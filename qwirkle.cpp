@@ -51,7 +51,7 @@ int main(void) {
 
    } while ( inGame && !std::cin.eof());
 
-   std::cout << "Goodbye" << std::endl;
+   std::cout << std::endl << std::endl << "Goodbye" << std::endl;
 
    return EXIT_SUCCESS;
 }
