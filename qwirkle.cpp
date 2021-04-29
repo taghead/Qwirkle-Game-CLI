@@ -70,3 +70,7 @@ int main(void) {
 
    return EXIT_SUCCESS;
 }
+
+void newTileBag(){
+   for ( )
+}

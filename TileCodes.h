@@ -18,4 +18,9 @@
 #define STAR_6    5
 #define CLOVER    6
 
+// Amounts
+#define AMOUNT_OF_COLORS    6
+#define AMOUNT_OF_SHAPES    6
+#define AMOUNT_OF_TILES_PER 3
+
 #endif // ASSIGN1_TILECODES_H
