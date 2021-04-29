@@ -32,6 +32,21 @@ void LinkedList::add_front(Tile* tile){
     head = node;
 }
 
+void LinkedList::add_back(Tile* tile){
+    Node* node = new Node(tile, head);
+    node->tile = tile;
+    node->next = nullptr;
+
+    if(head == nullptr){
+        head = node;
+    }else{
+        Node* current = head;
+        while(current->next != nullptr){
+            current = current->next;
+        }
+        current->next = node;
+    }
+}
 
 int LinkedList::size(){
     

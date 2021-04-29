@@ -12,7 +12,7 @@ public:
 
   /*
   Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3.
-  Used to populate the Qwirkle Tile Bag the new game capacity.
+  Used to populate the Qwirkle Tile Bag to the new game capacity.
 
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
@@ -41,6 +41,7 @@ public:
 private:
   Node* head;
   void add_front(Tile* tile);
+  void add_back(Tile* tile);
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
