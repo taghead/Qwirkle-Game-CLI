@@ -44,3 +44,19 @@ int LinkedList::size(){
     }
     return length;
 }
+
+Tile* LinkedList::getTile(int index){
+    Tile* retTile = nullptr;
+    if(index >= 0 && index < size()){
+
+        int counter = 0;
+        Node* current = head;
+
+        while(counter<index){
+            ++counter;
+            current = current->next;
+        }
+        retTile = current->tile;
+    }
+    return retTile;
+}

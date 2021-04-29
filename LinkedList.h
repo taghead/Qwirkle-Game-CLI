@@ -18,7 +18,25 @@ public:
   tileBag->populateLinkedList();
   */
   void populateLinkedList();
+
+  /*
+  Obtains size of LinkedList
+
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  std::cout << tileBag->size();
+  */
   int size();
+
+  /*
+  Get the tile of a specific index in the LinkedList
+
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  Tile* tile = tileBag->getTile(5);
+  std::cout << tile->getTileColour() << tile->getTileShape();
+  */
+  Tile* getTile(int index);
 
 private:
   Node* head;
