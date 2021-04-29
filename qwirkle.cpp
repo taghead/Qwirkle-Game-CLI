@@ -1,19 +1,14 @@
 
-#include "LinkedList.h"
-#include "Tile.h"
-#include "TileCodes.h"
+#include "GameEngine.h"
 
 #include <iostream>
 #include <string>
 
 #define EXIT_SUCCESS    0
 
-LinkedList newTileBag();
-
 int main(void) {
+   GameEngine* game = new GameEngine();
    bool inGame = true;
-
-   LinkedList tileBag = newTileBag(); //This test call delete for production
 
    std::cout   << "Welcome to Qwirkle!" << "\n" 
                << "-------------------" 
@@ -71,36 +66,4 @@ int main(void) {
    } while ( inGame );
 
    return EXIT_SUCCESS;
-}
-
-/* 
-
-   LinkedList newTileBag();
-
-   Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3
-
-   Requires the following included
-   
-   #include "Tile.h"
-   #include "TileCodes.h"
-
-   Also must be declared before main
-
-*/
-
-LinkedList newTileBag(){
-   LinkedList* tileBag = new LinkedList();
-   std::string colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-   std::string shapes = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-   for ( int c=0; c<AMOUNT_OF_COLORS; c++ ){
-      for ( int s=0; s<AMOUNT_OF_SHAPES; s++ ){ 
-         for ( int amount=0; amount<AMOUNT_OF_TILES_PER; i++){
-            new Tile(colours[c], shapes[s]);         
-         }
-         // Add tile to node
-         // Add node to LinkedList
-      }
-   }
-
-   return *tileBag;
 }
