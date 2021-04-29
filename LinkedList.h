@@ -54,6 +54,10 @@ private:
   void addFront(Tile* tile);
   void addBack(Tile* tile);
   void addNodeBack(Node* node);
+  void removeFront();
+  void removeBack();
+  void remove(int index);
+  void clear()
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

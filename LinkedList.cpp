@@ -7,11 +7,10 @@
 
 LinkedList::LinkedList() {
   head = nullptr;
-
-  // TODO
 }
 
-LinkedList::~LinkedList() {
+LinkedList::~LinkedList(){
+    clear();
 }
 
 LinkedList::LinkedList(LinkedList& other){
@@ -35,39 +34,40 @@ void LinkedList::populateLinkedList(){
 }
 
 void LinkedList::addFront(Tile* tile){
-    Node* node = new Node(tile, head);
-    node->next = head;
-    head = node;
+  Node* node = new Node(tile, head);
+  node->next = head;
+  head = node;
 }
 
 void LinkedList::addBack(Tile* tile){
-    Node* node = new Node(tile, head);
-    node->tile = tile;
-    node->next = nullptr;
+  Node* node = new Node(tile, head);
+  node->tile = tile;
+  node->next = nullptr;
 
-    if(head == nullptr){
-        head = node;
-    }else{
-        Node* current = head;
-        while(current->next != nullptr){
-            current = current->next;
-        }
-        current->next = node;
+  if(head == nullptr){
+      head = node;
+  }
+  else{
+    Node* current = head;
+    while(current->next != nullptr){
+        current = current->next;
     }
+    current->next = node;
+  }
 }
 
 void LinkedList::addNodeBack(Node* node){
-    node->next = nullptr;
+  node->next = nullptr;
 
-    if(head == nullptr){
-        head = node;
-    }else{
-        Node* current = head;
-        while(current->next != nullptr){
-            current = current->next;
-        }
-        current->next = node;
+  if(head == nullptr){
+    head = node;
+  }else{
+    Node* current = head;
+    while(current->next != nullptr){
+        current = current->next;
     }
+    current->next = node;
+  }
 }
 
 int LinkedList::size(){
@@ -75,122 +75,104 @@ int LinkedList::size(){
 
     Node* current = head;
     while(current != nullptr){
-        ++length;
-        current = current->next;
+      ++length;
+      current = current->next;
     }
     return length;
 }
 
 Tile* LinkedList::getTile(int index){
-    Tile* retTile = nullptr;
-    if(index >= 0 && index < size()){
+  Tile* retTile = nullptr;
+  if(index >= 0 && index < size()){
 
-        int counter = 0;
-        Node* current = head;
+    int counter = 0;
+    Node* current = head;
 
-        while(counter<index){
-            ++counter;
-            current = current->next;
-        }
-        retTile = current->tile;
+    while(counter<index){
+      ++counter;
+      current = current->next;
     }
-    return retTile;
+    retTile = current->tile;
+  }
+  return retTile;
 }
 
 
 Node* LinkedList::getNode(int index){
-    Node* retNode = nullptr;
-    if(index >= 0 && index < size()){
+  Node* retNode = nullptr;
+  if(index >= 0 && index < size()){
 
-        int counter = 0;
-        Node* current = head;
+    int counter = 0;
+    Node* current = head;
 
-        while(counter<index){
-            ++counter;
-            current = current->next;
-        }
-        retNode = current;
+    while(counter<index){
+      ++counter;
+      current = current->next;
     }
-    return retNode;
-}
-/*
-
-#include "LinkedList.h"
-#include <stdexcept>
-
-
-LinkedList::~LinkedList(){
-    clear();
+    retNode = current;
+  }
+  return retNode;
 }
 
+void LinkedList::removeFront(){
+  Node* toDelete = head;
+  head = head->next;
+
+  delete toDelete->tile;
+  delete toDelete;
+}
 
 
-void LinkedList::remove_front(){
-    if(head != nullptr){
-        Node* toDelete = head;
-        head = head->next;
+void LinkedList::removeBack(){
+  if(head != nullptr){
+    Node* current = head;
+    Node* prev = nullptr;
 
-        delete toDelete->card;
-        delete toDelete;
+    while(current->next != nullptr){
+      prev = current;
+      current = current->next;
+    }
+
+    if(prev == nullptr){
+      head = nullptr;
     }else{
-        throw std::runtime_error("Nothing to remove");
+      prev->next = nullptr;
     }
 
+    delete current->tile;
+    delete current;
+  }
 }
-void LinkedList::remove_back(){
-    
-    if(head != nullptr){
-        Node* current = head;
-        //pre should point to node before current;
-        Node* prev = nullptr;
 
-        while(current->next != nullptr){
-            prev = current;
-            current = current->next;
-        }
-
-        if(prev == nullptr){
-            head = nullptr;
-        }else{
-            prev->next = nullptr;
-        }
-
-        delete current->card;
-        delete current;
-    }
-    
-}
 
 void LinkedList::remove(int index){
-    if(index >= 0 && index < size()){
-        if(head != nullptr){
-            int counter = 0;
-            Node* current = head;
-            //pre should point to node before current;
-            Node* prev = nullptr;
+  if(index >= 0 && index < size()){
+    if(head != nullptr){
+      int counter = 0;
+      Node* current = head;
+      //pre should point to node before current;
+      Node* prev = nullptr;
 
-            while(counter != index){
-                ++counter;
-                prev = current;
-                current = current->next;
-            }
+      while(counter != index){
+        ++counter;
+        prev = current;
+        current = current->next;
+      }
 
-            if(prev == nullptr){
-                head = current->next;
-            }else{
-                prev->next = current->next;
-            }
+      if(prev == nullptr){
+        head = current->next;
+      }else{
+        prev->next = current->next;
+      }
 
-            delete current->card;
-            delete current;
-        }
+      delete current->tile;
+      delete current;
     }
+  }
 }
 
 void LinkedList::clear(){
     while(head != nullptr){
-        remove_front();
+        removeFront();
     }
 }
-
-*/
