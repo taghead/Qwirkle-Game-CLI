@@ -14,25 +14,33 @@ LinkedList::LinkedList() {
 LinkedList::~LinkedList() {
 }
 
+LinkedList::LinkedList(LinkedList& other){
+    head = nullptr;
+    for(int i = 0; i < other.size(); ++i){
+      Node* node = new Node(*other.getNode(i));
+      addNodeBack(node);
+    }
+}
+
 void LinkedList::populateLinkedList(){
   std::string colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
   std::string shapes = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
   for ( int c=0; c<AMOUNT_OF_COLORS; c++ ){
     for ( int s=0; s<AMOUNT_OF_SHAPES; s++ ){ 
       for ( int amount=0; amount<AMOUNT_OF_TILES_PER; amount++){
-        add_front(new Tile(colours[c], shapes[s]));
+        addFront(new Tile(colours[c], shapes[s]));
       }
     }
   }
 }
 
-void LinkedList::add_front(Tile* tile){
+void LinkedList::addFront(Tile* tile){
     Node* node = new Node(tile, head);
     node->next = head;
     head = node;
 }
 
-void LinkedList::add_back(Tile* tile){
+void LinkedList::addBack(Tile* tile){
     Node* node = new Node(tile, head);
     node->tile = tile;
     node->next = nullptr;
@@ -48,8 +56,21 @@ void LinkedList::add_back(Tile* tile){
     }
 }
 
+void LinkedList::addNodeBack(Node* node){
+    node->next = nullptr;
+
+    if(head == nullptr){
+        head = node;
+    }else{
+        Node* current = head;
+        while(current->next != nullptr){
+            current = current->next;
+        }
+        current->next = node;
+    }
+}
+
 int LinkedList::size(){
-    
     int length = 0;
 
     Node* current = head;
@@ -75,3 +96,101 @@ Tile* LinkedList::getTile(int index){
     }
     return retTile;
 }
+
+
+Node* LinkedList::getNode(int index){
+    Node* retNode = nullptr;
+    if(index >= 0 && index < size()){
+
+        int counter = 0;
+        Node* current = head;
+
+        while(counter<index){
+            ++counter;
+            current = current->next;
+        }
+        retNode = current;
+    }
+    return retNode;
+}
+/*
+
+#include "LinkedList.h"
+#include <stdexcept>
+
+
+LinkedList::~LinkedList(){
+    clear();
+}
+
+
+
+void LinkedList::remove_front(){
+    if(head != nullptr){
+        Node* toDelete = head;
+        head = head->next;
+
+        delete toDelete->card;
+        delete toDelete;
+    }else{
+        throw std::runtime_error("Nothing to remove");
+    }
+
+}
+void LinkedList::remove_back(){
+    
+    if(head != nullptr){
+        Node* current = head;
+        //pre should point to node before current;
+        Node* prev = nullptr;
+
+        while(current->next != nullptr){
+            prev = current;
+            current = current->next;
+        }
+
+        if(prev == nullptr){
+            head = nullptr;
+        }else{
+            prev->next = nullptr;
+        }
+
+        delete current->card;
+        delete current;
+    }
+    
+}
+
+void LinkedList::remove(int index){
+    if(index >= 0 && index < size()){
+        if(head != nullptr){
+            int counter = 0;
+            Node* current = head;
+            //pre should point to node before current;
+            Node* prev = nullptr;
+
+            while(counter != index){
+                ++counter;
+                prev = current;
+                current = current->next;
+            }
+
+            if(prev == nullptr){
+                head = current->next;
+            }else{
+                prev->next = current->next;
+            }
+
+            delete current->card;
+            delete current;
+        }
+    }
+}
+
+void LinkedList::clear(){
+    while(head != nullptr){
+        remove_front();
+    }
+}
+
+*/

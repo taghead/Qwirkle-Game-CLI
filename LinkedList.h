@@ -9,6 +9,7 @@ public:
 
   LinkedList();
   ~LinkedList();
+  LinkedList(LinkedList& other);
 
   /*
   Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3.
@@ -29,7 +30,7 @@ public:
   int size();
 
   /*
-  Get the tile of a specific index in the LinkedList
+  Get the tile of a specific node from the LinkedList based on index position
 
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
@@ -38,10 +39,21 @@ public:
   */
   Tile* getTile(int index);
 
+  /*
+  Get a specific node from the LinkedList based on index position
+
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  Node* node = tileBag->getNode(5);
+  std::cout << node->tile->getTileColour() << node->tile->getTileShape();
+  */
+  Node* getNode(int index);
+
 private:
   Node* head;
-  void add_front(Tile* tile);
-  void add_back(Tile* tile);
+  void addFront(Tile* tile);
+  void addBack(Tile* tile);
+  void addNodeBack(Node* node);
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
