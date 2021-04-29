@@ -1,5 +1,7 @@
 
 #include "LinkedList.h"
+#include <Tile.h>
+
 #include <iostream>
 #include <string>
 
