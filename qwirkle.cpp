@@ -73,7 +73,21 @@ int main(void) {
    return EXIT_SUCCESS;
 }
 
-// Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3
+/* 
+
+   LinkedList newTileBag();
+
+   Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3
+
+   Requires the following included
+   
+   #include "Tile.h"
+   #include "TileCodes.h"
+
+   Also must be declared before main
+
+*/
+
 LinkedList newTileBag(){
    LinkedList* tileBag = new LinkedList();
    std::string colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
