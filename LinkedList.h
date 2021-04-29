@@ -57,7 +57,7 @@ private:
   void removeFront();
   void removeBack();
   void remove(int index);
-  void clear()
+  void clear();
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
