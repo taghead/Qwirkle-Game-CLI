@@ -49,6 +49,16 @@ public:
   */
   Node* getNode(int index);
 
+
+  /*
+  Take a tile from an overloaded list and place in to the other LinkedList.
+  LinkedList* tileBag = new LinkedList();
+  LinkedList* playerHand = new LinkedList();
+  tileBag->populateLinkedList();
+  playerHand->drawTile(tileBag);
+  */
+  void drawTile(LinkedList* tileBag);
+
 private:
   Node* head;
   void addFront(Tile* tile);

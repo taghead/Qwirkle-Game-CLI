@@ -33,6 +33,11 @@ void LinkedList::populateLinkedList(){
   }
 }
 
+void LinkedList::drawTile(LinkedList* tileBag){
+  addNodeBack(tileBag->getNode(tileBag->size()-1));
+  tileBag->removeFront();
+}
+
 void LinkedList::addFront(Tile* tile){
   Node* node = new Node(tile, head);
   node->next = head;
@@ -150,7 +155,6 @@ void LinkedList::remove(int index){
     if(head != nullptr){
       int counter = 0;
       Node* current = head;
-      //pre should point to node before current;
       Node* prev = nullptr;
 
       while(counter != index){
