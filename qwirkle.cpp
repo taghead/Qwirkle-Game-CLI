@@ -8,8 +8,12 @@
 
 #define EXIT_SUCCESS    0
 
+LinkedList newTileBag();
+
 int main(void) {
    bool inGame = true;
+
+   LinkedList tileBag = newTileBag(); //This test call delete for production
 
    std::cout   << "Welcome to Qwirkle!" << "\n" 
                << "-------------------" 
@@ -69,13 +73,16 @@ int main(void) {
    return EXIT_SUCCESS;
 }
 
+// Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3
 LinkedList newTileBag(){
    LinkedList* tileBag = new LinkedList();
    std::string colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
    std::string shapes = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
    for ( int c=0; c<AMOUNT_OF_COLORS; c++ ){
       for ( int s=0; s<AMOUNT_OF_SHAPES; s++ ){ 
-         new Tile(colours[c], shapes[s]);         
+         for ( int amount=0; amount<AMOUNT_OF_TILES_PER){
+            new Tile(colours[c], shapes[s]);         
+         }
          // Add tile to node
          // Add node to LinkedList
       }
