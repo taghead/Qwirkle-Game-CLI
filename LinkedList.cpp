@@ -36,10 +36,50 @@ void LinkedList::populateLinkedList(){
 
 void LinkedList::shuffleLinkedList(){
   /*
-  GET NUMBER OF NODES
-    FOR NUMBER OF NODES
+  Set s as LinkedList size
+  Set n to the number of times to loop over to as 9
+  For loop over s times n
+    Generate random number as r greater than 0 and less than LinkedList size
+    If r is 0 or greater and r is 0 and less than s
+      If head is not null
+        Set current to LinkedLists head node
+        Set prev to nullptr node
 
+        Set current get node at position r 
+        Shift nodes
+        Remove current node in LinkedList
+        Add current node to front of LinkedList
   */
+  int s = size();
+  int n = 9;
+  for ( int i=0; i < s*n; i++ ){
+    std::random_device randomSeed;
+    std::uniform_int_distribution<int> uniform_dist(0, s);
+    int r = uniform_dist(randomSeed);
+
+    if(r >= 0 && r < s){
+      if(head != nullptr){
+        int counter = 0;
+        Node* current = head;
+        Node* prev = nullptr;
+
+        while(counter != r){
+          ++counter;
+          prev = current;
+          current = current->next;
+        }
+
+        if(prev == nullptr){
+          head = current->next;
+        }else{
+          prev->next = current->next;
+        }
+
+        current->next = head;
+        head = current;
+      }
+    }
+  }
 }
 
 int LinkedList::size(){

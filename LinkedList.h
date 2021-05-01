@@ -23,6 +23,9 @@ public:
   /*
   Shuffles around all the nodes in a LinkedList
 
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  tileBag->shuffleLinkedList();
   */
   void shuffleLinkedList();
 
