@@ -128,7 +128,7 @@ Node* LinkedList::getNode(int index){
 }
 
 void LinkedList::drawTile(LinkedList* tileBag){
-  if ( size() < 6 ){
+  if ( size() < 6 && tileBag->size() != 0){
     std::random_device randomSeed;
     std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
     int randomIndex = uniform_dist(randomSeed);
