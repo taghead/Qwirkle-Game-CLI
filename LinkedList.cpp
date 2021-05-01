@@ -4,6 +4,7 @@
 #include "Node.h"
 
 #include <iostream>
+#include <random>
 
 LinkedList::LinkedList() {
   head = nullptr;
@@ -33,46 +34,12 @@ void LinkedList::populateLinkedList(){
   }
 }
 
-void LinkedList::drawTile(LinkedList* tileBag){
-  addNodeBack(tileBag->getNode(tileBag->size()-1));
-  tileBag->removeFront();
-}
+void LinkedList::shuffleLinkedList(){
+  /*
+  GET NUMBER OF NODES
+    FOR NUMBER OF NODES
 
-void LinkedList::addFront(Tile* tile){
-  Node* node = new Node(tile, head);
-  node->next = head;
-  head = node;
-}
-
-void LinkedList::addBack(Tile* tile){
-  Node* node = new Node(tile, head);
-  node->tile = tile;
-  node->next = nullptr;
-
-  if(head == nullptr){
-      head = node;
-  }
-  else{
-    Node* current = head;
-    while(current->next != nullptr){
-        current = current->next;
-    }
-    current->next = node;
-  }
-}
-
-void LinkedList::addNodeBack(Node* node){
-  node->next = nullptr;
-
-  if(head == nullptr){
-    head = node;
-  }else{
-    Node* current = head;
-    while(current->next != nullptr){
-        current = current->next;
-    }
-    current->next = node;
-  }
+  */
 }
 
 int LinkedList::size(){
@@ -117,6 +84,60 @@ Node* LinkedList::getNode(int index){
     retNode = current;
   }
   return retNode;
+}
+
+void LinkedList::drawTile(LinkedList* tileBag){
+  addNodeBack(tileBag->getNode(tileBag->size()-1));
+  tileBag->removeFront();
+}
+
+void LinkedList::testPrintTiles(){
+  for ( int i=0; i < size(); i++){
+    Node* node = getNode(i);
+    std::cout << node->tile->getTileColour() << node->tile->getTileShape();
+  }
+}
+
+void LinkedList::addFront(Tile* tile){
+  Node* node = new Node(tile, head);
+  node->next = head;
+  head = node;
+}
+
+void LinkedList::addBack(Tile* tile){
+  Node* node = new Node(tile, head);
+  node->tile = tile;
+  node->next = nullptr;
+
+  if(head == nullptr){
+      head = node;
+  }
+  else{
+    Node* current = head;
+    while(current->next != nullptr){
+        current = current->next;
+    }
+    current->next = node;
+  }
+}
+
+void LinkedList::addNodeFront(Node* node){
+  node->next = head;
+  head = node;
+}
+
+void LinkedList::addNodeBack(Node* node){
+  node->next = nullptr;
+
+  if(head == nullptr){
+    head = node;
+  }else{
+    Node* current = head;
+    while(current->next != nullptr){
+        current = current->next;
+    }
+    current->next = node;
+  }
 }
 
 void LinkedList::removeFront(){

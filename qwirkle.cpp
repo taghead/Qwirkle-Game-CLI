@@ -1,5 +1,6 @@
 
 #include "GameEngine.h"
+#include "LinkedList.h"
 
 #include <iostream>
 #include <string>
@@ -7,7 +8,12 @@
 #define EXIT_SUCCESS    0
 
 int main(void) {
-   GameEngine* game = new GameEngine();
+   //GameEngine* game = new GameEngine();
+  LinkedList* tileBag = new LinkedList();
+  LinkedList* playerHand = new LinkedList();
+  tileBag->populateLinkedList();
+  playerHand->drawTile(tileBag);
+  tileBag->testPrintTiles();
    bool inGame = true;
 
    std::cout   << "Welcome to Qwirkle!" << "\n" 

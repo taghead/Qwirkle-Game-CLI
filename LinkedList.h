@@ -21,7 +21,13 @@ public:
   void populateLinkedList();
 
   /*
-  Obtains size of LinkedList
+  Shuffles around all the nodes in a LinkedList
+
+  */
+  void shuffleLinkedList();
+
+  /*
+  Obtains size of LinkedList by counting each node in a LinkedList
 
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
@@ -30,7 +36,7 @@ public:
   int size();
 
   /*
-  Get the tile of a specific node from the LinkedList based on index position
+  Get the tile from a specific node in the LinkedList based on index position.
 
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
@@ -51,7 +57,8 @@ public:
 
 
   /*
-  Take a tile from an overloaded list and place in to the other LinkedList.
+  Migrate a node from the overloaded LinkedList (should always be the tilebag).
+  
   LinkedList* tileBag = new LinkedList();
   LinkedList* playerHand = new LinkedList();
   tileBag->populateLinkedList();
@@ -59,11 +66,21 @@ public:
   */
   void drawTile(LinkedList* tileBag);
 
+  /*
+  FOR TESTING - Print all tiles in a LinkedList
+
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  tileBag->testPrintTiles();
+  */
+  void testPrintTiles();
+
 private:
   Node* head;
   void addFront(Tile* tile);
   void addBack(Tile* tile);
   void addNodeBack(Node* node);
+  void addNodeFront(Node* node);
   void removeFront();
   void removeBack();
   void remove(int index);
