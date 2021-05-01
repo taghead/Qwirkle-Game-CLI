@@ -60,11 +60,11 @@ public:
 
 
   /*
-  Migrate a node from the overloaded LinkedList (should always be the tilebag).
+  Migrate a random node from the overloaded LinkedList (tileBag).
   
   LinkedList* tileBag = new LinkedList();
-  LinkedList* playerHand = new LinkedList();
   tileBag->populateLinkedList();
+  LinkedList* playerHand = new LinkedList();
   playerHand->drawTile(tileBag);
   */
   void drawTile(LinkedList* tileBag);
