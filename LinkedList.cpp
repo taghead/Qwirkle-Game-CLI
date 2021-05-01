@@ -71,7 +71,8 @@ void LinkedList::shuffleLinkedList(){
 
         if(prev == nullptr){
           head = current->next;
-        }else{
+        }
+        else{
           prev->next = current->next;
         }
 
@@ -201,7 +202,8 @@ void LinkedList::removeBack(){
 
     if(prev == nullptr){
       head = nullptr;
-    }else{
+    }
+    else{
       prev->next = nullptr;
     }
 
@@ -226,7 +228,8 @@ void LinkedList::remove(int index){
 
       if(prev == nullptr){
         head = current->next;
-      }else{
+      }
+      else{
         prev->next = current->next;
       }
 
