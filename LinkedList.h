@@ -83,6 +83,14 @@ public:
   void loadListOfTiles(std::string tileString);
 
   /*
+  Prints LinkedList in player hand format
+  
+  LinkedList* playerHand = new LinkedList();
+  playerHand->populateLinkedList();
+  playerHand->printHand();
+  */
+  void printHand();
+  /*
   FOR TESTING - Print all tiles in a LinkedList
 
   LinkedList* tileBag = new LinkedList();

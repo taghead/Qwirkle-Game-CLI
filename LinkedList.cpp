@@ -129,31 +129,33 @@ Node* LinkedList::getNode(int index){
 }
 
 void LinkedList::drawTile(LinkedList* tileBag){
-  if ( size() < 6 && tileBag->size() != 0){
-    std::random_device randomSeed;
-    std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
-    int randomIndex = uniform_dist(randomSeed);
-    
-    if(randomIndex >= 0 && randomIndex < tileBag->size()){
-      if(tileBag->head != nullptr){
-        int counter = 0;
-        Node* current = tileBag->head;
-        Node* prev = nullptr;
+  while ( size() < 6 ){
+    if ( size() < 6 && tileBag->size() != 0){
+      std::random_device randomSeed;
+      std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
+      int randomIndex = uniform_dist(randomSeed);
+      
+      if(randomIndex >= 0 && randomIndex < tileBag->size()){
+        if(tileBag->head != nullptr){
+          int counter = 0;
+          Node* current = tileBag->head;
+          Node* prev = nullptr;
 
-        while(counter != randomIndex){
-          ++counter;
-          prev = current;
-          current = current->next;
-        }
+          while(counter != randomIndex){
+            ++counter;
+            prev = current;
+            current = current->next;
+          }
 
-        if(prev == nullptr){
-          tileBag->head = current->next;
-        }
-        else{
-          prev->next = current->next;
-        }
+          if(prev == nullptr){
+            tileBag->head = current->next;
+          }
+          else{
+            prev->next = current->next;
+          }
 
-        addNodeFront(current);
+          addNodeFront(current);
+        }
       }
     }
   }
@@ -179,6 +181,16 @@ void LinkedList::loadListOfTiles(std::string tileString){
         count++;
       }
     }
+}
+
+void LinkedList::printHand(){
+  for ( int i=0; i < size(); i++){
+    Node* node = getNode(i);
+    std::cout << node->tile->getTileColour() << node->tile->getTileShape();
+    if ( i < size()-1){
+      std::cout << ",";
+    }
+  }
 }
 
 void LinkedList::testPrintTiles(){
