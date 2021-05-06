@@ -70,6 +70,13 @@ public:
   void drawTile(LinkedList* tileBag);
 
   /*
+    Load an array of tiles
+
+
+  */
+  void loadListOfTiles(Tile tileArr[] );
+
+  /*
   FOR TESTING - Print all tiles in a LinkedList
 
   LinkedList* tileBag = new LinkedList();
