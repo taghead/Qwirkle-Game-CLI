@@ -63,7 +63,7 @@ public:
 
 
   /*
-  Migrate a random node from the overloaded LinkedList (tileBag).
+  Migrate a cap of 6 random nodes from the overloaded LinkedList (tileBag).
   
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
@@ -71,6 +71,16 @@ public:
   playerHand->drawTile(tileBag);
   */
   void drawTile(LinkedList* tileBag);
+
+ /*
+  Migrate a random node from the overloaded LinkedList.
+  
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  LinkedList* playerHand = new LinkedList();
+  playerHand->drawTile(tileBag);
+  */
+  void drawHand(LinkedList* tileBag);
 
   /*
     Load an tiles from a string
@@ -82,6 +92,14 @@ public:
   */
   void loadListOfTiles(std::string tileString);
 
+  /*
+  Prints LinkedList in player hand format
+  
+  LinkedList* playerHand = new LinkedList();
+  playerHand->populateLinkedList();
+  playerHand->printHand();
+  */
+  void printHand();
   /*
   FOR TESTING - Print all tiles in a LinkedList
 
