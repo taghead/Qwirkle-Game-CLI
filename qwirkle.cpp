@@ -1,14 +1,16 @@
 
-#include "LinkedList.h"
+#include "GameEngine.h"
+
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <iomanip>
+
 
 #define EXIT_SUCCESS    0
 
 int main(void) {
-   LinkedList* list = new LinkedList();
-   delete list;
-
+   //GameEngine* game = new GameEngine();
    bool inGame = true;
 
    std::cout   << "Welcome to Qwirkle!" << "\n" 
@@ -33,13 +35,26 @@ int main(void) {
       }
       else if ( choice == 2 ){
          std::cout   << std::endl 
-                     << "Enter the filename from which load a game" 
+                     << "Enter the filename from which to load a game" 
                      << std::endl << "> ";
 
          std::string filename;
          std::cin >> filename;
 
          // Load Game TODO Read Section 2.2.2
+           std::string x;
+           std::ifstream infile;
+
+           infile.open(filename);
+           if (!infile) {
+             std::cout << "not file found with that name. Try again." << std::endl;
+
+           }
+           while (getline(infile, x)) {
+             std::cout << x << std::endl;
+           }
+           infile.close();
+         
       }
       else if ( choice == 3 ){
          std::cout   << "----------------------------------" << std::endl 
