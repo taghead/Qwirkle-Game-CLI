@@ -10,7 +10,7 @@ GameEngine::GameEngine() {}
 
 GameEngine::~GameEngine() {}
 
-void newGame(){
+void GameEngine::newGame(){
    std::cout << std::endl << "Starting a New Game" << std::endl << std::endl;
 
    int numOfPlayers = 2;
@@ -42,7 +42,7 @@ void newGame(){
   //startGame(numOfPlayers, players);
 }
 
-void startGame(int numOfPlayers, std::string players[MAX_PLAYERS]){
+void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS]){
    bool inGame = true;
    int playersScores[MAX_PLAYERS];
    int boardDim[] = { 6,6 };
