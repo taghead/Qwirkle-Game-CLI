@@ -109,8 +109,16 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             playerHands[i]->printHand();
             std::cout << std::endl << "> ";
 
-            std::string userIn;
-            std::cin >> userIn;
+            bool inputIsValid = false;
+            while (!inputIsValid)
+            {
+              std::string userIn;
+              std::cin >> userIn;
+
+              if (!inputIsValid){
+                std::cout << std::endl << "Invalid Input" << std::endl << " >";
+              }
+            }
          }
       }
    }
