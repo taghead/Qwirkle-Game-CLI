@@ -14,6 +14,7 @@ public:
 private:
   void startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                  LinkedList* tileBag, LinkedList* playerHands[]);
+  bool functionCheckTileFormat(std::string tile);
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

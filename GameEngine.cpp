@@ -26,9 +26,11 @@ void GameEngine::newGame(){
 
          isValidInput = true;
          std::cin >> players[i];
+         std::cin.ignore(); // Prevents carriage return
          for ( unsigned int j = 0; j < players[i].length(); j++){
             //Check if lowercase
-            if ( players[i][j] >= *"a" && players[i][j] <= *"z" ){
+            if ( (players[i][j] >= *"a" && players[i][j] <= *"z") ||  
+                 (players[i][j] >= *"0" && players[i][j] <= *"9") ){
                isValidInput = false;
             }
 
@@ -108,26 +110,57 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
 
             std::cout << std::endl << std::endl << "Your hand is" << std::endl;
             playerHands[i]->printHand();
-            std::cout << std::endl << "> ";
+            
 
             // Do user input
             bool inputIsValid = false;
             while (!inputIsValid)
             {
+              std::cout << std::endl << "> ";
               std::string userIn;
               std::getline(std::cin,userIn);
 
-              std::vector<std::string> result; 
-              std::istringstream iss(userIn); 
-              for(std::string userIn; iss >> userIn; ) {
-                result.push_back(userIn); 
+
+              std::vector<std::string> commandsArr;
+              std::stringstream  data(userIn);
+              std::string tmpString;
+              while(std::getline(data,tmpString,' '))
+              {
+                  commandsArr.push_back(tmpString);
+              }
+
+              //place G5 at C4
+              if ( commandsArr.size() > 0 ){
+                if (commandsArr[0] == "place"){
+                  std::cout << "place";
+                  if ( commandsArr.size() > 1 ){
+                    if ( functionCheckTileFormat(commandsArr[1]) ){
+                      std::cout << "TRUE";
+                    }                    
+                  }
+                }
               }
 
               if (!inputIsValid){
-                std::cout << std::endl << "Invalid Input" << std::endl << " >";
+                std::cout << std::endl << "Invalid Input";
               }
             }
          }
       }
    }
+}
+
+bool GameEngine::functionCheckTileFormat(std::string tile){
+  bool isValid = false;
+  if ( tile[0] == RED || tile[0] == ORANGE || tile[0] == YELLOW ||
+       tile[0] == GREEN || tile[0] == BLUE || tile[0] == PURPLE){
+    isValid=true;
+  }
+
+  int shapeInt = (int)tile[1] - '0';
+  if ( shapeInt == CIRCLE || shapeInt == STAR_4 || shapeInt == DIAMOND ||
+       shapeInt == SQUARE || shapeInt == STAR_6 || shapeInt == CLOVER){
+    isValid=true;
+  }
+  return isValid;
 }
