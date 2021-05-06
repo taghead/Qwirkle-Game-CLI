@@ -132,10 +132,18 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
               //place G5 at C4
               if ( commandsArr.size() > 0 ){
                 if (commandsArr[0] == "place"){
-                  std::cout << "place";
                   if ( commandsArr.size() > 1 ){
                     if ( functionCheckTileFormat(commandsArr[1]) ){
-                      std::cout << "TRUE";
+                      if ( commandsArr.size() > 2 ){
+                        if (commandsArr[2] == "at"){
+                          if ( commandsArr.size() > 3 ){
+                            if ( placeTileCheck(boardState,boardDim,
+                                                commandsArr[3]) ){
+                              //Place tile
+                            }
+                          }
+                        }
+                      }
                     }                    
                   }
                 }
@@ -163,4 +171,18 @@ bool GameEngine::functionCheckTileFormat(std::string tile){
     isValid=true;
   }
   return isValid;
+}
+
+bool GameEngine::placeTileCheck(std::vector<std::string> boardState,
+                                int boardDim[1], std::string pos){
+  int posNumber = (int)pos[1] - '0';
+  bool posNumberIsValid = false;
+
+  if ( posNumber <= boardDim[1]){
+    posNumberIsValid = true;
+  }
+  std::cout << pos[0] << std::endl;
+  std::cout << &pos[0] << std::endl;
+
+  return posNumberIsValid;
 }
