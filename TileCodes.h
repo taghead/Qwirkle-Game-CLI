@@ -28,5 +28,6 @@
 
 #define EXIT_SUCCESS    0
 #define MAX_PLAYERS 100
+#define MAX_AMOUNT_OF_COMMANDS 100
 
 #endif // ASSIGN1_TILECODES_H

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "GameEngine.h"
 #include "TileCodes.h"
@@ -109,11 +110,18 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             playerHands[i]->printHand();
             std::cout << std::endl << "> ";
 
+            // Do user input
             bool inputIsValid = false;
             while (!inputIsValid)
             {
               std::string userIn;
-              std::cin >> userIn;
+              std::getline(std::cin,userIn);
+
+              std::vector<std::string> result; 
+              std::istringstream iss(userIn); 
+              for(std::string userIn; iss >> userIn; ) {
+                result.push_back(userIn); 
+              }
 
               if (!inputIsValid){
                 std::cout << std::endl << "Invalid Input" << std::endl << " >";
