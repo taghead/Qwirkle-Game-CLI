@@ -14,50 +14,44 @@ int main(void) {
    LinkedList* list = new LinkedList();
    delete list;
 
-  //  printGreeting();
-  //  printMenu();
+   printGreeting();
+   printMenu();
 
-  //  bool inGame = true;
-  //  do {
+   bool inGame = true;
+   do {
 
-     LinkedList* playerHand = new LinkedList();
-     std::string playerHandTiles = "P2,P3,O6,Y4,B2,O3";
-     playerHand->loadListOfTiles(playerHandTiles);
-     playerHand->testPrintTiles();
-     
+      char choice;
+      std::cin >> choice;
 
-  //     char choice;
-  //     std::cin >> choice;
+      if (!std::cin.eof()){
+         if ( choice == '1' ) {
+            std::cout << std::endl << "Starting a New Game" << std::endl;
+            // New Game TODO Read Section 2.2.1
+         }
+         else if ( choice == '2' ){
+            std::cout   << std::endl 
+                        << "Enter the filename from which load a game" 
+                        << std::endl << "> ";
 
-  //     if (!std::cin.eof()){
-  //        if ( choice == '1' ) {
-  //           std::cout << std::endl << "Starting a New Game" << std::endl;
-  //           // New Game TODO Read Section 2.2.1
-  //        }
-  //        else if ( choice == '2' ){
-  //           std::cout   << std::endl 
-  //                       << "Enter the filename from which load a game" 
-  //                       << std::endl << "> ";
+            std::string filename;
+            std::cin >> filename;
 
-  //           std::string filename;
-  //           std::cin >> filename;
+            // Load Game TODO Read Section 2.2.2
+         }
+         else if ( choice == '3' ){
+            printCredits();
+         }
+         else if ( choice == '4' ){
+            inGame = false;
+         }
+         else {
+            std::cout << "Invalid Input" << std::endl << "> ";
+         }
+      }
 
-  //           // Load Game TODO Read Section 2.2.2
-  //        }
-  //        else if ( choice == '3' ){
-  //           printCredits();
-  //        }
-  //        else if ( choice == '4' ){
-  //           inGame = false;
-  //        }
-  //        else {
-  //           std::cout << "Invalid Input" << std::endl << "> ";
-  //        }
-  //     }
+   } while ( inGame && !std::cin.eof());
 
-  //  } while ( inGame && !std::cin.eof());
-
-  //  std::cout << std::endl << std::endl << "Goodbye" << std::endl;
+   std::cout << std::endl << std::endl << "Goodbye" << std::endl;
 
    return EXIT_SUCCESS;
 }
