@@ -15,10 +15,11 @@ void GameEngine::newGame(){
 
    int numOfPlayers = 2;
    std::string players[MAX_PLAYERS];
+   int playerCount = 0;
    for ( int i=0; i < numOfPlayers; i++){
       bool isValidInput = true;
       do {
-         std::cout   << "Enter a name for player " << i+1 
+         std::cout   << "Enter a name for player " << playerCount+1 
             << " (uppercase characters only)" << std::endl << "> ";
 
          isValidInput = true;
@@ -33,6 +34,9 @@ void GameEngine::newGame(){
 
          if (!isValidInput){
             std::cout << std::endl << "Invalid. MUST USE UPPERCASE" << std::endl;
+         }
+         else if ( isValidInput ) {
+           playerCount++;
          }
       }  while (!isValidInput);      
    }
