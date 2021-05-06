@@ -50,19 +50,6 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS]){
    // Save states
    std::vector<std::string> boardState;
 
-   for ( int i=0; i<AMOUNT_OF_COLORS; i++){
-      for ( int j=0; j<AMOUNT_OF_SHAPES; j++){
-         for ( int j=0; j<AMOUNT_OF_TILES_PER; j++){
-            if ( i == 0 ){
-               // Create Tile
-               // Add Tile to Node
-               // Add Tile to LinkedList
-            }
-         }
-      }
-   }
-
-
    while(inGame){
       for ( int i=0; i<numOfPlayers; i++){
          if (inGame){
