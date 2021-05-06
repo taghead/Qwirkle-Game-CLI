@@ -4,6 +4,7 @@
 #include "Node.h"
 
 #include <iostream>
+#include <string>
 #include <random>
 
 LinkedList::LinkedList() {
@@ -156,6 +157,28 @@ void LinkedList::drawTile(LinkedList* tileBag){
       }
     }
   }
+}
+
+void LinkedList::loadListOfTiles(std::string tileString){
+  int count = 0;
+    for (std::string::size_type i = 0; i < tileString.size(); i++) {
+      // Use every second as a delimeter
+      if ( count == 2 ){
+        //Convert char to int
+        int shapeInt = (int)tileString[i-1] - '0'; 
+        addBack(new Tile(tileString[i-2],shapeInt));
+        count = 0;
+      }
+      // Accounts for last tile
+      else if ( i == tileString.size()-1){
+        //Convert char to int
+        int shapeInt = (int)tileString[i] - '0'; 
+        addBack(new Tile(tileString[i-1],shapeInt));
+      }
+      else {
+        count++;
+      }
+    }
 }
 
 void LinkedList::testPrintTiles(){
