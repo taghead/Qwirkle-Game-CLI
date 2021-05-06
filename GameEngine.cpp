@@ -103,7 +103,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             }
 
             // User draw max amount of tiles
-            playerHands[i]->drawTile(tileBag);
+            playerHands[i]->drawHand(tileBag);
 
             std::cout << std::endl << std::endl << "Your hand is" << std::endl;
             playerHands[i]->printHand();
