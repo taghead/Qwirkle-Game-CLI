@@ -3,6 +3,7 @@
 #include <string>
 
 #include "LinkedList.h"
+#include "GameEngine.h"
 
 #define EXIT_SUCCESS    0
 
@@ -18,6 +19,7 @@ int main(void) {
    printMenu();
 
    bool inGame = true;
+   GameEngine* game = new GameEngine();
    do {
 
       char choice;
@@ -27,6 +29,7 @@ int main(void) {
          if ( choice == '1' ) {
             std::cout << std::endl << "Starting a New Game" << std::endl;
             // New Game TODO Read Section 2.2.1
+            game->newGame();
          }
          else if ( choice == '2' ){
             std::cout   << std::endl 
