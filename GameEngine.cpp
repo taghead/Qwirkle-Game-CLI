@@ -39,7 +39,7 @@ void GameEngine::newGame(){
 
    std::cout << std::endl << "Let's Play!" << std::endl;
 
-  //startGame(numOfPlayers, players);
+  startGame(numOfPlayers, players);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS]){
