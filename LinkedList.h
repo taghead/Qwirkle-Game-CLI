@@ -2,7 +2,10 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include <string>
+
 #include "Node.h"
+#include "TileCodes.h"
 
 class LinkedList {
 public:
@@ -68,6 +71,16 @@ public:
   playerHand->drawTile(tileBag);
   */
   void drawTile(LinkedList* tileBag);
+
+  /*
+    Load an tiles from a string
+
+    LinkedList* playerHand = new LinkedList();
+    std::string playerHandTiles = "P2,P3,O6,Y4,B2,O3";
+    playerHand->loadListOfTiles(playerHandTiles);
+    playerHand->testPrintTiles();
+  */
+  void loadListOfTiles(std::string tileString);
 
   /*
   FOR TESTING - Print all tiles in a LinkedList
