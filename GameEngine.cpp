@@ -137,9 +137,16 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                       if ( commandsArr.size() > 2 ){
                         if (commandsArr[2] == "at"){
                           if ( commandsArr.size() > 3 ){
-                            if ( placeTileCheck(boardState,boardDim,
+                            if ( placeLoactionCheck(boardState,boardDim,
                                                 commandsArr[3]) ){
-                              //Place tile
+                              // Place tile
+                              
+                              // Interpret the coordinates into the board state using the P4@A1 format
+                              boardState.push_back(commandsArr[1]+"@"+commandsArr[3]);
+                              for ( unsigned int i = 0; i < boardState.size(); i++)
+                              {
+                                 std::cout << boardState[i] << std::endl;
+                              }
                             }
                           }
                         }
@@ -158,7 +165,13 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
    }
 }
 
-bool GameEngine::functionCheckTileFormat(std::string tile){
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Esures the tile (P4) is correctly formatted.
+*/
+bool GameEngine::checkTileFormat(std::string tile){
   bool isValid = false;
   if ( tile[0] == RED || tile[0] == ORANGE || tile[0] == YELLOW ||
        tile[0] == GREEN || tile[0] == BLUE || tile[0] == PURPLE){
@@ -173,16 +186,26 @@ bool GameEngine::functionCheckTileFormat(std::string tile){
   return isValid;
 }
 
-bool GameEngine::placeTileCheck(std::vector<std::string> boardState,
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Esures the coordinates (A1) are correctly formatted.
+*/
+bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                 int boardDim[1], std::string pos){
   int posNumber = (int)pos[1] - '0';
-  bool posNumberIsValid = false;
+  bool posIsValid = false;
 
   if ( posNumber <= boardDim[1]){
-    posNumberIsValid = true;
+    posIsValid = true;
   }
   std::cout << pos[0] << std::endl;
   std::cout << &pos[0] << std::endl;
 
-  return posNumberIsValid;
+  return posIsValid;
+}
+
+bool GameEngine::checkTileInPlayerHand(std::string tile, LinkedList* playerhand){
+   
 }
