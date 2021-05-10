@@ -186,6 +186,9 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                */
             }
           } 
+          if (std::cin.eof()){
+            inputIsValid = true;
+          }
           if (!inputIsValid) {
             std::cout << std::endl << "Invalid Input";
           }
