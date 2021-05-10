@@ -100,6 +100,8 @@ public:
   playerHand->printHand();
   */
   void printHand();
+
+  void remove(int index);
   /*
   FOR TESTING - Print all tiles in a LinkedList
 
@@ -117,7 +119,6 @@ private:
   void addNodeFront(Node* node);
   void removeFront();
   void removeBack();
-  void remove(int index);
   void clear();
 };
 

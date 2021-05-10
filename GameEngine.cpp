@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "GameEngine.h"
 #include "TileCodes.h"
@@ -25,9 +26,11 @@ void GameEngine::newGame(){
 
          isValidInput = true;
          std::cin >> players[i];
+         std::cin.ignore(); // Prevents carriage return
          for ( unsigned int j = 0; j < players[i].length(); j++){
             //Check if lowercase
-            if ( players[i][j] >= *"a" && players[i][j] <= *"z" ){
+            if ( (players[i][j] >= *"a" && players[i][j] <= *"z") ||  
+                 (players[i][j] >= *"0" && players[i][j] <= *"9") ){
                isValidInput = false;
             }
 
@@ -46,6 +49,7 @@ void GameEngine::newGame(){
   // Populate tilebag
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
+  tileBag->shuffleLinkedList();
 
   std::cout << std::endl << "Let's Play!" << std::endl;
 
@@ -94,10 +98,20 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                // Print this rows tiles and spaces
                for ( int j=0; j<boardDim[1]; j++){
                   std::cout << "|";
-                  // IF TILE PLACED HERE
-                     //PRINT TILE
-                  // ELSE
+                  bool tileIsHere = false;
+                  std::string currentNumber = std::to_string(j);
+                  for ( unsigned int i = 0; i < boardState.size(); i++){
+                     if ( currentLetter == boardState[i][3] ){
+                        char tileNumber =  boardState[i][4];
+                        if ( currentNumber[0] == tileNumber ){
+                           std::cout << boardState[i][0] << boardState[i][1];
+                           tileIsHere = true;
+                        }
+                     }
+                  }
+                  if (!tileIsHere){
                      std::cout << "  ";
+                  }
                }
                std::cout << "|";
             }
@@ -107,19 +121,128 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
 
             std::cout << std::endl << std::endl << "Your hand is" << std::endl;
             playerHands[i]->printHand();
-            std::cout << std::endl << "> ";
+            
 
+            // Do user input
             bool inputIsValid = false;
             while (!inputIsValid)
             {
+              std::cout << std::endl << "> ";
               std::string userIn;
-              std::cin >> userIn;
+              std::getline(std::cin,userIn);
+
+
+              std::vector<std::string> commandsArr;
+              std::stringstream  data(userIn);
+              std::string tmpString;
+              while(std::getline(data,tmpString,' '))
+              {
+                  commandsArr.push_back(tmpString);
+              }
+
+              //place G5 at C4
+              if ( commandsArr.size() > 0 ){
+                if (commandsArr[0] == "place"){
+                  if ( commandsArr.size() > 1 ){
+                    if ( checkTileFormat(commandsArr[1]) ){
+                      if ( commandsArr.size() > 2 ){
+                        if (commandsArr[2] == "at"){
+                          if ( commandsArr.size() > 3 ){
+                            if ( placeLoactionCheck(boardState,boardDim,
+                                                commandsArr[3]) ){
+                              if ( checkTileInPlayerHand(commandsArr[1], playerHands[i])){
+                                 boardState.push_back(commandsArr[1]+"@"+commandsArr[3]);
+                                 inputIsValid = true;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }                    
+                  }
+                }
+              }
 
               if (!inputIsValid){
-                std::cout << std::endl << "Invalid Input" << std::endl << " >";
+                std::cout << std::endl << "Invalid Input";
               }
             }
          }
       }
    }
+}
+
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Ensures the tile (P4) is correctly formatted.
+*/
+bool GameEngine::checkTileFormat(std::string tile){
+  bool isValid = false;
+  if ( tile[0] == RED || tile[0] == ORANGE || tile[0] == YELLOW ||
+       tile[0] == GREEN || tile[0] == BLUE || tile[0] == PURPLE){
+    isValid=true;
+  }
+
+  int shapeInt = (int)tile[1] - '0';
+  if ( shapeInt == CIRCLE || shapeInt == STAR_4 || shapeInt == DIAMOND ||
+       shapeInt == SQUARE || shapeInt == STAR_6 || shapeInt == CLOVER){
+    isValid=true;
+  }
+  return isValid;
+}
+
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Ensures the coordinates (A1) are correctly formatted.
+
+   And there are no tiles on the location
+*/
+bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
+                                int boardDim[1], std::string pos){
+  int posNumber = (int)pos[1] - '0';
+  int posChar = pos[0];
+  int posCharRef = *"A";
+  bool posIsValid = false;
+
+  if ( posNumber < boardDim[1]){
+   if ( posChar >= posCharRef && posChar < posCharRef+boardDim[0]){
+      posIsValid = true;
+   }
+  }
+
+//   if ()
+
+  for ( unsigned int i = 0; i<boardState.size();i++ ){
+      if ( boardState[i][3] == pos[0] ){
+         if ( boardState[i][4] == pos[1] ){
+            posIsValid = false;
+         }
+      }
+  }
+ 
+  return posIsValid;
+}
+
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Ensures the tile (P4) exists in players hand
+*/
+bool GameEngine::checkTileInPlayerHand(std::string tile, LinkedList* playerhand){
+   bool isInhand = false;
+   for ( int i = 0; i < playerhand->size(); i++ ){
+      std::string currentTile = playerhand->getTile(i)->getTileColour() +
+                                std::to_string(playerhand->getTile(i)
+                                                            ->getTileShape());
+      if ( currentTile == tile ){
+         playerhand->remove(i);
+         isInhand = true;
+      }
+   }
+   return isInhand;
 }
