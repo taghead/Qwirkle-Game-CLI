@@ -21,12 +21,12 @@
 // Amounts
 #define AMOUNT_OF_COLORS    6
 #define AMOUNT_OF_SHAPES    6
-#define AMOUNT_OF_TILES_PER 3
+#define AMOUNT_OF_TILES_PER 2
 
 // Max Amount of tiles
 #define MAX_TILE_COUNT  AMOUNT_OF_COLORS*AMOUNT_OF_SHAPES*AMOUNT_OF_TILES_PER
 
 #define EXIT_SUCCESS    0
-#define MAX_PLAYERS 100
+#define MAX_PLAYERS 2
 
 #endif // ASSIGN1_TILECODES_H

@@ -80,17 +80,17 @@ void printCredits(){
       << "Student ID: s3599751"  << std::endl
       << "Email: s3599751@student.rmit.edu.au" << std::endl 
       << std::endl
-      << "Name: Siang Hii"  << std::endl 
-      << "Student ID: s3668877"  << std::endl
-      << "Email: s3668877@student.rmit.edu.au" << std::endl 
+      << "Name: Andrew Chander"  << std::endl 
+      << "Student ID: s3666434"  << std::endl
+      << "Email: s3666434@student.rmit.edu.au" << std::endl 
       << std::endl
       << "Name: Cameron Tavelli"  << std::endl 
       << "Student ID: s3668468"  << std::endl
       << "Email: s3668468@student.rmit.edu.au" << std::endl 
       << std::endl
-      << "Name: Andrew Chander"  << std::endl 
-      << "Student ID: s3666434"  << std::endl
-      << "Email: s3666434@student.rmit.edu.au" << std::endl 
+      << "Name: Siang Hii"  << std::endl 
+      << "Student ID: s3668877"  << std::endl
+      << "Email: s3668877@student.rmit.edu.au" << std::endl
       << "----------------------------------" << std::endl
       << std::endl << "> ";
 }
