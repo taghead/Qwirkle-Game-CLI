@@ -53,19 +53,21 @@ void GameEngine::newGame() {
     tileBag->populateLinkedList();
     tileBag->shuffleLinkedList();
 
+    // Empty Player Score Array
+    int playersScores[MAX_PLAYERS];
 
     std::cout << std::endl << "Let's Play!" << std::endl;
-    startGame(numOfPlayers, players, tileBag, playerHands, 0);
+    startGame(numOfPlayers, players, tileBag, playerHands, 0, playersScores);
   }
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
                            LinkedList *playerHands[MAX_PLAYERS],
-                           int currentPlayer) {
+                           int currentPlayer,
+                           int playersScores[MAX_PLAYERS]) {
   bool inGame = true;
-  int playersScores[MAX_PLAYERS];
-  int boardDim[] = {6, 6};
+  int boardDim[] = {26, 26};
 
   // Save states
   std::vector<std::string> boardState;
@@ -84,7 +86,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
           if (i == 0) {
             std::cout << "  ";
             for (int j = 0; j < boardDim[1]; j++) {
-              std::cout << j << "  ";
+              if ( j > 9 ){
+                std::cout << j << " ";
+              }
+              else{
+                std::cout << j << "  ";
+              }
             }
             std::cout << std::endl << " ";
             for (int j = 0; j < boardDim[1]; j++) {
