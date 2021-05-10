@@ -13,6 +13,9 @@ GameEngine::GameEngine() {}
 GameEngine::~GameEngine() {}
 
 void GameEngine::newGame() {
+  if (!std::cin.eof()){
+    
+  }
   std::cout << std::endl << "Starting a New Game" << std::endl << std::endl;
   int numOfPlayers = 2;
   LinkedList *playerHands[MAX_PLAYERS];
@@ -52,12 +55,13 @@ void GameEngine::newGame() {
 
   std::cout << std::endl << "Let's Play!" << std::endl;
 
-  startGame(numOfPlayers, players, tileBag, playerHands);
+  startGame(numOfPlayers, players, tileBag, playerHands, 0);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
-                           LinkedList *playerHands[MAX_PLAYERS]) {
+                           LinkedList *playerHands[MAX_PLAYERS],
+                           int currentPlayer) {
   bool inGame = true;
   int playersScores[MAX_PLAYERS];
   int boardDim[] = {6, 6};
@@ -66,10 +70,9 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
   std::vector<std::string> boardState;
 
   while (inGame && !std::cin.eof()) {
-    for (int i = 0; i < numOfPlayers; i++) {
       if (inGame) {
         // Tile Display
-        std::cout << players[i] << ", it's your turn" << std::endl;
+        std::cout << players[currentPlayer] << ", it's your turn" << std::endl;
         for (int i = 0; i < numOfPlayers; i++) {
           std::cout << "Score for " << players[i] << ":" << playersScores[i]
                     << std::endl;
@@ -116,22 +119,26 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
         }
 
         // User draw max amount of tiles
-        playerHands[i]->drawHand(tileBag);
+        playerHands[currentPlayer]->drawHand(tileBag);
 
         std::cout << std::endl << std::endl << "Your hand is" << std::endl;
-        playerHands[i]->printHand();
+        playerHands[currentPlayer]->printHand();
 
         // Do user input
         bool inputIsValid = false;
+        
         while (!inputIsValid && !std::cin.eof()) {
           std::cout << std::endl << "> ";
           std::string userIn;
           std::getline(std::cin, userIn);
+         
 
           std::vector<std::string> inArr; // Input
           std::stringstream data(userIn);
+          
           std::string tmpString;
-          while (std::getline(data, tmpString, ' ') && !std::cin.eof()) {
+          
+          while (std::getline(data, tmpString, ' ')) {
             inArr.push_back(tmpString);
           }
 
@@ -146,7 +153,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         if (placeLoactionCheck(boardState, boardDim,
                                                inArr[3])) {
                           if (checkTileInPlayerHand(inArr[1],
-                                                    playerHands[i])) {
+                                                    playerHands[currentPlayer])) {
                             boardState.push_back(inArr[1] + "@" +
                                                  inArr[3]);
                            /* Scoring function
@@ -179,13 +186,18 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                */
             }
           } 
-
-
           if (!inputIsValid) {
             std::cout << std::endl << "Invalid Input";
           }
         }
       }
+    
+    // Change player turn
+    if ( currentPlayer == numOfPlayers-1 ){
+      currentPlayer = 0;
+    }
+    else {
+      currentPlayer++; 
     }
   }
 }
