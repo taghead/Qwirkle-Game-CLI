@@ -98,10 +98,14 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                for ( int j=0; j<boardDim[1]; j++){
                   std::cout << "|";
                   bool tileIsHere = false;
+                  std::string currentNumber = std::to_string(j);
                   for ( unsigned int i = 0; i < boardState.size(); i++){
                      if ( currentLetter == boardState[i][3] ){
-                        std::cout << boardState[i][0] << boardState[i][1];
-                        tileIsHere = true;
+                        char tileNumber =  boardState[i][4];
+                        if ( currentNumber[0] == tileNumber ){
+                           std::cout << boardState[i][0] << boardState[i][1];
+                           tileIsHere = true;
+                        }
                      }
                   }
                   if (!tileIsHere){
