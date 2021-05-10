@@ -97,10 +97,16 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                // Print this rows tiles and spaces
                for ( int j=0; j<boardDim[1]; j++){
                   std::cout << "|";
-                  // IF TILE PLACED HERE
-                     //PRINT TILE
-                  // ELSE
+                  bool tileIsHere = false;
+                  for ( unsigned int i = 0; i < boardState.size(); i++){
+                     if ( currentLetter == boardState[i][3] ){
+                        std::cout << boardState[i][0] << boardState[i][1];
+                        tileIsHere = true;
+                     }
+                  }
+                  if (!tileIsHere){
                      std::cout << "  ";
+                  }
                }
                std::cout << "|";
             }
@@ -139,9 +145,9 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                           if ( commandsArr.size() > 3 ){
                             if ( placeLoactionCheck(boardState,boardDim,
                                                 commandsArr[3]) ){
-                              
                               if ( checkTileInPlayerHand(commandsArr[1], playerHands[i])){
                                  boardState.push_back(commandsArr[1]+"@"+commandsArr[3]);
+                                 inputIsValid = true;
                               }
                             }
                           }
@@ -165,7 +171,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
    For the place command
    example...   place P4 at A1
 
-   Esures the tile (P4) is correctly formatted.
+   Ensures the tile (P4) is correctly formatted.
 */
 bool GameEngine::checkTileFormat(std::string tile){
   bool isValid = false;
@@ -186,7 +192,7 @@ bool GameEngine::checkTileFormat(std::string tile){
    For the place command
    example...   place P4 at A1
 
-   Esures the coordinates (A1) are correctly formatted.
+   Ensures the coordinates (A1) are correctly formatted.
 */
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                 int boardDim[1], std::string pos){
@@ -200,14 +206,18 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   return posIsValid;
 }
 
+/*
+   For the place command
+   example...   place P4 at A1
+
+   Ensures the tile (P4) exists in players hand
+*/
 bool GameEngine::checkTileInPlayerHand(std::string tile, LinkedList* playerhand){
    bool isInhand = false;
    for ( int i = 0; i < playerhand->size(); i++ ){
       std::string currentTile = playerhand->getTile(i)->getTileColour() +
                                 std::to_string(playerhand->getTile(i)
                                                             ->getTileShape());
-
-      std::cout <<  currentTile <<  "=" << tile << std::endl;
       if ( currentTile == tile ){
          isInhand = true;
       }
