@@ -133,19 +133,15 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
               if ( commandsArr.size() > 0 ){
                 if (commandsArr[0] == "place"){
                   if ( commandsArr.size() > 1 ){
-                    if ( functionCheckTileFormat(commandsArr[1]) ){
+                    if ( checkTileFormat(commandsArr[1]) ){
                       if ( commandsArr.size() > 2 ){
                         if (commandsArr[2] == "at"){
                           if ( commandsArr.size() > 3 ){
                             if ( placeLoactionCheck(boardState,boardDim,
                                                 commandsArr[3]) ){
-                              // Place tile
                               
-                              // Interpret the coordinates into the board state using the P4@A1 format
-                              boardState.push_back(commandsArr[1]+"@"+commandsArr[3]);
-                              for ( unsigned int i = 0; i < boardState.size(); i++)
-                              {
-                                 std::cout << boardState[i] << std::endl;
+                              if ( checkTileInPlayerHand(commandsArr[1], playerHands[i])){
+                                 boardState.push_back(commandsArr[1]+"@"+commandsArr[3]);
                               }
                             }
                           }
@@ -200,12 +196,21 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   if ( posNumber <= boardDim[1]){
     posIsValid = true;
   }
-  std::cout << pos[0] << std::endl;
-  std::cout << &pos[0] << std::endl;
 
   return posIsValid;
 }
 
 bool GameEngine::checkTileInPlayerHand(std::string tile, LinkedList* playerhand){
-   
+   bool isInhand = false;
+   for ( int i = 0; i < playerhand->size(); i++ ){
+      std::string currentTile = playerhand->getTile(i)->getTileColour() +
+                                std::to_string(playerhand->getTile(i)
+                                                            ->getTileShape());
+
+      std::cout <<  currentTile <<  "=" << tile << std::endl;
+      if ( currentTile == tile ){
+         isInhand = true;
+      }
+   }
+   return isInhand;
 }
