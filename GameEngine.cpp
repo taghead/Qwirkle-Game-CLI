@@ -53,19 +53,21 @@ void GameEngine::newGame() {
     tileBag->populateLinkedList();
     tileBag->shuffleLinkedList();
 
+    // Empty Player Score Array
+    int playersScores[MAX_PLAYERS];
 
     std::cout << std::endl << "Let's Play!" << std::endl;
-    startGame(numOfPlayers, players, tileBag, playerHands, 0);
+    startGame(numOfPlayers, players, tileBag, playerHands, 0, playersScores);
   }
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
                            LinkedList *playerHands[MAX_PLAYERS],
-                           int currentPlayer) {
+                           int currentPlayer,
+                           int playersScores[MAX_PLAYERS]) {
   bool inGame = true;
-  int playersScores[MAX_PLAYERS];
-  int boardDim[] = {6, 6};
+  int boardDim[] = {26, 26};
 
   // Save states
   std::vector<std::string> boardState;
@@ -84,7 +86,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
           if (i == 0) {
             std::cout << "  ";
             for (int j = 0; j < boardDim[1]; j++) {
-              std::cout << j << "  ";
+              if ( j > 9 ){
+                std::cout << j << " ";
+              }
+              else{
+                std::cout << j << "  ";
+              }
             }
             std::cout << std::endl << " ";
             for (int j = 0; j < boardDim[1]; j++) {
@@ -106,7 +113,8 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             for (unsigned int i = 0; i < boardState.size(); i++) {
               if (currentLetter == boardState[i][3]) {
                 char tileNumber = boardState[i][4];
-                if (currentNumber[0] == tileNumber) {
+                char tileSecondNumber = boardState[i][5];
+                if (currentNumber[0] == tileNumber && currentNumber[1] == tileSecondNumber) {
                   std::cout << boardState[i][0] << boardState[i][1];
                   tileIsHere = true;
                 }
@@ -155,8 +163,18 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                                                inArr[3])) {
                           if (checkTileInPlayerHand(inArr[1],
                                                     playerHands[currentPlayer])) {
+                            if ( inArr[3][4] >= *"0" && inArr[3][4] <= *"9" ){
+                            boardState.push_back(inArr[1] + "@" +
+                                                 inArr[3]+inArr[4]);
+                            }
+                            else{
                             boardState.push_back(inArr[1] + "@" +
                                                  inArr[3]);
+                            }
+
+                                                 for ( unsigned int i = 0; i<boardState.size(); i++){
+                                                   std::cout << boardState[i];
+                                                 }
                            /* Scoring function
                               TODO: 2.3.5 
                               Load board state
@@ -238,23 +256,31 @@ bool GameEngine::checkTileFormat(std::string tile) {
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                     int boardDim[1], std::string pos) {
   int posNumber = (int)pos[1] - '0';
+  int posSecondNumber = (int)pos[2] - '0';
+  if ( posSecondNumber < '0' ){
+    posSecondNumber = 0;
+  }
   int posChar = pos[0];
   int posCharRef = *"A";
   bool posIsValid = false;
 
-  if (posNumber < boardDim[1]) {
-    if (posChar >= posCharRef && posChar < posCharRef + boardDim[0]) {
-      posIsValid = true;
+  // If between A-Z
+  if (posChar >= posCharRef && posChar < posCharRef + boardDim[0]) {
+    if (posNumber < 9 && posSecondNumber < 9 ) {
+        posIsValid = true;
     }
   }
 
   for (unsigned int i = 0; i < boardState.size(); i++) {
     if (boardState[i][3] == pos[0]) {
       if (boardState[i][4] == pos[1]) {
-        posIsValid = false;
+        if (boardState[i][5] == pos[2]) {
+          posIsValid = false;
+        }
       }
     }
   }
+  
 
    /* TILE PLACEMENT GAME RULES 
    TODO: 2.3.5 Check tile placement
