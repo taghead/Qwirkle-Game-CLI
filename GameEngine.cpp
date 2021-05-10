@@ -49,6 +49,7 @@ void GameEngine::newGame(){
   // Populate tilebag
   LinkedList* tileBag = new LinkedList();
   tileBag->populateLinkedList();
+  tileBag->shuffleLinkedList();
 
   std::cout << std::endl << "Let's Play!" << std::endl;
 
@@ -207,7 +208,6 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   int posCharRef = *"A";
   bool posIsValid = false;
 
-   std::cout << posChar << " " << posCharRef;
   if ( posNumber < boardDim[1]){
    if ( posChar >= posCharRef && posChar < posCharRef+boardDim[0]){
       posIsValid = true;
@@ -240,6 +240,7 @@ bool GameEngine::checkTileInPlayerHand(std::string tile, LinkedList* playerhand)
                                 std::to_string(playerhand->getTile(i)
                                                             ->getTileShape());
       if ( currentTile == tile ){
+         playerhand->remove(i);
          isInhand = true;
       }
    }
