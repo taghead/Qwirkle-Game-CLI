@@ -197,6 +197,8 @@ bool GameEngine::checkTileFormat(std::string tile){
    example...   place P4 at A1
 
    Ensures the coordinates (A1) are correctly formatted.
+
+   And there are no tiles on the location
 */
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                 int boardDim[1], std::string pos){
@@ -207,6 +209,14 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
     posIsValid = true;
   }
 
+  for ( unsigned int i = 0; i<boardState.size();i++ ){
+      if ( boardState[i][3] == pos[0] ){
+         if ( boardState[i][4] == pos[1] ){
+            posIsValid = false;
+         }
+      }
+  }
+ 
   return posIsValid;
 }
 
