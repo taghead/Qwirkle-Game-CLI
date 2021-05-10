@@ -13,51 +13,56 @@ GameEngine::GameEngine() {}
 GameEngine::~GameEngine() {}
 
 void GameEngine::newGame() {
-  std::cout << std::endl << "Starting a New Game" << std::endl << std::endl;
-  int numOfPlayers = 2;
-  LinkedList *playerHands[MAX_PLAYERS];
-  std::string players[MAX_PLAYERS];
+  if (!std::cin.eof()) {
+    std::cout << std::endl << "Starting a New Game" << std::endl << std::endl;
+    int numOfPlayers = 2;
+    LinkedList *playerHands[MAX_PLAYERS];
+    std::string players[MAX_PLAYERS];
 
-  for (int i = 0; i < numOfPlayers; i++) {
-    bool isValidInput = true;
-    do {
-      std::cout << "Enter a name for player " << i + 1
-                << " (uppercase characters only)" << std::endl
-                << "> ";
+    for (int i = 0; i < numOfPlayers; i++) {
+      bool isValidInput = true;
+      if (!std::cin.eof()){
+          do {
+            std::cout << "Enter a name for player " << i + 1
+                      << " (uppercase characters only)" << std::endl
+                      << "> ";
 
-      isValidInput = true;
-      std::cin >> players[i];
-      std::cin.ignore(); // Prevents carriage return
-      for (unsigned int j = 0; j < players[i].length(); j++) {
-        // Check if lowercase
-        if ((players[i][j] >= *"a" && players[i][j] <= *"z") ||
-            (players[i][j] >= *"0" && players[i][j] <= *"9")) {
-          isValidInput = false;
+            isValidInput = true;
+            std::cin >> players[i];
+            std::cin.ignore(); // Prevents carriage return
+            for (unsigned int j = 0; j < players[i].length(); j++) {
+              // Check if lowercase
+              if ((players[i][j] >= *"a" && players[i][j] <= *"z") ||
+                  (players[i][j] >= *"0" && players[i][j] <= *"9")) {
+                isValidInput = false;
+              }
+            }
+
+            if (!isValidInput) {
+              std::cout << std::endl << "Invalid. MUST USE UPPERCASE" << std::endl;
+            } else if (isValidInput) {
+              // Create hand for player
+              playerHands[i] = new LinkedList();
+            }
+          } while (!isValidInput && !std::cin.eof());
         }
       }
 
-      if (!isValidInput) {
-        std::cout << std::endl << "Invalid. MUST USE UPPERCASE" << std::endl;
-      } else if (isValidInput) {
-        // Create hand for player
-        playerHands[i] = new LinkedList();
-      }
-    } while (!isValidInput);
+    // Populate tilebag
+    LinkedList *tileBag = new LinkedList();
+    tileBag->populateLinkedList();
+    tileBag->shuffleLinkedList();
+
+
+    std::cout << std::endl << "Let's Play!" << std::endl;
+    startGame(numOfPlayers, players, tileBag, playerHands, 0);
   }
-
-  // Populate tilebag
-  LinkedList *tileBag = new LinkedList();
-  tileBag->populateLinkedList();
-  tileBag->shuffleLinkedList();
-
-  std::cout << std::endl << "Let's Play!" << std::endl;
-
-  startGame(numOfPlayers, players, tileBag, playerHands);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
-                           LinkedList *playerHands[MAX_PLAYERS]) {
+                           LinkedList *playerHands[MAX_PLAYERS],
+                           int currentPlayer) {
   bool inGame = true;
   int playersScores[MAX_PLAYERS];
   int boardDim[] = {6, 6};
@@ -65,11 +70,10 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
   // Save states
   std::vector<std::string> boardState;
 
-  while (inGame) {
-    for (int i = 0; i < numOfPlayers; i++) {
+  while (inGame && !std::cin.eof()) {
       if (inGame) {
         // Tile Display
-        std::cout << players[i] << ", it's your turn" << std::endl;
+        std::cout << players[currentPlayer] << ", it's your turn" << std::endl;
         for (int i = 0; i < numOfPlayers; i++) {
           std::cout << "Score for " << players[i] << ":" << playersScores[i]
                     << std::endl;
@@ -116,21 +120,25 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
         }
 
         // User draw max amount of tiles
-        playerHands[i]->drawHand(tileBag);
+        playerHands[currentPlayer]->drawHand(tileBag);
 
         std::cout << std::endl << std::endl << "Your hand is" << std::endl;
-        playerHands[i]->printHand();
+        playerHands[currentPlayer]->printHand();
 
         // Do user input
         bool inputIsValid = false;
-        while (!inputIsValid) {
+        
+        while (!inputIsValid && !std::cin.eof()) {
           std::cout << std::endl << "> ";
           std::string userIn;
           std::getline(std::cin, userIn);
+         
 
           std::vector<std::string> inArr; // Input
           std::stringstream data(userIn);
+          
           std::string tmpString;
+          
           while (std::getline(data, tmpString, ' ')) {
             inArr.push_back(tmpString);
           }
@@ -146,7 +154,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         if (placeLoactionCheck(boardState, boardDim,
                                                inArr[3])) {
                           if (checkTileInPlayerHand(inArr[1],
-                                                    playerHands[i])) {
+                                                    playerHands[currentPlayer])) {
                             boardState.push_back(inArr[1] + "@" +
                                                  inArr[3]);
                            /* Scoring function
@@ -179,13 +187,21 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                */
             }
           } 
-
-
+          if (std::cin.eof()){
+            inputIsValid = true;
+          }
           if (!inputIsValid) {
             std::cout << std::endl << "Invalid Input";
           }
         }
       }
+    
+    // Change player turn
+    if ( currentPlayer == numOfPlayers-1 ){
+      currentPlayer = 0;
+    }
+    else {
+      currentPlayer++; 
     }
   }
 }

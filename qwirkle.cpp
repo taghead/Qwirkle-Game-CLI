@@ -22,32 +22,30 @@ int main(void) {
    GameEngine* game = new GameEngine();
    do {
 
-      char choice;
-      std::cin >> choice;
+   char choice;
+   std::cin >> choice;
 
-      if (!std::cin.eof()){
-         if ( choice == '1' ) {
-            game->newGame();
-         }
-         else if ( choice == '2' ){
-            std::cout   << std::endl 
-                        << "Enter the filename from which load a game" 
-                        << std::endl << "> ";
+      if ( choice == '1' && !std::cin.eof() ) {
+         game->newGame();
+      }
+      else if ( choice == '2' && !std::cin.eof() ){
+         std::cout   << std::endl 
+                     << "Enter the filename from which load a game" 
+                     << std::endl << "> ";
 
-            std::string filename;
-            std::cin >> filename;
+         std::string filename;
+         std::cin >> filename;
 
-            // Load Game TODO Read Section 2.2.2
-         }
-         else if ( choice == '3' ){
-            printCredits();
-         }
-         else if ( choice == '4' ){
-            inGame = false;
-         }
-         else {
-            std::cout << "Invalid Input" << std::endl << "> ";
-         }
+         // Load Game TODO Read Section 2.2.2
+      }
+      else if ( choice == '3' && !std::cin.eof() ){
+         printCredits();
+      }
+      else if ( choice == '4' || std::cin.eof() ){
+         inGame = false;
+      }
+      else {
+         std::cout << "Invalid Input" << std::endl << "> ";
       }
 
    } while ( inGame && !std::cin.eof());
