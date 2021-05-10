@@ -42,7 +42,7 @@ void GameEngine::newGame() {
         // Create hand for player
         playerHands[i] = new LinkedList();
       }
-    } while (!isValidInput);
+    } while (!isValidInput && !std::cin.eof());
   }
 
   // Populate tilebag
@@ -65,7 +65,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
   // Save states
   std::vector<std::string> boardState;
 
-  while (inGame) {
+  while (inGame && !std::cin.eof()) {
     for (int i = 0; i < numOfPlayers; i++) {
       if (inGame) {
         // Tile Display
@@ -123,7 +123,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
 
         // Do user input
         bool inputIsValid = false;
-        while (!inputIsValid) {
+        while (!inputIsValid && !std::cin.eof()) {
           std::cout << std::endl << "> ";
           std::string userIn;
           std::getline(std::cin, userIn);
@@ -131,7 +131,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
           std::vector<std::string> inArr; // Input
           std::stringstream data(userIn);
           std::string tmpString;
-          while (std::getline(data, tmpString, ' ')) {
+          while (std::getline(data, tmpString, ' ') && !std::cin.eof()) {
             inArr.push_back(tmpString);
           }
 
