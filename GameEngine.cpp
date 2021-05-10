@@ -203,11 +203,18 @@ bool GameEngine::checkTileFormat(std::string tile){
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                 int boardDim[1], std::string pos){
   int posNumber = (int)pos[1] - '0';
+  int posChar = pos[0];
+  int posCharRef = *"A";
   bool posIsValid = false;
 
-  if ( posNumber <= boardDim[1]){
-    posIsValid = true;
+   std::cout << posChar << " " << posCharRef;
+  if ( posNumber < boardDim[1]){
+   if ( posChar >= posCharRef && posChar < posCharRef+boardDim[0]){
+      posIsValid = true;
+   }
   }
+
+//   if ()
 
   for ( unsigned int i = 0; i<boardState.size();i++ ){
       if ( boardState[i][3] == pos[0] ){
