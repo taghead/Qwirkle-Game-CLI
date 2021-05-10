@@ -162,8 +162,18 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                                                inArr[3])) {
                           if (checkTileInPlayerHand(inArr[1],
                                                     playerHands[currentPlayer])) {
+                            if ( inArr[3][4] >= *"0" && inArr[3][4] <= *"9" ){
+                            boardState.push_back(inArr[1] + "@" +
+                                                 inArr[3]+inArr[4]);
+                            }
+                            else{
                             boardState.push_back(inArr[1] + "@" +
                                                  inArr[3]);
+                            }
+
+                                                 for ( unsigned int i = 0; i<boardState.size(); i++){
+                                                   std::cout << boardState[i];
+                                                 }
                            /* Scoring function
                               TODO: 2.3.5 
                               Load board state
