@@ -531,8 +531,6 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   ss >> posNumber;
   ss.clear();
 
-  std::cout << posNumber;
-
   int posChar = pos[0];
   int posCharRef = *"A";
   bool posIsValid = false;

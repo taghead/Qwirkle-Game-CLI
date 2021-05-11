@@ -6,8 +6,7 @@
 
 #include "LinkedList.h"
 #include "GameEngine.h"
-
-#define EXIT_SUCCESS 0
+#include "TileCodes.h"
 
 void printGreeting();
 void printMenu();
