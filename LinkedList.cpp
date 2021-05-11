@@ -224,6 +224,22 @@ void LinkedList::printHand(){
   }
 }
 
+std::string LinkedList::printHandToString(){
+  std::string toString;
+  for ( int i=0; i < size(); i++){
+    Node* node = getNode(i);
+    if ( i < size()-1){
+      toString += node->tile->getTileColour() +
+                  std::to_string(node->tile->getTileShape()) + ",";
+    }
+    else {
+      toString += node->tile->getTileColour() +
+                  std::to_string(node->tile->getTileShape());
+    }
+  }
+  return toString;
+}
+
 void LinkedList::testPrintTiles(){
   for ( int i=0; i < size(); i++){
     Node* node = getNode(i);
