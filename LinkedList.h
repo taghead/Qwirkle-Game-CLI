@@ -100,6 +100,17 @@ public:
   playerHand->printHand();
   */
   void printHand();
+
+  /*
+  Returns LinkedList in player hand format as a string
+  
+  LinkedList* playerHand = new LinkedList();
+  playerHand->populateLinkedList();
+  playerHand->printHand();
+  */
+  std::string printHandToString();
+
+  void remove(int index);
   /*
   FOR TESTING - Print all tiles in a LinkedList
 
@@ -117,7 +128,6 @@ private:
   void addNodeFront(Node* node);
   void removeFront();
   void removeBack();
-  void remove(int index);
   void clear();
 };
 

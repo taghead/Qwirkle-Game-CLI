@@ -25,6 +25,7 @@ int main(void) {
    GameEngine* game = new GameEngine();
    do {
 
+<<<<<<< HEAD
       char choice;
       std::cin >> choice;
 
@@ -65,6 +66,32 @@ int main(void) {
          else {
             std::cout << "Invalid Input" << std::endl << "> ";
          }
+=======
+   char choice;
+   std::cin >> choice;
+
+      if ( choice == '1' && !std::cin.eof() ) {
+         game->newGame();
+      }
+      else if ( choice == '2' && !std::cin.eof() ){
+         std::cout   << std::endl 
+                     << "Enter the filename from which load a game" 
+                     << std::endl << "> ";
+
+         std::string filename;
+         std::cin >> filename;
+
+         // Load Game TODO Read Section 2.2.2
+      }
+      else if ( choice == '3' && !std::cin.eof() ){
+         printCredits();
+      }
+      else if ( choice == '4' || std::cin.eof() ){
+         inGame = false;
+      }
+      else {
+         std::cout << "Invalid Input" << std::endl << "> ";
+>>>>>>> 640014ce8da054bd647d9e5d3fe0463cd1f596a9
       }
 
    } while ( inGame && !std::cin.eof());
@@ -97,17 +124,17 @@ void printCredits(){
       << "Student ID: s3599751"  << std::endl
       << "Email: s3599751@student.rmit.edu.au" << std::endl 
       << std::endl
-      << "Name: Siang Hii"  << std::endl 
-      << "Student ID: s3668877"  << std::endl
-      << "Email: s3668877@student.rmit.edu.au" << std::endl 
+      << "Name: Andrew Chander"  << std::endl 
+      << "Student ID: s3666434"  << std::endl
+      << "Email: s3666434@student.rmit.edu.au" << std::endl 
       << std::endl
       << "Name: Cameron Tavelli"  << std::endl 
       << "Student ID: s3668468"  << std::endl
       << "Email: s3668468@student.rmit.edu.au" << std::endl 
       << std::endl
-      << "Name: Andrew Chander"  << std::endl 
-      << "Student ID: s3666434"  << std::endl
-      << "Email: s3666434@student.rmit.edu.au" << std::endl 
+      << "Name: Siang Hii"  << std::endl 
+      << "Student ID: s3668877"  << std::endl
+      << "Email: s3668877@student.rmit.edu.au" << std::endl
       << "----------------------------------" << std::endl
       << std::endl << "> ";
 }
