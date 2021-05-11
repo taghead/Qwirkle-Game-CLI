@@ -190,23 +190,24 @@ void LinkedList::drawTile(LinkedList *tileBag)
 
 void LinkedList::drawHand(LinkedList *tileBag)
 {
-  while (size() < 6)
+  while (size() < 6 && tileBag->getNode(0) != nullptr)
   {
     if (size() < 6 && tileBag->size() != 0)
     {
-      std::random_device randomSeed;
-      std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
-      int randomIndex = uniform_dist(randomSeed);
+      // std::random_device randomSeed;
+      // std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
+      // int randomIndex = uniform_dist(randomSeed);
 
-      if (randomIndex >= 0 && randomIndex < tileBag->size())
-      {
+      // if (randomIndex >= 0 && randomIndex < tileBag->size())
+      // {
         if (tileBag->head != nullptr)
         {
           int counter = 0;
           Node *current = tileBag->head;
           Node *prev = nullptr;
 
-          while (counter != randomIndex)
+          // while (counter != randomIndex)
+          while (counter != 0)
           {
             ++counter;
             prev = current;
@@ -224,7 +225,7 @@ void LinkedList::drawHand(LinkedList *tileBag)
 
           addNodeFront(current);
         }
-      }
+      // }
     }
   }
 }

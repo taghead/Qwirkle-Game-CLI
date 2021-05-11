@@ -60,7 +60,7 @@ int main(void)
    std::cout << std::endl
              << std::endl
              << "Goodbye" << std::endl;
-
+   delete game;
    return EXIT_SUCCESS;
 }
 
