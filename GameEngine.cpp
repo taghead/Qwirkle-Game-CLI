@@ -357,7 +357,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         if (checkTileInPlayerHand(inArr[1],
                                                   playerHands[currentPlayer]))
                         {
-                          boardState.push_back(inArr[1] + "@" + inArr[3]);
+                          boardState.push_back(inArr[1] + "@" +inArr[3]);
                           removeTileInPlayerHand(inArr[1],playerHands[currentPlayer]);
                           
                           /* Scoring function
@@ -443,6 +443,29 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                     << "Invalid Input";
         }
       }
+    }
+
+
+    // User draw max amount of tiles
+    playerHands[currentPlayer]->drawHand(tileBag);
+    /*
+      Check Win Condition
+
+      Check for tilebag == 0 not required since the hand will 
+      draw to max capacity if tiles exist in tilebag.
+    */
+    if ( playerHands[currentPlayer]->size() == 0 )
+    {
+      inGame = false;
+      std::cout << std::endl << "Game over" << std::endl;
+      int indexOfWinner = 0;
+      for ( int i = 0; i<numOfPlayers; i++){
+        std::cout << "Score for " << players[i] << ":" << playersScores[i] << std::endl;
+        if ( playersScores[i] > playersScores[indexOfWinner] ){
+          indexOfWinner = i;
+        }
+      }
+      std::cout << "Player " << players[indexOfWinner] << " won!";
     }
 
     // Change player turn
