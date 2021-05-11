@@ -650,6 +650,13 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
             << "Shape:  " << tmpTileShape  << std::endl; // Int
 
   }
+
+  /*
+    iterate through the boardstate, 
+    look for tiles that are valid via colour (e.g P=P) or shape (e.g. 4=4) based on position.
+    if either colour or shape match through iteration, then tile is valid and should +1 score
+  */
+
   std::cout << "--- TEST ZONE END ---" << std::endl;
   return 0;
 }
