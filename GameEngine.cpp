@@ -221,6 +221,8 @@ void GameEngine::loadGame()
   std::cout << std::endl
             << "Qwirkle game successfully loaded" << std::endl;
 
+
+  std::cin.ignore(); // Prevents carriage return
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
 }
@@ -366,11 +368,6 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                                                  inArr[3]);
                           }
                           removeTileInPlayerHand(inArr[1],playerHands[currentPlayer]);
-
-                          for (unsigned int i = 0; i < boardState.size(); i++)
-                          {
-                            std::cout << boardState[i];
-                          }
                           
                           /* Scoring function
                               TODO: 2.3.5 
