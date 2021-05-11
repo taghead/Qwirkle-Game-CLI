@@ -160,6 +160,19 @@ void GameEngine::loadGame(){
     }
     if ( i == 7 ){
       //Load board dimensions
+      std::stringstream data(fileVector[i]);
+      std::string tmpString;
+      std::vector<std::string> dimArr;
+      
+      int count = 0;
+      while (std::getline(data, tmpString, ',')) {
+        int num;
+        std::stringstream ss;
+        ss << tmpString;
+        ss >> num;
+        boardDim[count] = num;
+        count++;
+      }
     }
     if ( i == 8 ){
       //Load tile positions on board
