@@ -175,10 +175,17 @@ void GameEngine::loadGame(){
       }
     }
     if ( i == 8 ){
-      //Load tile positions on board
+      //Load tilebag
+      tileBag->loadListOfTiles(fileVector[i]);
     }
     if ( i == 9 ){
       //Load current player's turn
+      if ( players[0] == fileVector[i]){
+        currentPlayer = 0;
+      }
+      if ( players[1] == fileVector[i]){
+        currentPlayer = 1;
+      }
     }
   }
 
