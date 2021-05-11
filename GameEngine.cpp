@@ -81,21 +81,30 @@ void GameEngine::loadGame(){
               << "Enter the filename from which load a game" 
               << std::endl << "> ";
 
+
   std::string filename;
   std::cin >> filename;
 
-  // int                                numOfPlayers
-  // std::string        Parralel Array	players[MAX_PLAYERS]
-  // LinkedList                         tileBag
-  // LinkedList array   Parralel Array	playerHands
-  // int                                currentPlayer
-  // int array          Parralel Array	playersScores[MAX_PLAYERS]
-  // vector array       boardState
-  // int array          boardDim
+  // int                                numOfPlayers                  This is the amount of players   DONE
+  int numOfPlayers = 2;
+  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names
+  std::string players[MAX_PLAYERS];
+  // LinkedList                         tileBag                       This is the games tilebag
+  LinkedList *tileBag = new LinkedList();
+  // LinkedList array   Parralel Array	playerHands                   These are the players hands
+  LinkedList *playerHands[MAX_PLAYERS];
+  // int                                currentPlayer                 This is the currents playes turn
+  int currentPlayer = 0;
+  // int array          Parralel Array	playersScores[MAX_PLAYERS]    These are the players scores
+  int playersScores[MAX_PLAYERS];
+  // vector array       boardState                                    This is the boards state
+  std::vector<std::string> boardState;
+  // int array          boardDim                                      This is the boards dimenstions  DONE
+  int boardDim[] = {26, 26};
 
 
-  // startGame(numOfPlayers, players, tileBag, playerHands, 0,
-  //           playersScores, boardState, boardDim);
+  startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
+            playersScores, boardState, boardDim);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
