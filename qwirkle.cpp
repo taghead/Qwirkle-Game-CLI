@@ -1,6 +1,9 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <iomanip>
+
 
 #include "LinkedList.h"
 #include "GameEngine.h"
@@ -29,12 +32,7 @@ int main(void) {
          game->newGame();
       }
       else if ( choice == '2' && !std::cin.eof() ){
-         std::cout   << std::endl 
-                     << "Enter the filename from which load a game" 
-                     << std::endl << "> ";
-
-         std::string filename;
-         std::cin >> filename;
+         game->loadGame();
 
          // Load Game TODO Read Section 2.2.2
       }

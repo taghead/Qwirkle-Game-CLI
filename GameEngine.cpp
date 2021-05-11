@@ -57,22 +57,66 @@ void GameEngine::newGame() {
     // Empty Player Score Array
     int playersScores[MAX_PLAYERS];
 
+    // Ensure score is 0
+    for ( int i = 0; i<numOfPlayers;i++){
+      playersScores[i] = 0;
+    }
+
+    // Empty Board State
+    std::vector<std::string> boardState;
+
+    // Default Board Dim
+    int boardDim[] = {26, 26};
+
     std::cout << std::endl << "Let's Play!" << std::endl;
 
-    startGame(numOfPlayers, players, tileBag, playerHands, 0, playersScores);
+
+    startGame(numOfPlayers, players, tileBag, playerHands, 0,
+              playersScores, boardState, boardDim);
   }
+}
+
+void GameEngine::loadGame(){
+  std::cout   << std::endl 
+              << "Enter the filename from which load a game" 
+              << std::endl << "> ";
+
+
+  std::string filename;
+  std::cin >> filename;
+  
+  
+
+  // int                                numOfPlayers                  This is the amount of players   DONE
+  int numOfPlayers = 2;
+  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names
+  std::string players[MAX_PLAYERS];
+  // LinkedList                         tileBag                       This is the games tilebag
+  LinkedList *tileBag = new LinkedList();
+  // LinkedList array   Parralel Array	playerHands                   These are the players hands
+  LinkedList *playerHands[MAX_PLAYERS];
+  // int                                currentPlayer                 This is the currents playes turn
+  int currentPlayer = 0;
+  // int array          Parralel Array	playersScores[MAX_PLAYERS]    These are the players scores
+  int playersScores[MAX_PLAYERS];
+  // vector array       boardState                                    This is the boards state
+  std::vector<std::string> boardState;
+  // int array          boardDim                                      This is the boards dimenstions  DONE
+  int boardDim[] = {26, 26};
+
+
+  startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
+            playersScores, boardState, boardDim);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
                            LinkedList *playerHands[MAX_PLAYERS],
                            int currentPlayer,
-                           int playersScores[MAX_PLAYERS]) {
+                           int playersScores[MAX_PLAYERS],
+                           std::vector<std::string> boardState,
+                           int boardDim[1]) {
   bool inGame = true;
-  int boardDim[] = {26, 26};
-
-  // Save states
-  std::vector<std::string> boardState;
 
   while (inGame && !std::cin.eof()) {
       if (inGame) {
@@ -214,7 +258,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                           << std::endl;
                 }
                 for ( unsigned int i = 0; i<boardState.size(); i++ ){
-                  outfile << boardState[i];
+                  if (i == boardState.size()-1){
+                    outfile << boardState[i];
+                  }
+                  else {
+                    outfile << boardState[i]+",";
+                  }
                 }
                 outfile << std::endl
                         << boardDim[0] << "," << boardDim[1] << std::endl
