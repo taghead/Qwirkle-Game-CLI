@@ -573,27 +573,45 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
 
   std::cout << std::endl << "--- TEST ZONE ---" << std::endl;
 
+  // Declare
+  std::stringstream ss;
+  std::string tmpStr;
+
   // Get Row
   char row;
   row = pos.at(0);
 
   // Get Col
   int col;
-  std::string tmpStr = pos;
+  tmpStr = pos;
   tmpStr.erase(0,1);
-  std::stringstream ss;
+  
   ss << tmpStr;
   ss >> col;
+  ss.clear();
 
-  std::cout << "POS:  " << pos << std::endl
-            << "Row:  " << row << std::endl
-            << "Col:  " << col << std::endl
-            << "Tile: " << tile << std::endl;
+  // Get Colour
+  char colour;
+  colour = tile.at(0);
 
+  // Get Shape
+  int shape;
+  tmpStr = tile.at(1);
+  ss << tmpStr;
+  ss >> shape;
+  ss.clear();
 
+  // HL-L3230CDW
+  std::cout << "POS:    " << pos    << std::endl
+            << "Row:    " << row    << std::endl
+            << "Col:    " << col    << std::endl
+            << std::endl
+            << "Tile:   " << tile   << std::endl
+            << "Colour: " << colour << std::endl
+            << "Shape:  " << shape  << std::endl;
 
   for ( unsigned int i=0; i<boardState.size(); i++) {
-    std::cout << boardState[i] << "       " << pos << std::endl;
+    std::cout << boardState[i] << std::endl;
   }
 
 
