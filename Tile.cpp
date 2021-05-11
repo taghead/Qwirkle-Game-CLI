@@ -1,16 +1,18 @@
 
 #include "Tile.h"
 
-Tile::Tile(Colour colour, Shape shape){
-  this->colour=colour;
-  this->shape=shape;
+Tile::Tile(Colour colour, Shape shape)
+{
+  this->colour = colour;
+  this->shape = shape;
 }
 
-
-char Tile::getTileColour(){
+char Tile::getTileColour()
+{
   return this->colour;
 }
 
-int Tile::getTileShape(){
+int Tile::getTileShape()
+{
   return this->shape;
 }

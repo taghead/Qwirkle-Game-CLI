@@ -7,12 +7,12 @@
 #include "Node.h"
 #include "TileCodes.h"
 
-class LinkedList {
+class LinkedList
+{
 public:
-
   LinkedList();
   ~LinkedList();
-  LinkedList(LinkedList& other);
+  LinkedList(LinkedList &other);
 
   /*
   Create a new tile bag. Qwirkle contains 108 tiles. Colors*Shapes*3.
@@ -49,7 +49,7 @@ public:
   Tile* tile = tileBag->getTile(5);
   std::cout << tile->getTileColour() << tile->getTileShape();
   */
-  Tile* getTile(int index);
+  Tile *getTile(int index);
 
   /*
   Get a specific node from the LinkedList based on index position
@@ -59,8 +59,7 @@ public:
   Node* node = tileBag->getNode(5);
   std::cout << node->tile->getTileColour() << node->tile->getTileShape();
   */
-  Node* getNode(int index);
-
+  Node *getNode(int index);
 
   /*
   Migrate a cap of 6 random nodes from the overloaded LinkedList (tileBag).
@@ -70,9 +69,9 @@ public:
   LinkedList* playerHand = new LinkedList();
   playerHand->drawTile(tileBag);
   */
-  void drawTile(LinkedList* tileBag);
+  void drawTile(LinkedList *tileBag);
 
- /*
+  /*
   Migrate a random node from the overloaded LinkedList.
   
   LinkedList* tileBag = new LinkedList();
@@ -80,7 +79,7 @@ public:
   LinkedList* playerHand = new LinkedList();
   playerHand->drawTile(tileBag);
   */
-  void drawHand(LinkedList* tileBag);
+  void drawHand(LinkedList *tileBag);
 
   /*
     Load an tiles from a string
@@ -121,11 +120,11 @@ public:
   void testPrintTiles();
 
 private:
-  Node* head;
-  void addFront(Tile* tile);
-  void addBack(Tile* tile);
-  void addNodeBack(Node* node);
-  void addNodeFront(Node* node);
+  Node *head;
+  void addFront(Tile *tile);
+  void addBack(Tile *tile);
+  void addNodeBack(Node *node);
+  void addNodeFront(Node *node);
   void removeFront();
   void removeBack();
   void clear();

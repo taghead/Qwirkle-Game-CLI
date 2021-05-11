@@ -7,35 +7,44 @@
 #include <string>
 #include <random>
 
-LinkedList::LinkedList() {
+LinkedList::LinkedList()
+{
   head = nullptr;
 }
 
-LinkedList::~LinkedList(){
-    clear();
+LinkedList::~LinkedList()
+{
+  clear();
 }
 
-LinkedList::LinkedList(LinkedList& other){
-    head = nullptr;
-    for(int i = 0; i < other.size(); ++i){
-      Node* node = new Node(*other.getNode(i));
-      addNodeBack(node);
-    }
+LinkedList::LinkedList(LinkedList &other)
+{
+  head = nullptr;
+  for (int i = 0; i < other.size(); ++i)
+  {
+    Node *node = new Node(*other.getNode(i));
+    addNodeBack(node);
+  }
 }
 
-void LinkedList::populateLinkedList(){
+void LinkedList::populateLinkedList()
+{
   std::string colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
   std::string shapes = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-  for ( int c=0; c<AMOUNT_OF_COLORS; c++ ){
-    for ( int s=0; s<AMOUNT_OF_SHAPES; s++ ){ 
-      for ( int amount=0; amount<AMOUNT_OF_TILES_PER; amount++){
+  for (int c = 0; c < AMOUNT_OF_COLORS; c++)
+  {
+    for (int s = 0; s < AMOUNT_OF_SHAPES; s++)
+    {
+      for (int amount = 0; amount < AMOUNT_OF_TILES_PER; amount++)
+      {
         addFront(new Tile(colours[c], shapes[s]));
       }
     }
   }
 }
 
-void LinkedList::shuffleLinkedList(){
+void LinkedList::shuffleLinkedList()
+{
   /*
   Set s as LinkedList size
   Set n to the number of times to loop over to as 9
@@ -53,27 +62,33 @@ void LinkedList::shuffleLinkedList(){
   */
   int s = size();
   int n = 9;
-  for ( int i=0; i < s*n; i++ ){
+  for (int i = 0; i < s * n; i++)
+  {
     std::random_device randomSeed;
     std::uniform_int_distribution<int> uniform_dist(0, s);
     int r = uniform_dist(randomSeed);
 
-    if(r >= 0 && r < s){
-      if(head != nullptr){
+    if (r >= 0 && r < s)
+    {
+      if (head != nullptr)
+      {
         int counter = 0;
-        Node* current = head;
-        Node* prev = nullptr;
+        Node *current = head;
+        Node *prev = nullptr;
 
-        while(counter != r){
+        while (counter != r)
+        {
           ++counter;
           prev = current;
           current = current->next;
         }
 
-        if(prev == nullptr){
+        if (prev == nullptr)
+        {
           head = current->next;
         }
-        else{
+        else
+        {
           prev->next = current->next;
         }
 
@@ -84,25 +99,30 @@ void LinkedList::shuffleLinkedList(){
   }
 }
 
-int LinkedList::size(){
-    int length = 0;
+int LinkedList::size()
+{
+  int length = 0;
 
-    Node* current = head;
-    while(current != nullptr){
-      ++length;
-      current = current->next;
-    }
-    return length;
+  Node *current = head;
+  while (current != nullptr)
+  {
+    ++length;
+    current = current->next;
+  }
+  return length;
 }
 
-Tile* LinkedList::getTile(int index){
-  Tile* retTile = nullptr;
-  if(index >= 0 && index < size()){
+Tile *LinkedList::getTile(int index)
+{
+  Tile *retTile = nullptr;
+  if (index >= 0 && index < size())
+  {
 
     int counter = 0;
-    Node* current = head;
+    Node *current = head;
 
-    while(counter<index){
+    while (counter < index)
+    {
       ++counter;
       current = current->next;
     }
@@ -111,15 +131,17 @@ Tile* LinkedList::getTile(int index){
   return retTile;
 }
 
-
-Node* LinkedList::getNode(int index){
-  Node* retNode = nullptr;
-  if(index >= 0 && index < size()){
+Node *LinkedList::getNode(int index)
+{
+  Node *retNode = nullptr;
+  if (index >= 0 && index < size())
+  {
 
     int counter = 0;
-    Node* current = head;
+    Node *current = head;
 
-    while(counter<index){
+    while (counter < index)
+    {
       ++counter;
       current = current->next;
     }
@@ -128,28 +150,35 @@ Node* LinkedList::getNode(int index){
   return retNode;
 }
 
-void LinkedList::drawTile(LinkedList* tileBag){
-  if ( size() < 6 && tileBag->size() != 0){
+void LinkedList::drawTile(LinkedList *tileBag)
+{
+  if (size() < 6 && tileBag->size() != 0)
+  {
     std::random_device randomSeed;
     std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
     int randomIndex = uniform_dist(randomSeed);
-    
-    if(randomIndex >= 0 && randomIndex < tileBag->size()){
-      if(tileBag->head != nullptr){
-        int counter = 0;
-        Node* current = tileBag->head;
-        Node* prev = nullptr;
 
-        while(counter != randomIndex){
+    if (randomIndex >= 0 && randomIndex < tileBag->size())
+    {
+      if (tileBag->head != nullptr)
+      {
+        int counter = 0;
+        Node *current = tileBag->head;
+        Node *prev = nullptr;
+
+        while (counter != randomIndex)
+        {
           ++counter;
           prev = current;
           current = current->next;
         }
 
-        if(prev == nullptr){
+        if (prev == nullptr)
+        {
           tileBag->head = current->next;
         }
-        else{
+        else
+        {
           prev->next = current->next;
         }
 
@@ -159,29 +188,37 @@ void LinkedList::drawTile(LinkedList* tileBag){
   }
 }
 
-void LinkedList::drawHand(LinkedList* tileBag){
-  while ( size() < 6 ){
-    if ( size() < 6 && tileBag->size() != 0){
+void LinkedList::drawHand(LinkedList *tileBag)
+{
+  while (size() < 6)
+  {
+    if (size() < 6 && tileBag->size() != 0)
+    {
       std::random_device randomSeed;
       std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
       int randomIndex = uniform_dist(randomSeed);
-      
-      if(randomIndex >= 0 && randomIndex < tileBag->size()){
-        if(tileBag->head != nullptr){
-          int counter = 0;
-          Node* current = tileBag->head;
-          Node* prev = nullptr;
 
-          while(counter != randomIndex){
+      if (randomIndex >= 0 && randomIndex < tileBag->size())
+      {
+        if (tileBag->head != nullptr)
+        {
+          int counter = 0;
+          Node *current = tileBag->head;
+          Node *prev = nullptr;
+
+          while (counter != randomIndex)
+          {
             ++counter;
             prev = current;
             current = current->next;
           }
 
-          if(prev == nullptr){
+          if (prev == nullptr)
+          {
             tileBag->head = current->next;
           }
-          else{
+          else
+          {
             prev->next = current->next;
           }
 
@@ -192,47 +229,59 @@ void LinkedList::drawHand(LinkedList* tileBag){
   }
 }
 
-void LinkedList::loadListOfTiles(std::string tileString){
+void LinkedList::loadListOfTiles(std::string tileString)
+{
   int count = 0;
-    for (std::string::size_type i = 0; i < tileString.size(); i++) {
-      // Use every second as a delimeter
-      if ( count == 2 ){
-        //Convert char to int
-        int shapeInt = (int)tileString[i-1] - '0'; 
-        addBack(new Tile(tileString[i-2],shapeInt));
-        count = 0;
-      }
-      // Accounts for last tile
-      else if ( i == tileString.size()-1){
-        //Convert char to int
-        int shapeInt = (int)tileString[i] - '0'; 
-        addBack(new Tile(tileString[i-1],shapeInt));
-      }
-      else {
-        count++;
-      }
+  for (std::string::size_type i = 0; i < tileString.size(); i++)
+  {
+    // Use every second as a delimeter
+    if (count == 2)
+    {
+      //Convert char to int
+      int shapeInt = (int)tileString[i - 1] - '0';
+      addBack(new Tile(tileString[i - 2], shapeInt));
+      count = 0;
     }
+    // Accounts for last tile
+    else if (i == tileString.size() - 1)
+    {
+      //Convert char to int
+      int shapeInt = (int)tileString[i] - '0';
+      addBack(new Tile(tileString[i - 1], shapeInt));
+    }
+    else
+    {
+      count++;
+    }
+  }
 }
 
-void LinkedList::printHand(){
-  for ( int i=0; i < size(); i++){
-    Node* node = getNode(i);
+void LinkedList::printHand()
+{
+  for (int i = 0; i < size(); i++)
+  {
+    Node *node = getNode(i);
     std::cout << node->tile->getTileColour() << node->tile->getTileShape();
-    if ( i < size()-1){
+    if (i < size() - 1)
+    {
       std::cout << ",";
     }
   }
 }
 
-std::string LinkedList::printHandToString(){
+std::string LinkedList::printHandToString()
+{
   std::string toString;
-  for ( int i=0; i < size(); i++){
-    Node* node = getNode(i);
-    if ( i < size()-1){
+  for (int i = 0; i < size(); i++)
+  {
+    Node *node = getNode(i);
+    if (i < size() - 1)
+    {
       toString += node->tile->getTileColour() +
                   std::to_string(node->tile->getTileShape()) + ",";
     }
-    else {
+    else
+    {
       toString += node->tile->getTileColour() +
                   std::to_string(node->tile->getTileShape());
     }
@@ -240,78 +289,96 @@ std::string LinkedList::printHandToString(){
   return toString;
 }
 
-void LinkedList::testPrintTiles(){
-  for ( int i=0; i < size(); i++){
-    Node* node = getNode(i);
+void LinkedList::testPrintTiles()
+{
+  for (int i = 0; i < size(); i++)
+  {
+    Node *node = getNode(i);
     std::cout << node->tile->getTileColour() << node->tile->getTileShape() << ",";
   }
 }
 
-void LinkedList::addFront(Tile* tile){
-  Node* node = new Node(tile, head);
+void LinkedList::addFront(Tile *tile)
+{
+  Node *node = new Node(tile, head);
   node->next = head;
   head = node;
 }
 
-void LinkedList::addBack(Tile* tile){
-  Node* node = new Node(tile, head);
+void LinkedList::addBack(Tile *tile)
+{
+  Node *node = new Node(tile, head);
   node->tile = tile;
   node->next = nullptr;
 
-  if(head == nullptr){
-      head = node;
+  if (head == nullptr)
+  {
+    head = node;
   }
-  else{
-    Node* current = head;
-    while(current->next != nullptr){
-        current = current->next;
+  else
+  {
+    Node *current = head;
+    while (current->next != nullptr)
+    {
+      current = current->next;
     }
     current->next = node;
   }
 }
 
-void LinkedList::addNodeFront(Node* node){
+void LinkedList::addNodeFront(Node *node)
+{
   node->next = head;
   head = node;
 }
 
-void LinkedList::addNodeBack(Node* node){
+void LinkedList::addNodeBack(Node *node)
+{
   node->next = nullptr;
 
-  if(head == nullptr){
+  if (head == nullptr)
+  {
     head = node;
-  }else{
-    Node* current = head;
-    while(current->next != nullptr){
-        current = current->next;
+  }
+  else
+  {
+    Node *current = head;
+    while (current->next != nullptr)
+    {
+      current = current->next;
     }
     current->next = node;
   }
 }
 
-void LinkedList::removeFront(){
-  Node* toDelete = head;
+void LinkedList::removeFront()
+{
+  Node *toDelete = head;
   head = head->next;
 
   delete toDelete->tile;
   delete toDelete;
 }
 
+void LinkedList::removeBack()
+{
+  if (head != nullptr)
+  {
+    Node *current = head;
+    Node *prev = nullptr;
 
-void LinkedList::removeBack(){
-  if(head != nullptr){
-    Node* current = head;
-    Node* prev = nullptr;
-
-    while(current->next != nullptr){
+    while (current->next != nullptr)
+    {
       prev = current;
       current = current->next;
     }
 
-    if(prev == nullptr){
+    if (prev == nullptr)
+    {
       head = nullptr;
     }
-    else{
+    else
+    {
       prev->next = nullptr;
     }
 
@@ -320,24 +387,29 @@ void LinkedList::removeBack(){
   }
 }
 
-
-void LinkedList::remove(int index){
-  if(index >= 0 && index < size()){
-    if(head != nullptr){
+void LinkedList::remove(int index)
+{
+  if (index >= 0 && index < size())
+  {
+    if (head != nullptr)
+    {
       int counter = 0;
-      Node* current = head;
-      Node* prev = nullptr;
+      Node *current = head;
+      Node *prev = nullptr;
 
-      while(counter != index){
+      while (counter != index)
+      {
         ++counter;
         prev = current;
         current = current->next;
       }
 
-      if(prev == nullptr){
+      if (prev == nullptr)
+      {
         head = current->next;
       }
-      else{
+      else
+      {
         prev->next = current->next;
       }
 
@@ -347,8 +419,10 @@ void LinkedList::remove(int index){
   }
 }
 
-void LinkedList::clear(){
-    while(head != nullptr){
-        removeFront();
-    }
+void LinkedList::clear()
+{
+  while (head != nullptr)
+  {
+    removeFront();
+  }
 }
