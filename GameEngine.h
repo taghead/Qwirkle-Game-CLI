@@ -28,6 +28,8 @@ private:
   bool placeLoactionCheck(std::vector<std::string> boardState,
                           int boardDim[1], std::string pos);
   bool checkTileInPlayerHand(std::string tile, LinkedList *playerhand);
+  int scoreSystem(int playerScore, std::string tile, std::string pos, std::vector<std::string> boardState);
+  int charToNumber(char letter);
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

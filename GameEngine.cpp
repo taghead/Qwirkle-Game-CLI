@@ -370,13 +370,17 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                           {
                             std::cout << boardState[i];
                           }
+                          
                           /* Scoring function
                               TODO: 2.3.5 
+                              
                               Load board state
                               a = position to inArr[3]
                               Iterate over board state get the tiles relative 
                               to the placed tile and determine the score
                            */
+                          playersScores[currentPlayer] = scoreSystem(playersScores[currentPlayer], inArr[1], inArr[3], boardState);
+                          
                           inputIsValid = true;
                         }
                       }
@@ -562,4 +566,34 @@ bool GameEngine::checkTileInPlayerHand(std::string tile,
     }
   }
   return isInhand;
+}
+
+int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, std::vector<std::string> boardState) {
+  
+
+  std::cout << std::endl << "--- TEST ZONE ---" << std::endl;
+
+  // Get Row
+  char row;
+  row = pos.at(0);
+
+  // Get Col
+  int col;
+  std::string tmpStr = pos;
+  tmpStr.erase(0,1);
+  std::stringstream ss;
+  ss << tmpStr;
+  ss >> col;
+
+  std::cout << "POS: " << pos << std::endl
+            << "Row: " << row << std::endl
+            << "Col: " << col << std::endl;
+
+  for ( unsigned int i=0; i<boardState.size(); i++) {
+    std::cout << boardState[i] << "       " << pos << std::endl;
+  }
+
+
+  std::cout << "--- TEST ZONE END ---" << std::endl;
+  return 0;
 }
