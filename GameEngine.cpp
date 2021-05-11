@@ -509,7 +509,7 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   // If between A-Z
   if (posChar >= posCharRef && posChar < posCharRef + boardDim[0])
   {
-    if (posNumber < 9 && posSecondNumber < 9)
+    if (posNumber <= 9 && posSecondNumber <= 9)
     {
       posIsValid = true;
     }
