@@ -150,6 +150,13 @@ void GameEngine::loadGame(){
     }
     if ( i == 6 ){
       //Load Board State
+      std::stringstream data(fileVector[i]);
+      std::string tmpString;
+      
+      while (std::getline(data, tmpString, ',')) {
+        boardState.push_back(tmpString);
+      }
+      
     }
     if ( i == 7 ){
       //Load board dimensions
