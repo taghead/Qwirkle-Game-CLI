@@ -603,18 +603,53 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
 
   // HL-L3230CDW
   std::cout << "POS:    " << pos    << std::endl
-            << "Row:    " << row    << std::endl
-            << "Col:    " << col    << std::endl
+            << "Row:    " << row    << std::endl // Char
+            << "Col:    " << col    << std::endl // Int
             << std::endl
             << "Tile:   " << tile   << std::endl
-            << "Colour: " << colour << std::endl
-            << "Shape:  " << shape  << std::endl;
+            << "Colour: " << colour << std::endl // Char
+            << "Shape:  " << shape  << std::endl; // Int
 
-  for ( unsigned int i=0; i<boardState.size(); i++) {
-    std::cout << boardState[i] << std::endl;
+  // char alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K',
+  //                  'L','M','N','O','P','Q','R','S','T','U','V',
+  //                  'W','X','Y','Z'};
+  // int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
+  //            20,21,22,23,24,25};
+
+  // boardState[i] O1@A1
+  for (unsigned int i=0; i<boardState.size(); i++) {
+    std::string tmpStr;
+    // Gets iterated tile colour
+    char tmpTileColour;
+    tmpTileColour = boardState[i].at(0);
+    // Gets iterated tile shape
+    int tmpTileShape;
+    tmpStr = boardState[i].at(1);
+    ss << tmpStr;
+    ss >> tmpTileShape;
+    ss.clear();
+    
+    // Gets iterated row
+    char tmpRow;
+    tmpRow = boardState[i].at(3);
+    // Gets iterated col
+    int tmpCol;
+    tmpStr = boardState[i];
+    tmpStr.erase(0,4);
+    ss << tmpStr;
+    ss >> tmpCol;
+    ss.clear();
+
+  // HL-L3230CDW
+  std::cout << "POS:    " << tmpRow << tmpCol << std::endl
+            << "Row:    " << tmpRow    << std::endl // Char
+            << "Col:    " << tmpCol    << std::endl // Int
+            << std::endl
+            << "Tile:   " << tmpTileColour << tmpTileShape << std::endl
+            << "Colour: " << tmpTileColour << std::endl // Char
+            << "Shape:  " << tmpTileShape  << std::endl; // Int
+
   }
-
-
   std::cout << "--- TEST ZONE END ---" << std::endl;
   return 0;
 }
