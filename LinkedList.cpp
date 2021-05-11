@@ -229,6 +229,47 @@ void LinkedList::drawHand(LinkedList *tileBag)
   }
 }
 
+void LinkedList::replaceTile(std::string tile, LinkedList *tileBag){
+  char color = tile[0];
+  int shape = (int)tile[1];
+  bool found = false;
+
+  for ( int i = 0; i<size(); i++){
+    if ( getTile(i)->getTileColour() == color && !found ){
+      if ( getTile(i)->getTileShape() == shape && !found ){
+        std::cout << "OK";
+        tileBag->addBack(getTile(i));
+        if (i >= 0 && i < size())
+        {
+          if (head != nullptr)
+          {
+            int counter = 0;
+            Node *current = head;
+            Node *prev = nullptr;
+
+            while (counter != i)
+            {
+              ++counter;
+              prev = current;
+              current = current->next;
+            }
+
+            if (prev == nullptr)
+            {
+              head = current->next;
+            }
+            else
+            {
+              prev->next = current->next;
+            }
+          }
+        }
+        found = true;
+      }
+    }
+  }
+}
+
 void LinkedList::loadListOfTiles(std::string tileString)
 {
   int count = 0;
