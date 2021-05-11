@@ -365,6 +365,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                             boardState.push_back(inArr[1] + "@" +
                                                  inArr[3]);
                           }
+                          removeTileInPlayerHand(inArr[1],playerHands[currentPlayer]);
 
                           for (unsigned int i = 0; i < boardState.size(); i++)
                           {
@@ -393,9 +394,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
           // IF replace
           if (inArr[0] == "replace")
           {
-            /*Write code
-                  TODO: 2.3.6 Replacing tile in hand
-               */
+            if (inArr.size() > 1){
+              if (checkTileInPlayerHand(inArr[1], playerHands[currentPlayer])){
+                playerHands[currentPlayer]->replaceTile(inArr[1],tileBag);
+                inputIsValid = true;
+              }
+            }
           }
           // IF save game
           if (inArr[0] == "save")
@@ -561,11 +565,25 @@ bool GameEngine::checkTileInPlayerHand(std::string tile,
         std::to_string(playerhand->getTile(i)->getTileShape());
     if (currentTile == tile)
     {
-      playerhand->remove(i);
       isInhand = true;
     }
   }
   return isInhand;
+}
+
+void GameEngine::removeTileInPlayerHand(std::string tile,
+                                       LinkedList *playerhand)
+{
+  for (int i = 0; i < playerhand->size(); i++)
+  {
+    std::string currentTile =
+        playerhand->getTile(i)->getTileColour() +
+        std::to_string(playerhand->getTile(i)->getTileShape());
+    if (currentTile == tile)
+    {
+      playerhand->remove(i);
+    }
+  }
 }
 
 int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, std::vector<std::string> boardState) {
