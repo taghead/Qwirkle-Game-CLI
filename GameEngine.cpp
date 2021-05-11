@@ -357,16 +357,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         if (checkTileInPlayerHand(inArr[1],
                                                   playerHands[currentPlayer]))
                         {
-                          if (inArr[3][4] >= *"0" && inArr[3][4] <= *"9")
-                          {
-                            boardState.push_back(inArr[1] + "@" +
-                                                 inArr[3] + inArr[4]);
-                          }
-                          else
-                          {
-                            boardState.push_back(inArr[1] + "@" +
-                                                 inArr[3]);
-                          }
+                          boardState.push_back(inArr[1] + "@" + inArr[3]);
                           removeTileInPlayerHand(inArr[1],playerHands[currentPlayer]);
                           
                           /* Scoring function
@@ -464,6 +455,10 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
       currentPlayer++;
     }
   }
+  delete tileBag;
+  for ( int i = 0; i<numOfPlayers; i++){
+    delete playerHands[i];
+  }
 }
 
 /*
@@ -512,8 +507,6 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   ss << tmpStr;
   ss >> posNumber;
   ss.clear();
-
-  std::cout << posNumber;
 
   int posChar = pos[0];
   int posCharRef = *"A";
