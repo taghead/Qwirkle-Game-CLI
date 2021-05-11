@@ -57,6 +57,11 @@ void GameEngine::newGame() {
     // Empty Player Score Array
     int playersScores[MAX_PLAYERS];
 
+    // Ensure score is 0
+    for ( int i = 0; i<numOfPlayers;i++){
+      playersScores[i] = 0;
+    }
+
     // Empty Board State
     std::vector<std::string> boardState;
 
@@ -79,14 +84,18 @@ void GameEngine::loadGame(){
   std::string filename;
   std::cin >> filename;
 
-// int                numOfPlayers
-// std::string        Parralel Array	players[MAX_PLAYERS]
-// LinkedList         tileBag
-// LinkedList array   playerHands
-// int                currentPlayer
-// int array          playersScores[MAX_PLAYERS]
-// vector array       boardState
+  // int                                numOfPlayers
+  // std::string        Parralel Array	players[MAX_PLAYERS]
+  // LinkedList                         tileBag
+  // LinkedList array   Parralel Array	playerHands
+  // int                                currentPlayer
+  // int array          Parralel Array	playersScores[MAX_PLAYERS]
+  // vector array       boardState
+  // int array          boardDim
 
+
+  // startGame(numOfPlayers, players, tileBag, playerHands, 0,
+  //           playersScores, boardState, boardDim);
 }
 
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
