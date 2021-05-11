@@ -84,6 +84,8 @@ void GameEngine::loadGame(){
 
   std::string filename;
   std::cin >> filename;
+  
+  
 
   // int                                numOfPlayers                  This is the amount of players   DONE
   int numOfPlayers = 2;
@@ -256,7 +258,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                           << std::endl;
                 }
                 for ( unsigned int i = 0; i<boardState.size(); i++ ){
-                  outfile << boardState[i];
+                  if (i == boardState.size()-1){
+                    outfile << boardState[i];
+                  }
+                  else {
+                    outfile << boardState[i]+",";
+                  }
                 }
                 outfile << std::endl
                         << boardDim[0] << "," << boardDim[1] << std::endl
