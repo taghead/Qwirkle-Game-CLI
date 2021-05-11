@@ -30,9 +30,11 @@ int main(void) {
 
       if ( choice == '1' && !std::cin.eof() ) {
          game->newGame();
+         inGame = false;
       }
       else if ( choice == '2' && !std::cin.eof() ){
          game->loadGame();
+         inGame = false;
 
          // Load Game TODO Read Section 2.2.2
       }

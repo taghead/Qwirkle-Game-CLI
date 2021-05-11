@@ -84,13 +84,21 @@ void GameEngine::loadGame(){
 
   std::string filename;
   std::cin >> filename;
-  
-  
+
+  std::ifstream in(filename);
+
+  std::string str;
+  std::vector<std::string> fileVector;
+  // Read the next line from File untill it reaches the end.
+  while (std::getline(in, str))
+  {
+    fileVector.push_back(str);
+  }
 
   // int                                numOfPlayers                  This is the amount of players   DONE
   int numOfPlayers = 2;
-  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names
-  std::string players[MAX_PLAYERS];
+  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names    DONE
+  std::string players[MAX_PLAYERS];  
   // LinkedList                         tileBag                       This is the games tilebag
   LinkedList *tileBag = new LinkedList();
   // LinkedList array   Parralel Array	playerHands                   These are the players hands
@@ -104,6 +112,84 @@ void GameEngine::loadGame(){
   // int array          boardDim                                      This is the boards dimenstions  DONE
   int boardDim[] = {26, 26};
 
+  for ( unsigned int i=0; i<fileVector.size(); i++){
+    // fileVector[i] is the line in the file
+    if ( i == 0 ){
+      //Load player 1 name
+      players[0] = fileVector[i];
+    }
+    if ( i == 1 ){
+      //Load player 1 score
+      int num;
+      std::stringstream ss;
+      ss << fileVector[i];
+      ss >> num;
+      playersScores[0] = num;
+    }
+    if ( i == 2 ){
+      //Load player 1 hand
+      playerHands[0] = new LinkedList();
+      playerHands[0]->loadListOfTiles(fileVector[i]);
+    }
+    if ( i == 3 ){
+      //Load player 2 name
+      players[1] = fileVector[i];
+    }
+    if ( i == 4 ){
+      //Load player 2 score
+      int num;
+      std::stringstream ss;
+      ss << fileVector[i];
+      ss >> num;
+      playersScores[1] = num;
+    }
+    if ( i == 5 ){
+      //Load player 2 hand
+      playerHands[1] = new LinkedList();
+      playerHands[1]->loadListOfTiles(fileVector[i]);
+    }
+    if ( i == 6 ){
+      //Load Board State
+      std::stringstream data(fileVector[i]);
+      std::string tmpString;
+      
+      while (std::getline(data, tmpString, ',')) {
+        boardState.push_back(tmpString);
+      }
+      
+    }
+    if ( i == 7 ){
+      //Load board dimensions
+      std::stringstream data(fileVector[i]);
+      std::string tmpString;
+      std::vector<std::string> dimArr;
+      
+      int count = 0;
+      while (std::getline(data, tmpString, ',')) {
+        int num;
+        std::stringstream ss;
+        ss << tmpString;
+        ss >> num;
+        boardDim[count] = num;
+        count++;
+      }
+    }
+    if ( i == 8 ){
+      //Load tilebag
+      tileBag->loadListOfTiles(fileVector[i]);
+    }
+    if ( i == 9 ){
+      //Load current player's turn
+      if ( players[0] == fileVector[i]){
+        currentPlayer = 0;
+      }
+      if ( players[1] == fileVector[i]){
+        currentPlayer = 1;
+      }
+    }
+  }
+
+  std::cout << std::endl << "Qwirkle game successfully loaded" << std::endl;
 
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
@@ -185,8 +271,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
         while (!inputIsValid && !std::cin.eof()) {
           std::cout << std::endl << "> ";
           std::string userIn;
-          std::getline(std::cin, userIn);
-         
+          std::getline(std::cin, userIn);         
 
           std::vector<std::string> inArr; // Input
           std::stringstream data(userIn);
@@ -197,6 +282,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             inArr.push_back(tmpString);
           }
 
+          bool skipInvalidOutput = false;
           // place G5 at C4
           if (inArr.size() > 0) {
             if (inArr[0] == "place") {
@@ -271,14 +357,19 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         << std::endl
                         << players[currentPlayer];
                 outfile.close();
-                inputIsValid = true;
+                skipInvalidOutput = true;
+                std::cout << std::endl << "Game successfully saved" << std::endl;
               }
+            }
+            if (inArr[0] == "quit") { 
+              inGame = false;
+              inputIsValid = true;
             }
           } 
           if (std::cin.eof()){
             inputIsValid = true;
           }
-          if (!inputIsValid) {
+          if (!inputIsValid && !skipInvalidOutput) {
             std::cout << std::endl << "Invalid Input";
           }
         }
