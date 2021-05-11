@@ -92,22 +92,22 @@ void GameEngine::loadGame(){
   // Read the next line from File untill it reaches the end.
   while (std::getline(in, str))
   {
-      // Line contains string of length > 0 then save it in vector
-      if(str.size() > 0)
-          fileVector.push_back(str);
+    fileVector.push_back(str);
   }
-
-  for ( unsigned int i=0; i<fileVector.size(); i++){
-    // fileVector[i] is the line in the file
-    std::cout << fileVector[i] << std::endl;
-  }
-
-    
 
   // int                                numOfPlayers                  This is the amount of players   DONE
   int numOfPlayers = 2;
-  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names
+  // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names    DONE
   std::string players[MAX_PLAYERS];
+  for ( unsigned int i=0; i<fileVector.size(); i++){
+    // fileVector[i] is the line in the file
+    if ( i == 0 ){
+      players[0] = fileVector[i];
+    }
+    if ( i == 3 ){
+      players[1] = fileVector[i];
+    }
+  }
   // LinkedList                         tileBag                       This is the games tilebag
   LinkedList *tileBag = new LinkedList();
   // LinkedList array   Parralel Array	playerHands                   These are the players hands
@@ -120,7 +120,6 @@ void GameEngine::loadGame(){
   std::vector<std::string> boardState;
   // int array          boardDim                                      This is the boards dimenstions  DONE
   int boardDim[] = {26, 26};
-
 
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
