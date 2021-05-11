@@ -84,8 +84,25 @@ void GameEngine::loadGame(){
 
   std::string filename;
   std::cin >> filename;
-  
-  
+
+  std::ifstream in(filename);
+
+  std::string str;
+  std::vector<std::string> fileVector;
+  // Read the next line from File untill it reaches the end.
+  while (std::getline(in, str))
+  {
+      // Line contains string of length > 0 then save it in vector
+      if(str.size() > 0)
+          fileVector.push_back(str);
+  }
+
+  for ( unsigned int i=0; i<fileVector.size(); i++){
+    // fileVector[i] is the line in the file
+    std::cout << fileVector[i] << std::endl;
+  }
+
+    
 
   // int                                numOfPlayers                  This is the amount of players   DONE
   int numOfPlayers = 2;
