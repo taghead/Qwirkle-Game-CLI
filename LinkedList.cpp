@@ -231,8 +231,11 @@ void LinkedList::drawHand(LinkedList *tileBag)
 
 void LinkedList::replaceTile(std::string tile, LinkedList *tileBag){
   char color = tile[0];
-  int shape = (int)tile[1];
+  int shape = (int)tile[1] - '0';
   bool found = false;
+
+  std::cout <<color;
+  std::cout << shape;
 
   for ( int i = 0; i<size(); i++){
     if ( getTile(i)->getTileColour() == color && !found ){
