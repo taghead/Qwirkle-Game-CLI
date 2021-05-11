@@ -585,9 +585,12 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   ss << tmpStr;
   ss >> col;
 
-  std::cout << "POS: " << pos << std::endl
-            << "Row: " << row << std::endl
-            << "Col: " << col << std::endl;
+  std::cout << "POS:  " << pos << std::endl
+            << "Row:  " << row << std::endl
+            << "Col:  " << col << std::endl
+            << "Tile: " << tile << std::endl;
+
+
 
   for ( unsigned int i=0; i<boardState.size(); i++) {
     std::cout << boardState[i] << "       " << pos << std::endl;
