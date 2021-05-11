@@ -98,16 +98,7 @@ void GameEngine::loadGame(){
   // int                                numOfPlayers                  This is the amount of players   DONE
   int numOfPlayers = 2;
   // std::string        Parralel Array	players[MAX_PLAYERS]          These is the players names    DONE
-  std::string players[MAX_PLAYERS];
-  for ( unsigned int i=0; i<fileVector.size(); i++){
-    // fileVector[i] is the line in the file
-    if ( i == 0 ){
-      players[0] = fileVector[i];
-    }
-    if ( i == 3 ){
-      players[1] = fileVector[i];
-    }
-  }
+  std::string players[MAX_PLAYERS];  
   // LinkedList                         tileBag                       This is the games tilebag
   LinkedList *tileBag = new LinkedList();
   // LinkedList array   Parralel Array	playerHands                   These are the players hands
@@ -120,6 +111,52 @@ void GameEngine::loadGame(){
   std::vector<std::string> boardState;
   // int array          boardDim                                      This is the boards dimenstions  DONE
   int boardDim[] = {26, 26};
+
+  for ( unsigned int i=0; i<fileVector.size(); i++){
+    // fileVector[i] is the line in the file
+    if ( i == 0 ){
+      //Load player 1 name
+      players[0] = fileVector[i];
+    }
+    if ( i == 1 ){
+      //Load player 1 score
+      int num;
+      std::stringstream ss;
+      ss << fileVector[i];
+      ss >> num;
+      playersScores[0] = num;
+    }
+    if ( i == 2 ){
+      //Load player 1 hand
+    }
+    if ( i == 3 ){
+      //Load player 2 name
+      players[1] = fileVector[i];
+    }
+    if ( i == 4 ){
+      //Load player 2 score
+      int num;
+      std::stringstream ss;
+      ss << fileVector[i];
+      ss >> num;
+      playersScores[1] = num;
+    }
+    if ( i == 5 ){
+      //Load player 2 hand
+    }
+    if ( i == 6 ){
+      //Load Board State
+    }
+    if ( i == 7 ){
+      //Load board dimensions
+    }
+    if ( i == 8 ){
+      //Load tile positions on board
+    }
+    if ( i == 9 ){
+      //Load current player's turn
+    }
+  }
 
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
