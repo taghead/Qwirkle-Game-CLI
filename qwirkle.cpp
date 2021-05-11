@@ -25,48 +25,6 @@ int main(void) {
    GameEngine* game = new GameEngine();
    do {
 
-<<<<<<< HEAD
-      char choice;
-      std::cin >> choice;
-
-      if (!std::cin.eof()){
-         if ( choice == '1' ) {
-            game->newGame();
-         }
-         else if ( choice == '2' ){
-              std::cout   << std::endl 
-                          << "Enter the filename from which to load a game" 
-                          << std::endl << "> ";
-
-                  std::string filename;
-                  std::cin >> filename;
-
-              // Load Game TODO Read Section 2.2.2
-                std::string x;
-                std::ifstream infile;
-
-                infile.open(filename);
-                if (!infile) {
-                  std::cout << "not file found with that name. Try again." << std::endl;
-
-                }
-                while (getline(infile, x)) {
-                  std::cout << x << std::endl;
-                }
-                infile.close();
-
-            // Load Game TODO Read Section 2.2.2
-         }
-         else if ( choice == '3' ){
-            printCredits();
-         }
-         else if ( choice == '4' ){
-            inGame = false;
-         }
-         else {
-            std::cout << "Invalid Input" << std::endl << "> ";
-         }
-=======
    char choice;
    std::cin >> choice;
 
@@ -74,12 +32,7 @@ int main(void) {
          game->newGame();
       }
       else if ( choice == '2' && !std::cin.eof() ){
-         std::cout   << std::endl 
-                     << "Enter the filename from which load a game" 
-                     << std::endl << "> ";
-
-         std::string filename;
-         std::cin >> filename;
+         game->loadGame();
 
          // Load Game TODO Read Section 2.2.2
       }
@@ -91,7 +44,6 @@ int main(void) {
       }
       else {
          std::cout << "Invalid Input" << std::endl << "> ";
->>>>>>> 640014ce8da054bd647d9e5d3fe0463cd1f596a9
       }
 
    } while ( inGame && !std::cin.eof());

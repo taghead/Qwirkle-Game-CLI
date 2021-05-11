@@ -63,6 +63,15 @@ void GameEngine::newGame() {
   }
 }
 
+void GameEngine::loadGame(){
+  std::cout   << std::endl 
+              << "Enter the filename from which load a game" 
+              << std::endl << "> ";
+
+  std::string filename;
+  std::cin >> filename;
+}
+
 void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                            LinkedList *tileBag,
                            LinkedList *playerHands[MAX_PLAYERS],

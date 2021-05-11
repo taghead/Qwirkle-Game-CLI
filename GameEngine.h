@@ -13,6 +13,7 @@ public:
    ~GameEngine();
 
   void newGame();
+  void loadGame();
 private:
   void startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                  LinkedList* tileBag, LinkedList* playerHands[],
