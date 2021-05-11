@@ -128,6 +128,8 @@ void GameEngine::loadGame(){
     }
     if ( i == 2 ){
       //Load player 1 hand
+      playerHands[0] = new LinkedList();
+      playerHands[0]->loadListOfTiles(fileVector[i]);
     }
     if ( i == 3 ){
       //Load player 2 name
@@ -143,6 +145,8 @@ void GameEngine::loadGame(){
     }
     if ( i == 5 ){
       //Load player 2 hand
+      playerHands[1] = new LinkedList();
+      playerHands[1]->loadListOfTiles(fileVector[i]);
     }
     if ( i == 6 ){
       //Load Board State
