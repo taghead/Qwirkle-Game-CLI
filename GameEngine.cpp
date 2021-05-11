@@ -212,9 +212,9 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                           << playersScores[i] << std::endl
                           << playerHands[i]->printHandToString()
                           << std::endl;
-                  for ( unsigned int i = 0; i<boardState.size(); i++ ){
-                    outfile << boardState[i];
-                  }
+                }
+                for ( unsigned int i = 0; i<boardState.size(); i++ ){
+                  outfile << boardState[i];
                 }
                 outfile << std::endl
                         << boardDim[0] << "," << boardDim[1] << std::endl
