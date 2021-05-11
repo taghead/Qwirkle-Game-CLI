@@ -189,6 +189,8 @@ void GameEngine::loadGame(){
     }
   }
 
+  std::cout << std::endl << "Qwirkle game successfully loaded" << std::endl;
+
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
 }
@@ -269,8 +271,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
         while (!inputIsValid && !std::cin.eof()) {
           std::cout << std::endl << "> ";
           std::string userIn;
-          std::getline(std::cin, userIn);
-         
+          std::getline(std::cin, userIn);         
 
           std::vector<std::string> inArr; // Input
           std::stringstream data(userIn);
@@ -281,6 +282,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             inArr.push_back(tmpString);
           }
 
+          bool skipInvalidOutput = false;
           // place G5 at C4
           if (inArr.size() > 0) {
             if (inArr[0] == "place") {
@@ -355,14 +357,19 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         << std::endl
                         << players[currentPlayer];
                 outfile.close();
-                inputIsValid = true;
+                skipInvalidOutput = true;
+                std::cout << std::endl << "Game successfully saved" << std::endl;
               }
+            }
+            if (inArr[0] == "quit") { 
+              inGame = false;
+              inputIsValid = true;
             }
           } 
           if (std::cin.eof()){
             inputIsValid = true;
           }
-          if (!inputIsValid) {
+          if (!inputIsValid && !skipInvalidOutput) {
             std::cout << std::endl << "Invalid Input";
           }
         }
