@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "GameEngine.h"
 #include "LinkedList.h"
@@ -57,6 +58,7 @@ void GameEngine::newGame() {
     int playersScores[MAX_PLAYERS];
 
     std::cout << std::endl << "Let's Play!" << std::endl;
+
     startGame(numOfPlayers, players, tileBag, playerHands, 0, playersScores);
   }
 }
@@ -200,9 +202,28 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
             }
             // IF save game
             if (inArr[0] == "save") { 
-               /*Write code
-                  TODO: 2.3.7 Save game
-               */
+              if (inArr.size() > 1) {
+                /*Write code
+                    TODO: 2.3.7 Save game
+                */
+                std::ofstream outfile(inArr[1]);
+                for ( int i=0; i<numOfPlayers; i++){
+                  outfile << players[i] << std::endl
+                          << playersScores[i] << std::endl
+                          << playerHands[i]->printHandToString()
+                          << std::endl;
+                  for ( unsigned int i = 0; i<boardState.size(); i++ ){
+                    outfile << boardState[i];
+                  }
+                }
+                outfile << std::endl
+                        << boardDim[0] << "," << boardDim[1] << std::endl
+                        << tileBag->printHandToString()
+                        << std::endl
+                        << players[currentPlayer];
+                outfile.close();
+                inputIsValid = true;
+              }
             }
           } 
           if (std::cin.eof()){
