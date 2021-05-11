@@ -501,12 +501,20 @@ bool GameEngine::checkTileFormat(std::string tile)
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                     int boardDim[1], std::string pos)
 {
-  int posNumber = (int)pos[1] - '0';
-  int posSecondNumber = (int)pos[2] - '0';
-  if (posSecondNumber < '0')
-  {
-    posSecondNumber = 0;
-  }
+    // Declare
+  std::stringstream ss;
+  std::string tmpStr;
+
+  int posNumber;
+  tmpStr = pos;
+  tmpStr.erase(0,1);
+  
+  ss << tmpStr;
+  ss >> posNumber;
+  ss.clear();
+
+  std::cout << posNumber;
+
   int posChar = pos[0];
   int posCharRef = *"A";
   bool posIsValid = false;
@@ -514,23 +522,9 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   // If between A-Z
   if (posChar >= posCharRef && posChar < posCharRef + boardDim[0])
   {
-    if (posNumber <= 9 && posSecondNumber <= 9)
+    if (posNumber <= boardDim[1]-1)
     {
       posIsValid = true;
-    }
-  }
-
-  for (unsigned int i = 0; i < boardState.size(); i++)
-  {
-    if (boardState[i][3] == pos[0])
-    {
-      if (boardState[i][4] == pos[1])
-      {
-        if (boardState[i][5] == pos[2])
-        {
-          posIsValid = false;
-        }
-      }
     }
   }
 
