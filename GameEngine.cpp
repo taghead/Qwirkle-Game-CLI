@@ -712,73 +712,40 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     envShape[tmpIntRow][tmpCol] = tmpTileShape;
   }
 
-  // Get col going up
   bool colUpStop = false;
   bool colDownStop = false;
   bool rowUpStop = false;
   bool rowDownStop = false;
-  for ( int i=0; i<6; i++){
+  for ( int i=1; i<6; i++){
     if ( envShape[intRow][col-i] != 0 && envColor[intRow][col-i] != ' ' && !colDownStop){
         std::cout << envColor[intRow][col-i];
         std::cout << envShape[intRow][col-i];
+    }
+    else {
+      colUpStop = true;
     }
     if ( envShape[intRow][col+i] != 0 && envColor[intRow][col+i] != ' ' && !colUpStop){
         std::cout << envColor[intRow][col+i];
         std::cout << envShape[intRow][col+i];
     }
+    else {
+      colDownStop = true;
+    }
     if ( envShape[intRow+i][col] != 0 && envColor[intRow+i][col] != ' ' && !rowUpStop){
         std::cout << envColor[intRow+i][col];
         std::cout << envShape[intRow+i][col];
+    }
+    else {
+      rowUpStop = true;
     }
     if ( envShape[intRow-i][col] != 0 && envColor[intRow-i][col] != ' ' && !rowDownStop){
         std::cout << envColor[intRow-i][col];
         std::cout << envShape[intRow-i][col];
     }
+    else {
+      rowDownStop = true;
+    }
   }
-  // for ( int y = 0; y<26; y++){
-  //   for ( int x = 0; x<26; x++){
-  //     for ( int i=0; i<6; i++){
-  //       if ( envShape[y][x] != 0 && envColor[y][x] != ' ' && !colUpStop){
-  //         if ( x == col+i ){
-  //           if ( envShape[y][x] != 0 && envColor[y][x] != ' ' ){
-  //             std::cout << envColor[y][x];
-  //             std::cout << envShape[y][x];
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   std::cout << std::endl;
-  // }
-
-
-
-  // Get row going up
-  // for ( int y = 0; y<26; y++){
-  //   for ( int x = 0; x<26; x++){
-  //     for ( int i=0; i<6; i++){
-  //       if ( envShape[y][x] != 0 && envColor[y][x] != ' ' ){
-  //         if ( y == intRow+i ){
-  //           if ( envShape[y][x] != 0 && envColor[y][x] != ' ' ){
-  //             std::cout << envColor[y][x];
-  //             std::cout << envShape[y][x];
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   std::cout << std::endl;
-  // }
-
-  // int count = 0;
-  // bool emplty = false;
-
-    // if ( envColor[row][col-1] == colour || envShape[row][col-1] == shape ){
-    //   std::cout << envColor[row][col-1] << envShape[row][col-1];
-    // }
-
-  // std::cout << envColor[intRow][col-1];
-  // std::cout << envShape[intRow][col-1];
 
   std::cout << "--- TEST ZONE END ---" << std::endl;
   std::cout << intRow;
