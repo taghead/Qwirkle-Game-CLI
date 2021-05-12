@@ -574,21 +574,14 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   std::cout << std::endl << "--- TEST ZONE ---" << std::endl;
 
   // Declare
+  char alpha[] = {'A','B','C','D','E','F','G','H','I','J','K',
+                   'L','M','N','O','P','Q','R','S','T','U','V',
+                   'W','X','Y','Z'};
+  int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
+             20,21,22,23,24,25};
+
   std::stringstream ss;
   std::string tmpStr;
-
-  // Get Row
-  char row;
-  row = pos.at(0);
-
-  // Get Col
-  int col;
-  tmpStr = pos;
-  tmpStr.erase(0,1);
-  
-  ss << tmpStr;
-  ss >> col;
-  ss.clear();
 
   // Get Colour
   char colour;
@@ -601,20 +594,39 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   ss >> shape;
   ss.clear();
 
+  // Get Row
+  char row;
+  row = pos.at(0);
+
+  // Convert Row from char to int
+  int intRow = 0;
+  for (int j = 0; j < 25; j++) {
+    if (row == alpha[j]) {
+      intRow = alphaNum[j];
+    }
+  }
+  // Get Col
+  int col;
+  tmpStr = pos;
+  tmpStr.erase(0,1);
+  
+  ss << tmpStr;
+  ss >> col;
+  ss.clear();
+
   // HL-L3230CDW
-  std::cout << "POS:    " << pos    << std::endl
+  std::cout << "-----" << std::endl
+            << "POS:    " << pos    << std::endl
             << "Row:    " << row    << std::endl // Char
             << "Col:    " << col    << std::endl // Int
+            << "(x,y):  " << "(" << col << "," << intRow << ")"
             << std::endl
             << "Tile:   " << tile   << std::endl
             << "Colour: " << colour << std::endl // Char
-            << "Shape:  " << shape  << std::endl; // Int
+            << "Shape:  " << shape  << std::endl // Int
+            << "-----" << std::endl;
 
-  // char alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K',
-  //                  'L','M','N','O','P','Q','R','S','T','U','V',
-  //                  'W','X','Y','Z'};
-  // int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
-  //            20,21,22,23,24,25};
+  
 
   // boardState[i] O1@A1
   for (unsigned int i=0; i<boardState.size(); i++) {
@@ -640,22 +652,33 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     ss >> tmpCol;
     ss.clear();
 
-  // HL-L3230CDW
-  std::cout << "POS:    " << tmpRow << tmpCol << std::endl
-            << "Row:    " << tmpRow    << std::endl // Char
-            << "Col:    " << tmpCol    << std::endl // Int
-            << std::endl
-            << "Tile:   " << tmpTileColour << tmpTileShape << std::endl
-            << "Colour: " << tmpTileColour << std::endl // Char
-            << "Shape:  " << tmpTileShape  << std::endl; // Int
+    // Convert from char to int
+    int tmpIntRow = 0;
+    for (int j = 0; j < 25; j++) {
+      if (tmpRow == alpha[j]) {
+        tmpIntRow = alphaNum[j];
+      }
+    }
 
+    // HL-L3230CDW
+    std::cout << "POS:    " << tmpRow << tmpCol << std::endl
+              << "Row:    " << tmpRow    << std::endl // Char
+              << "Col:    " << tmpCol    << std::endl // Int
+              << "(x,y):  " << "(" << tmpCol << "," << tmpIntRow << ")"
+              << std::endl
+              << "Tile:   " << tmpTileColour << tmpTileShape << std::endl
+              << "Colour: " << tmpTileColour << std::endl // Char
+              << "Shape:  " << tmpTileShape  << std::endl; // Int
+
+    
+
+    if (row == tmpRow) {
+      std::cout << "tmpRow CHECK " << std::endl;
+    }
+    if (col == tmpCol) {
+      std::cout << "tmpCol CHECK " << std::endl;
+    }
   }
-
-  /*
-    iterate through the boardstate, 
-    look for tiles that are valid via colour (e.g P=P) or shape (e.g. 4=4) based on position.
-    if either colour or shape match through iteration, then tile is valid and should +1 score
-  */
 
   std::cout << "--- TEST ZONE END ---" << std::endl;
   return 0;
