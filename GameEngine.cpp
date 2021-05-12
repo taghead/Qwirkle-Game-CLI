@@ -368,7 +368,7 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                               Iterate over board state get the tiles relative 
                               to the placed tile and determine the score
                            */
-                          playersScores[currentPlayer] = scoreSystem(playersScores[currentPlayer], inArr[1], inArr[3], boardState);
+                          playersScores[currentPlayer] += scoreSystem(playersScores[currentPlayer], inArr[1], inArr[3], boardState);
                           
                           inputIsValid = true;
                         }
@@ -595,7 +595,7 @@ void GameEngine::removeTileInPlayerHand(std::string tile,
 
 int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, std::vector<std::string> boardState) {
   
-
+  int score = 0;
   std::cout << std::endl << "--- TEST ZONE ---" << std::endl;
 
   std::vector<std::string> rowArr;
@@ -716,10 +716,19 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   bool colDownStop = false;
   bool rowUpStop = false;
   bool rowDownStop = false;
+  bool colUpStopExtra = false;
+  bool colDownStopExtra = false;
+  bool rowUpStopExtra = false;
+  bool rowDownStopExtra = false;
   for ( int i=1; i<6; i++){
     if ( envShape[intRow][col-i] != 0 && envColor[intRow][col-i] != ' ' && !colDownStop){
         std::cout << envColor[intRow][col-i];
         std::cout << envShape[intRow][col-i];
+        score+=1;
+        if ( !colDownStopExtra ){
+          score+=1;
+          colDownStopExtra =true;
+        }
     }
     else {
       colUpStop = true;
@@ -727,6 +736,11 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     if ( envShape[intRow][col+i] != 0 && envColor[intRow][col+i] != ' ' && !colUpStop){
         std::cout << envColor[intRow][col+i];
         std::cout << envShape[intRow][col+i];
+        score+=1;
+        if (!colUpStopExtra){
+          score+=1;
+          colUpStopExtra=true;
+        }
     }
     else {
       colDownStop = true;
@@ -734,6 +748,11 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     if ( envShape[intRow+i][col] != 0 && envColor[intRow+i][col] != ' ' && !rowUpStop){
         std::cout << envColor[intRow+i][col];
         std::cout << envShape[intRow+i][col];
+        score+=1;
+        if (!rowUpStopExtra){
+          score+=1;
+          rowUpStopExtra=true;
+        }
     }
     else {
       rowUpStop = true;
@@ -741,6 +760,11 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     if ( envShape[intRow-i][col] != 0 && envColor[intRow-i][col] != ' ' && !rowDownStop){
         std::cout << envColor[intRow-i][col];
         std::cout << envShape[intRow-i][col];
+        score+=1;
+        if (!rowDownStopExtra){
+          score+=1;
+          rowDownStopExtra=true;
+        }
     }
     else {
       rowDownStop = true;
@@ -750,5 +774,5 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   std::cout << "--- TEST ZONE END ---" << std::endl;
   std::cout << intRow;
   std::cout << colour;
-  return 0;
+  return score;
 }
