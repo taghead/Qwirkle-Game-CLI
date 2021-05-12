@@ -6,8 +6,7 @@
 
 #include "LinkedList.h"
 #include "GameEngine.h"
-
-#define EXIT_SUCCESS 0
+#include "TileCodes.h"
 
 void printGreeting();
 void printMenu();
@@ -60,7 +59,7 @@ int main(void)
    std::cout << std::endl
              << std::endl
              << "Goodbye" << std::endl;
-
+   delete game;
    return EXIT_SUCCESS;
 }
 

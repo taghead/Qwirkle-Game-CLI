@@ -221,6 +221,8 @@ void GameEngine::loadGame()
   std::cout << std::endl
             << "Qwirkle game successfully loaded" << std::endl;
 
+
+  std::cin.ignore(); // Prevents carriage return
   startGame(numOfPlayers, players, tileBag, playerHands, currentPlayer,
             playersScores, boardState, boardDim);
 }
@@ -355,21 +357,8 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
                         if (checkTileInPlayerHand(inArr[1],
                                                   playerHands[currentPlayer]))
                         {
-                          if (inArr[3][4] >= *"0" && inArr[3][4] <= *"9")
-                          {
-                            boardState.push_back(inArr[1] + "@" +
-                                                 inArr[3] + inArr[4]);
-                          }
-                          else
-                          {
-                            boardState.push_back(inArr[1] + "@" +
-                                                 inArr[3]);
-                          }
-
-                          for (unsigned int i = 0; i < boardState.size(); i++)
-                          {
-                            std::cout << boardState[i];
-                          }
+                          boardState.push_back(inArr[1] + "@" +inArr[3]);
+                          removeTileInPlayerHand(inArr[1],playerHands[currentPlayer]);
                           
                           /* Scoring function
                               TODO: 2.3.5 
@@ -393,9 +382,12 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
           // IF replace
           if (inArr[0] == "replace")
           {
-            /*Write code
-                  TODO: 2.3.6 Replacing tile in hand
-               */
+            if (inArr.size() > 1){
+              if (checkTileInPlayerHand(inArr[1], playerHands[currentPlayer])){
+                playerHands[currentPlayer]->replaceTile(inArr[1],tileBag);
+                inputIsValid = true;
+              }
+            }
           }
           // IF save game
           if (inArr[0] == "save")
@@ -453,6 +445,29 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
       }
     }
 
+
+    // User draw max amount of tiles
+    playerHands[currentPlayer]->drawHand(tileBag);
+    /*
+      Check Win Condition
+
+      Check for tilebag == 0 not required since the hand will 
+      draw to max capacity if tiles exist in tilebag.
+    */
+    if ( playerHands[currentPlayer]->size() == 0 )
+    {
+      inGame = false;
+      std::cout << std::endl << "Game over" << std::endl;
+      int indexOfWinner = 0;
+      for ( int i = 0; i<numOfPlayers; i++){
+        std::cout << "Score for " << players[i] << ":" << playersScores[i] << std::endl;
+        if ( playersScores[i] > playersScores[indexOfWinner] ){
+          indexOfWinner = i;
+        }
+      }
+      std::cout << "Player " << players[indexOfWinner] << " won!";
+    }
+
     // Change player turn
     if (currentPlayer == numOfPlayers - 1)
     {
@@ -462,6 +477,10 @@ void GameEngine::startGame(int numOfPlayers, std::string players[MAX_PLAYERS],
     {
       currentPlayer++;
     }
+  }
+  delete tileBag;
+  for ( int i = 0; i<numOfPlayers; i++){
+    delete playerHands[i];
   }
 }
 
@@ -500,12 +519,18 @@ bool GameEngine::checkTileFormat(std::string tile)
 bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
                                     int boardDim[1], std::string pos)
 {
-  int posNumber = (int)pos[1] - '0';
-  int posSecondNumber = (int)pos[2] - '0';
-  if (posSecondNumber < '0')
-  {
-    posSecondNumber = 0;
-  }
+    // Declare
+  std::stringstream ss;
+  std::string tmpStr;
+
+  int posNumber;
+  tmpStr = pos;
+  tmpStr.erase(0,1);
+  
+  ss << tmpStr;
+  ss >> posNumber;
+  ss.clear();
+
   int posChar = pos[0];
   int posCharRef = *"A";
   bool posIsValid = false;
@@ -513,23 +538,9 @@ bool GameEngine::placeLoactionCheck(std::vector<std::string> boardState,
   // If between A-Z
   if (posChar >= posCharRef && posChar < posCharRef + boardDim[0])
   {
-    if (posNumber <= 9 && posSecondNumber <= 9)
+    if (posNumber <= boardDim[1]-1)
     {
       posIsValid = true;
-    }
-  }
-
-  for (unsigned int i = 0; i < boardState.size(); i++)
-  {
-    if (boardState[i][3] == pos[0])
-    {
-      if (boardState[i][4] == pos[1])
-      {
-        if (boardState[i][5] == pos[2])
-        {
-          posIsValid = false;
-        }
-      }
     }
   }
 
@@ -561,11 +572,25 @@ bool GameEngine::checkTileInPlayerHand(std::string tile,
         std::to_string(playerhand->getTile(i)->getTileShape());
     if (currentTile == tile)
     {
-      playerhand->remove(i);
       isInhand = true;
     }
   }
   return isInhand;
+}
+
+void GameEngine::removeTileInPlayerHand(std::string tile,
+                                       LinkedList *playerhand)
+{
+  for (int i = 0; i < playerhand->size(); i++)
+  {
+    std::string currentTile =
+        playerhand->getTile(i)->getTileColour() +
+        std::to_string(playerhand->getTile(i)->getTileShape());
+    if (currentTile == tile)
+    {
+      playerhand->remove(i);
+    }
+  }
 }
 
 int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, std::vector<std::string> boardState) {

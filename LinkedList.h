@@ -72,6 +72,18 @@ public:
   void drawTile(LinkedList *tileBag);
 
   /*
+  Locate the first instance of a spcified tile and migrate that tile to a
+  new LinkedList
+  
+  LinkedList* tileBag = new LinkedList();
+  tileBag->populateLinkedList();
+  LinkedList* playerHand = new LinkedList();
+  playerHand->drawTile(tileBag);
+  playerHand->replaceTile("P5", tilebag);
+  */
+  void replaceTile(std::string tile, LinkedList *tileBag);
+
+  /*
   Migrate a random node from the overloaded LinkedList.
   
   LinkedList* tileBag = new LinkedList();

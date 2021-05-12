@@ -190,23 +190,24 @@ void LinkedList::drawTile(LinkedList *tileBag)
 
 void LinkedList::drawHand(LinkedList *tileBag)
 {
-  while (size() < 6)
+  while (size() < 6 && tileBag->getNode(0) != nullptr)
   {
     if (size() < 6 && tileBag->size() != 0)
     {
-      std::random_device randomSeed;
-      std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
-      int randomIndex = uniform_dist(randomSeed);
+      // std::random_device randomSeed;
+      // std::uniform_int_distribution<int> uniform_dist(0, tileBag->size());
+      // int randomIndex = uniform_dist(randomSeed);
 
-      if (randomIndex >= 0 && randomIndex < tileBag->size())
-      {
+      // if (randomIndex >= 0 && randomIndex < tileBag->size())
+      // {
         if (tileBag->head != nullptr)
         {
           int counter = 0;
           Node *current = tileBag->head;
           Node *prev = nullptr;
 
-          while (counter != randomIndex)
+          // while (counter != randomIndex)
+          while (counter != 0)
           {
             ++counter;
             prev = current;
@@ -224,6 +225,50 @@ void LinkedList::drawHand(LinkedList *tileBag)
 
           addNodeFront(current);
         }
+      // }
+    }
+  }
+}
+
+void LinkedList::replaceTile(std::string tile, LinkedList *tileBag){
+  char color = tile[0];
+  int shape = (int)tile[1] - '0';
+  bool found = false;
+
+  std::cout <<color;
+  std::cout << shape;
+
+  for ( int i = 0; i<size(); i++){
+    if ( getTile(i)->getTileColour() == color && !found ){
+      if ( getTile(i)->getTileShape() == shape && !found ){
+        std::cout << "OK";
+        tileBag->addBack(getTile(i));
+        if (i >= 0 && i < size())
+        {
+          if (head != nullptr)
+          {
+            int counter = 0;
+            Node *current = head;
+            Node *prev = nullptr;
+
+            while (counter != i)
+            {
+              ++counter;
+              prev = current;
+              current = current->next;
+            }
+
+            if (prev == nullptr)
+            {
+              head = current->next;
+            }
+            else
+            {
+              prev->next = current->next;
+            }
+          }
+        }
+        found = true;
       }
     }
   }
