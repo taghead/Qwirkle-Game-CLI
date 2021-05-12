@@ -614,7 +614,7 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   for ( int y = 0; y<26; y++){
     for ( int x = 0; x<26; x++){
       envColor[y][x] = ' ';
-      envShape[y][x] = 7;
+      envShape[y][x] = 0;
     }
   }
 
@@ -633,7 +633,7 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   ss.clear();
 
   // Get Row
-  char row;
+  unsigned char row;
   row = pos.at(0);
 
   // Convert Row from char to int
@@ -653,16 +653,16 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   ss.clear();
 
   // HL-L3230CDW
-  std::cout << "-----" << std::endl
-            << "POS:    " << pos    << std::endl
-            << "Row:    " << row    << std::endl // Char
-            << "Col:    " << col    << std::endl // Int
-            << "(x,y):  " << "(" << col << "," << intRow << ")"
-            << std::endl
-            << "Tile:   " << tile   << std::endl
-            << "Colour: " << colour << std::endl // Char
-            << "Shape:  " << shape  << std::endl // Int
-            << "-----" << std::endl;
+  // std::cout << "-----" << std::endl
+  //           << "POS:    " << pos    << std::endl
+  //           << "Row:    " << row    << std::endl // Char
+  //           << "Col:    " << col    << std::endl // Int
+  //           << "(x,y):  " << "(" << col << "," << intRow << ")"
+  //           << std::endl
+  //           << "Tile:   " << tile   << std::endl
+  //           << "Colour: " << colour << std::endl // Char
+  //           << "Shape:  " << shape  << std::endl // Int
+  //           << "-----" << std::endl;
 
   
 
@@ -670,7 +670,7 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   for (unsigned int i=0; i<boardState.size(); i++) {
     std::string tmpStr;
     // Gets iterated tile colour
-    char tmpTileColour;
+    unsigned char tmpTileColour;
     tmpTileColour = boardState[i].at(0);
     // Gets iterated tile shape
     int tmpTileShape;
@@ -680,7 +680,7 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     ss.clear();
     
     // Gets iterated row
-    char tmpRow;
+    unsigned char tmpRow;
     tmpRow = boardState[i].at(3);
     // Gets iterated col
     int tmpCol;
@@ -699,26 +699,46 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
     }
 
     // HL-L3230CDW
-    std::cout << "POS:    " << tmpRow << tmpCol << std::endl
-              << "Row:    " << tmpRow    << std::endl // Char
-              << "Col:    " << tmpCol    << std::endl // Int
-              << "(x,y):  " << "(" << tmpCol << "," << tmpIntRow << ")"
-              << std::endl
-              << "Tile:   " << tmpTileColour << tmpTileShape << std::endl
-              << "Colour: " << tmpTileColour << std::endl // Char
-              << "Shape:  " << tmpTileShape  << std::endl; // Int
+    // std::cout << "POS:    " << tmpRow << tmpCol << std::endl
+    //           << "Row:    " << tmpRow    << std::endl // Char
+    //           << "Col:    " << tmpCol    << std::endl // Int
+    //           << "(x,y):  " << "(" << tmpCol << "," << tmpIntRow << ")"
+    //           << std::endl
+    //           << "Tile:   " << tmpTileColour << tmpTileShape << std::endl
+    //           << "Colour: " << tmpTileColour << std::endl // Char
+    //           << "Shape:  " << tmpTileShape  << std::endl; // Int
 
     envColor[tmpIntRow][tmpCol] = tmpTileColour;
     envShape[tmpIntRow][tmpCol] = tmpTileShape;
   }
 
+  // Get row going up
   for ( int y = 0; y<26; y++){
     for ( int x = 0; x<26; x++){
-      std::cout << envColor[y][x];
-      std::cout << envShape[y][x];
+      for ( int i=0; i<6; i++){
+        if ( envShape[y][x] != 0 && envColor[y][x] != ' ' ){
+          if ( x == col+i ){
+            std::cout << envColor[y][x];
+            std::cout << envShape[y][x];
+          }
+        }
+      }
     }
+    std::cout << std::endl;
   }
 
+  // int count = 0;
+  // bool emplty = false;
+
+    // if ( envColor[row][col-1] == colour || envShape[row][col-1] == shape ){
+    //   std::cout << envColor[row][col-1] << envShape[row][col-1];
+    // }
+
+  // std::cout << envColor[intRow][col-1];
+  // std::cout << envShape[intRow][col-1];
+
   std::cout << "--- TEST ZONE END ---" << std::endl;
+  std::cout << intRow;
+  std::cout << colour;
   return 0;
 }
