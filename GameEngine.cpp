@@ -598,12 +598,25 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
 
   std::cout << std::endl << "--- TEST ZONE ---" << std::endl;
 
+  std::vector<std::string> rowArr;
+  std::vector<std::string> colArr;
+
   // Declare
   char alpha[] = {'A','B','C','D','E','F','G','H','I','J','K',
                    'L','M','N','O','P','Q','R','S','T','U','V',
                    'W','X','Y','Z'};
   int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
              20,21,22,23,24,25};
+
+  char envColor[26][26];
+  int envShape[26][26];
+
+  for ( int y = 0; y<26; y++){
+    for ( int x = 0; x<26; x++){
+      envColor[y][x] = ' ';
+      envShape[y][x] = 7;
+    }
+  }
 
   std::stringstream ss;
   std::string tmpStr;
@@ -695,13 +708,14 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
               << "Colour: " << tmpTileColour << std::endl // Char
               << "Shape:  " << tmpTileShape  << std::endl; // Int
 
-    
+    envColor[tmpIntRow][tmpCol] = tmpTileColour;
+    envShape[tmpIntRow][tmpCol] = tmpTileShape;
+  }
 
-    if (row == tmpRow) {
-      std::cout << "tmpRow CHECK " << std::endl;
-    }
-    if (col == tmpCol) {
-      std::cout << "tmpCol CHECK " << std::endl;
+  for ( int y = 0; y<26; y++){
+    for ( int x = 0; x<26; x++){
+      std::cout << envColor[y][x];
+      std::cout << envShape[y][x];
     }
   }
 
