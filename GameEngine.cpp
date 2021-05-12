@@ -716,54 +716,52 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   bool colDownStop = false;
   bool rowUpStop = false;
   bool rowDownStop = false;
-  bool colUpStopExtra = false;
-  bool colDownStopExtra = false;
-  bool rowUpStopExtra = false;
-  bool rowDownStopExtra = false;
+  bool colExtra = false;
+  bool rowExtra = false;
   for ( int i=1; i<6; i++){
     if ( envShape[intRow][col-i] != 0 && envColor[intRow][col-i] != ' ' && !colDownStop){
-        std::cout << envColor[intRow][col-i];
-        std::cout << envShape[intRow][col-i];
+        
+        std::cout << envColor[intRow][col-i] << envShape[intRow][col-i] << std::endl;
         score+=1;
-        if ( !colDownStopExtra ){
+        if ( !colExtra ){
           score+=1;
-          colDownStopExtra =true;
+          colExtra =true;
         }
     }
     else {
       colUpStop = true;
     }
     if ( envShape[intRow][col+i] != 0 && envColor[intRow][col+i] != ' ' && !colUpStop){
-        std::cout << envColor[intRow][col+i];
-        std::cout << envShape[intRow][col+i];
+
+        std::cout << envColor[intRow][col+i] << envShape[intRow][col+i] << std::endl;
         score+=1;
-        if (!colUpStopExtra){
+        if (!colExtra){
           score+=1;
-          colUpStopExtra=true;
+          colExtra=true;
         }
     }
     else {
       colDownStop = true;
     }
     if ( envShape[intRow+i][col] != 0 && envColor[intRow+i][col] != ' ' && !rowUpStop){
-        std::cout << envColor[intRow+i][col];
-        std::cout << envShape[intRow+i][col];
+
+        std::cout << envColor[intRow+i][col] << envShape[intRow+i][col] << std::endl;
         score+=1;
-        if (!rowUpStopExtra){
+        if (!rowExtra){
           score+=1;
-          rowUpStopExtra=true;
+          rowExtra=true;
         }
     }
     else {
       rowUpStop = true;
     }
     if ( envShape[intRow-i][col] != 0 && envColor[intRow-i][col] != ' ' && !rowDownStop){
-        std::cout << envColor[intRow-i][col];
-        std::cout << envShape[intRow-i][col];
+
+        std::cout << envColor[intRow-i][col] << envShape[intRow-i][col] << std::endl;
         score+=1;
-        if (!rowDownStopExtra){
+        if (!rowExtra){
           score+=1;
-          rowDownStopExtra=true;
+          rowExtra=true;
         }
     }
     else {
@@ -774,5 +772,8 @@ int GameEngine::scoreSystem(int playerScore, std::string tile, std::string pos, 
   std::cout << "--- TEST ZONE END ---" << std::endl;
   std::cout << intRow;
   std::cout << colour;
+  if (score == 0){
+    score = 2;
+  }
   return score;
 }
