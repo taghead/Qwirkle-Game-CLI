@@ -1,6 +1,7 @@
-
 #ifndef ASSIGN2_TILE_H
 #define ASSIGN2_TILE_H
+
+#include <string>
 
 // Define a Colour type
 typedef char Colour;
@@ -12,6 +13,8 @@ class Tile {
 public:
    Colour colour;
    Shape  shape;
+   
+   // Possible TODO
 };
 
 #endif // ASSIGN2_TILE_H
