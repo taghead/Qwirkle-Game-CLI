@@ -12,7 +12,6 @@ void newGame();
 void loadGame();
 
 bool checkUpperCase(std::string name);
-bool checkFile(std::string &filename);
 
 // GameEngine *gameEngine;
 
@@ -44,7 +43,7 @@ int main(void) {
       // TODO: Create function in other file
     }
     else if (choice == '2') {
-      std::cout << "LOAD GAME";
+      loadGame();
       // TODO: Create function in other file
     }
     else if (choice == '3') {
@@ -97,8 +96,9 @@ void newGame() {
                 << " (uppercase characters only)" << std::endl
                 << "> ";
       std::cin >> playerName;
-      // std::cin.ignore(256, '\n');
+
       validName = checkUpperCase(playerName);
+
       if(!validName && !std::cin.eof()) {
         std::cout << std::endl << "Invalid Input" << std::endl << std::endl;
       }
@@ -111,6 +111,37 @@ void newGame() {
   }
   // TILEBAG
   // DRAW 
+  // GAMEENGINE
+}
+
+void loadGame() {
+  bool validFile = false;
+  std::string filename;
+
+  while (!validFile && !std::cin.eof())
+  {
+    std::cout << "Enter the filename to load a game" << std::endl
+              << "> ";
+    std::cin >> filename;
+
+    if (std::cin.eof()) {
+      std::cout << std::endl << std::endl << "Goodbye!" << std::endl;
+      exit(0);
+    }
+
+    std::ifstream in;
+    in.open(filename);
+
+    if (in.fail()) {
+      std::cout << "Please enter a correct load filename" << std::endl;
+    }
+    else {
+      validFile = true;
+    }
+    in.close();
+  }
+
+  // LOAD GAME
   // GAMEENGINE
 }
 
