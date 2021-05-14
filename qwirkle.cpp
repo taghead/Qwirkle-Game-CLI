@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 #include "LinkedList.h"
 #include "TileCodes.h"
@@ -10,8 +11,7 @@
 
 void newGame();
 void loadGame();
-
-bool checkUpperCase(std::string name);
+bool checkUpperCase(std::string playerName);
 
 // GameEngine *gameEngine;
 
@@ -40,11 +40,9 @@ int main(void) {
     std::cout << std::endl;
     if (choice == '1') {
       newGame();
-      // TODO: Create function in other file
     }
     else if (choice == '2') {
       loadGame();
-      // TODO: Create function in other file
     }
     else if (choice == '3') {
       std::cout << "----------------------------------" << std::endl
