@@ -5,12 +5,20 @@
 
 class Node {
 public:
+  Node(Tile *tile, Node *next, Node *prev);
+  Node(Node &other);
 
-   Node(Tile* tile, Node* next);
-   Node(Node& other);
+  // Getters
+  Tile *getTile();
 
-   Tile*    tile;
-   Node*    next;
+  // toString
+  std::string toString();
+
+  Node *next;
+  Node *prev;
+
+private:
+  Tile *tile;
 };
 
 #endif // ASSIGN2_NODE_H
