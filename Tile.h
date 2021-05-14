@@ -11,10 +11,19 @@ typedef int Shape;
 
 class Tile {
 public:
-   Colour colour;
-   Shape  shape;
-   
-   // Possible TODO
+  Tile(Colour colour, Shape shape);
+  Tile(Tile& otherTile);
+
+  // Getters
+  Colour getColour();
+  Shape getShape();
+
+  // toString
+  std::string toString();
+
+private:
+  Colour colour;
+  Shape shape;
 };
 
 #endif // ASSIGN2_TILE_H
