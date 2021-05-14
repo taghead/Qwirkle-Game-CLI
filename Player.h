@@ -14,9 +14,9 @@ class Player {
   void drawTile(Tile *tile);
 
   // Getters
-  LinkedList getHand();
+  LinkedList getPlayerHand();
   std::string getPlayerName();
-  int getScore();
+  int getPlayerScore();
   LinkedList *getHandLinkedList();
 
   // toString

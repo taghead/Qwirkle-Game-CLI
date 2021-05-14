@@ -16,7 +16,7 @@ void Player::drawTile(Tile *tile) {
   hand.addBack(tile);
 }
 
-LinkedList Player::getHand() {
+LinkedList Player::getPlayerHand() {
   return hand;
 }
 
@@ -24,7 +24,7 @@ std::string Player::getPlayerName() {
   return name;
 }
 
-int Player::getScore() {
+int Player::getPlayerScore() {
   return score;
 }
 
