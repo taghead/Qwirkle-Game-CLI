@@ -97,11 +97,21 @@ void newGame() {
                 << " (uppercase characters only)" << std::endl
                 << "> ";
       std::cin >> playerName;
+      // std::cin.ignore(256, '\n');
       validName = checkUpperCase(playerName);
-      
-      std::cout << "name :" << playerName << "\nvalid?: " << validName;
+      if(!validName && !std::cin.eof()) {
+        std::cout << std::endl << "Invalid Input" << std::endl << std::endl;
+      }
+      else if (std::cin.eof()) {
+        std::cout << std::endl << std::endl << "Goodbye!" << std::endl;
+        exit(0);
+      }
     }
+    // ADD PLAYER NAME
   }
+  // TILEBAG
+  // DRAW 
+  // GAMEENGINE
 }
 
 bool checkUpperCase(std::string playerName) {
