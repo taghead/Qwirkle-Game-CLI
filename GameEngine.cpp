@@ -96,3 +96,13 @@ void GameEngine::createTileBag() {
     tileBag.deleteAt(randomNum);
   }
 }
+
+void GameEngine::drawTiles() {
+  for (Player* player : playersArr) {
+    for (int i = 0; i < MAX_HAND_SIZE; i++) {
+      Tile* tile = tileBag.getTileAt(0);
+      tileBag.deleteFront();
+      player->drawHand(tile);
+    }
+  }
+}

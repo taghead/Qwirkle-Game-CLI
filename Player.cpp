@@ -12,7 +12,7 @@ void Player::addPoints(int points) {
   this->score += points;
 }
 
-void Player::drawTile(Tile *tile) {
+void Player::drawHand(Tile *tile) {
   hand.addBack(tile);
 }
 

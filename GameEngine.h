@@ -37,6 +37,8 @@ public:
 
   void createTileBag();
 
+  void drawTiles();
+
   Player* currentPlayer;
 
 private:

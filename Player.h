@@ -12,7 +12,7 @@ public:
 
   // Custom Functions
   void addPoints(int points);
-  void drawTile(Tile *tile);
+  void drawHand(Tile *tile);
 
   // Getters
   LinkedList getPlayerHand();
