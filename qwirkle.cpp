@@ -8,9 +8,16 @@
 
 #define EXIT_SUCCESS 0
 
+void newGame();
+void loadGame();
+
+bool checkUpperCase(std::string name);
+bool checkFile(std::string &filename);
+
+// GameEngine *gameEngine;
+
 int main(void) {
-  LinkedList *list = new LinkedList();
-  delete list;
+  // GameEngine *gameEngine;
 
   // GREETING
   std::cout << "Welcome to Qwirkle!" << std::endl
@@ -33,10 +40,12 @@ int main(void) {
 
     std::cout << std::endl;
     if (choice == '1') {
-      std::cout << "NEW GAME";
+      newGame();
+      // TODO: Create function in other file
     }
     else if (choice == '2') {
       std::cout << "LOAD GAME";
+      // TODO: Create function in other file
     }
     else if (choice == '3') {
       std::cout << "----------------------------------" << std::endl
@@ -71,4 +80,35 @@ int main(void) {
   }
 
   return EXIT_SUCCESS;
+}
+
+void newGame() {
+  std::string playerName;
+  int playerCount = 2;
+  bool validName = false;
+
+  std::cout << "Starting a New Game"
+            << std::endl << std::endl;
+
+  for (int i = 0; i < playerCount; i++) {
+    validName = false;
+    while (!validName) {
+      std::cout << "Enter a name for player " << std::to_string(i + 1)
+                << " (uppercase characters only)" << std::endl
+                << "> ";
+      std::cin >> playerName;
+      validName = checkUpperCase(playerName);
+      
+      std::cout << "name :" << playerName << "\nvalid?: " << validName;
+    }
+  }
+}
+
+bool checkUpperCase(std::string playerName) {
+  for (char c : playerName) {
+    if (!isupper(c)) {
+      return false;
+    }
+  }
+  return true;
 }
