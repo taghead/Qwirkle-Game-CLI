@@ -29,25 +29,27 @@ public:
   GameEngine();
   ~GameEngine();
 
-  // Game Functions
+  // Game Functions 
   void saveGame(std::string filename);
   void loadGame(std::string filename);
-
+  void userInput();
   void addPlayer(std::string playerName);
-
   void createTileBag();
-
   void drawTiles();
+  void qwirkleEngine();
 
   Player* currentPlayer;
 
 private:
   LinkedList tileBag;
   int numOfPlayers;
-  int turnCount;
+  int numOfTurns;
+  int currentTurn = 0;
+  bool turnCheck = false;
   std::vector<Player*> playersArr;
 
   std::vector<std::vector<Tile*>> board{26, std::vector<Tile*>(26, nullptr)};
+  
   
 };
 

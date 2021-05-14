@@ -3,47 +3,58 @@
 #include <iostream>
 #include <string>
 
-Player::Player(std::string name) {
+Player::Player(std::string name)
+{
   this->name = name;
   this->score = 0;
 }
 
-void Player::addPoints(int points) {
+void Player::addPoints(int points)
+{
   this->score += points;
 }
 
-void Player::drawHand(Tile *tile) {
+void Player::drawHand(Tile *tile)
+{
   hand.addBack(tile);
 }
 
-LinkedList Player::getPlayerHand() {
+LinkedList Player::getPlayerHand()
+{
   return hand;
 }
 
-std::string Player::getPlayerName() {
+std::string Player::getPlayerName()
+{
   return name;
 }
 
-int Player::getPlayerScore() {
+int Player::getPlayerScore()
+{
   return score;
 }
 
-LinkedList *Player::getHandLinkedList() {
+LinkedList *Player::getHandLinkedList()
+{
   LinkedList *handPtr = new LinkedList();
   handPtr = &hand;
   return handPtr;
 }
 
-void Player::toStringHand() {
+void Player::toStringHand()
+{
   std::cout << "Your hand is" << std::endl;
-  // Iterate over player hand
-  for (int i = 0; i < hand.getSize(); i++) {
-    if (i < hand.getSize()-1) {
-      // Add spacing
+  for (int i = 0; i < hand.getSize(); i++)
+  {
+
+    if (i < hand.getSize() - 1)
+    {
       std::cout << hand.getTileAt(i)->toString() << ", ";
     }
-    else {
-      std::cout << hand.getTileAt(i)->toString() << std::endl << std::endl;
+    else
+    {
+      std::cout << hand.getTileAt(i)->toString() << std::endl
+                << std::endl;
     }
   }
 }

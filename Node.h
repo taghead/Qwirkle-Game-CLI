@@ -3,7 +3,8 @@
 
 #include "Tile.h"
 
-class Node {
+class Node
+{
 public:
   Node(Tile *tile, Node *next, Node *prev);
   Node(Node &other);
@@ -11,7 +12,7 @@ public:
   // Getters
   Tile *getTile();
 
-  // toString
+  // To String
   std::string toString();
 
   Node *next;
@@ -21,4 +22,4 @@ private:
   Tile *tile;
 };
 
-#endif // ASSIGN2_NODE_H
+#endif

@@ -3,7 +3,8 @@
 
 #include "Node.h"
 
-class LinkedList {
+class LinkedList
+{
 public:
   LinkedList();
   ~LinkedList();
@@ -31,8 +32,8 @@ private:
   Node *head;
   Node *tail;
   int size;
-  
+
   void clear();
 };
 
-#endif // ASSIGN2_LINKEDLIST_H
+#endif

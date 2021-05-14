@@ -1,70 +1,86 @@
 #include "LinkedList.h"
 
-LinkedList::LinkedList() {
+LinkedList::LinkedList()
+{
   head = nullptr;
   tail = nullptr;
   size = 0;
 }
 
-LinkedList::~LinkedList() {
-  // delete head
-  // delete tail
+LinkedList::~LinkedList()
+{
   // clear();
+  // delete head;
+  // delete tail;
 }
 
-void LinkedList::addFront(Tile *tile) {
+void LinkedList::addFront(Tile *tile)
+{
   Node *tmp = new Node(tile, head, nullptr);
-  if (head == nullptr) {
+  if (head == nullptr)
+  {
     head = tmp;
     tail = tmp;
   }
-  else {
+  else
+  {
     head = tmp;
   }
   size++;
 }
 
-void LinkedList::addBack(Tile *tile) {
+void LinkedList::addBack(Tile *tile)
+{
   Node *tmp = new Node(tile, nullptr, tail);
-  if (head == nullptr) {
+  if (head == nullptr)
+  {
     head = tmp;
     tail = tmp;
     tmp = nullptr;
   }
-  else {
+  else
+  {
     tail->next = tmp;
     tail = tmp;
   }
   size++;
 }
 
-void LinkedList::deleteFront() {
+void LinkedList::deleteFront()
+{
   Node *tmp = head;
   head = head->next;
   delete tmp;
   size--;
 }
 
-void LinkedList::deleteBack() {
+void LinkedList::deleteBack()
+{
   Node *tmp = tail;
   tail = tail->prev;
   delete tmp;
   size--;
 }
 
-void LinkedList::deleteAt(int pos) {
-  if (pos > size) {
+void LinkedList::deleteAt(int pos)
+{
+  if (pos > size)
+  {
     return;
   }
-  if (pos == 0) {
+  if (pos == 0)
+  {
     deleteFront();
   }
-  else if (pos == size - 1) {
+  else if (pos == size - 1)
+  {
     deleteBack();
   }
-  else {
+  else
+  {
     Node *curr = head;
-    for (int i = 0; i < pos; i++) {
+    for (int i = 0; i < pos; i++)
+    {
       curr = curr->next;
     }
     curr->prev->next = curr->next;
@@ -74,15 +90,19 @@ void LinkedList::deleteAt(int pos) {
   }
 }
 
-int LinkedList::getSize() {
+int LinkedList::getSize()
+{
   return size;
 }
 
-Node *LinkedList::getNode(Tile *tile) {
+Node *LinkedList::getNode(Tile *tile)
+{
   Node *foundNode = nullptr;
   Node *curr = head;
-  while (curr != nullptr && foundNode == nullptr) {
-    if (curr->getTile() == tile) {
+  while (curr != nullptr && foundNode == nullptr)
+  {
+    if (curr->getTile() == tile)
+    {
       foundNode = curr;
     }
     curr = curr->next;
@@ -90,11 +110,13 @@ Node *LinkedList::getNode(Tile *tile) {
   return foundNode;
 }
 
-Node *LinkedList::getNodeAt(int index) {
+Node *LinkedList::getNodeAt(int index)
+{
   Node *foundNode = nullptr;
   Node *curr = head;
   int i = 0;
-  while (i < index) {
+  while (i < index)
+  {
     curr = curr->next;
     i++;
   }
@@ -102,11 +124,13 @@ Node *LinkedList::getNodeAt(int index) {
   return foundNode;
 }
 
-Tile *LinkedList::getTileAt(int index) {
+Tile *LinkedList::getTileAt(int index)
+{
   int i = 0;
   Node *curr = head;
   Tile *tile;
-  while (i < index) {
+  while (i < index)
+  {
     curr = curr->next;
     i++;
   }
@@ -114,11 +138,14 @@ Tile *LinkedList::getTileAt(int index) {
   return tile;
 }
 
-std::string LinkedList::toStringBoard() {
+std::string LinkedList::toStringBoard()
+{
   std::string listString;
   Node *curr = head;
-  if (size > 0) {
-    for (int i = 0; i < size; i++) {
+  if (size > 0)
+  {
+    for (int i = 0; i < size; i++)
+    {
       listString += (curr->getTile()->toString() + " ");
       curr = curr->next;
     }
@@ -126,21 +153,27 @@ std::string LinkedList::toStringBoard() {
   return listString;
 }
 
-std::string LinkedList::toStringHand() {
+std::string LinkedList::toStringHand()
+{
   std::string listString;
   Node *curr = head;
-  if (size > 0) {
-    for (int i = 0; i < size - 1; i++) {
+  if (size > 0)
+  {
+    for (int i = 0; i < size - 1; i++)
+    {
       listString += (curr->getTile()->toString() + ",");
       curr = curr->next;
     }
     listString += curr->getTile()->toString();
   }
+
   return listString;
 }
 
-void LinkedList::clear() {
-  while (this->head != nullptr) {
+void LinkedList::clear()
+{
+  while (this->head != nullptr)
+  {
     Node *toDelete = this->head;
     head = toDelete->next;
     delete toDelete;

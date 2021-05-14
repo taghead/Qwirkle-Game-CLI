@@ -6,6 +6,7 @@
 
 #include "LinkedList.h"
 #include "TileCodes.h"
+#include "GameEngine.h"
 
 #define EXIT_SUCCESS 0
 
@@ -13,11 +14,10 @@ void newGame();
 void loadGame();
 bool checkUpperCase(std::string playerName);
 
-GameEngine *GameEngine;
+GameEngine* gameEngine;
 
-int main(void) {
-  GameEngine = new GameEngine();
-
+int main() {
+  gameEngine = new GameEngine();
   // GREETING
   std::cout << "Welcome to Qwirkle!" << std::endl
   << "-------------------" << std::endl;
@@ -76,7 +76,7 @@ int main(void) {
     }
   }
 
-  delete GameEngine;
+  //delete gameEngine;
   return EXIT_SUCCESS;
 }
 
@@ -106,11 +106,11 @@ void newGame() {
         exit(0);
       }
     }
-    GameEngine->addPlayer(playerName);
+    gameEngine->addPlayer(playerName);
   }
-  GameEngine->createTileBag();
-  GameEngine->drawTiles();
-  GameEngine->engine();
+  gameEngine->createTileBag();
+  gameEngine->drawTiles();
+  gameEngine->qwirkleEngine();
 
 }
 

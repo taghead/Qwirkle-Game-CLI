@@ -6,7 +6,8 @@
 #include "LinkedList.h"
 #include "Tile.h"
 
-class Player {
+class Player
+{
 public:
   Player(std::string name);
 
@@ -20,7 +21,7 @@ public:
   int getPlayerScore();
   LinkedList *getHandLinkedList();
 
-  // toString
+  // To String
   void toStringHand();
 
 private:
