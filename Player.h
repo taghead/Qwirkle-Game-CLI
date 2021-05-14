@@ -7,6 +7,7 @@
 #include "Tile.h"
 
 class Player {
+public:
   Player(std::string name);
 
   // Custom Functions

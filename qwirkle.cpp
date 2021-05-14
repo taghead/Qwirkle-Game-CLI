@@ -13,10 +13,10 @@ void newGame();
 void loadGame();
 bool checkUpperCase(std::string playerName);
 
-// GameEngine *gameEngine;
+GameEngine *GameEngine;
 
 int main(void) {
-  // GameEngine *gameEngine;
+  GameEngine = new GameEngine();
 
   // GREETING
   std::cout << "Welcome to Qwirkle!" << std::endl
@@ -76,6 +76,7 @@ int main(void) {
     }
   }
 
+  delete GameEngine;
   return EXIT_SUCCESS;
 }
 
@@ -105,11 +106,12 @@ void newGame() {
         exit(0);
       }
     }
-    // ADD PLAYER NAME
+    GameEngine->addPlayer(playerName);
   }
-  // TILEBAG
-  // DRAW 
-  // GAMEENGINE
+  GameEngine->createTileBag();
+  GameEngine->drawTiles();
+  GameEngine->engine();
+
 }
 
 void loadGame() {

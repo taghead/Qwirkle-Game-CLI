@@ -64,7 +64,35 @@ void GameEngine::saveGame(std::string filename) {
   // Adds remaining tile bag to file
   fileStream << tileBag.toStringHand() << std::endl;
   // Adds current player to file
-  fileStream << currentPlayer->getPlayerName() << std::end;
+  fileStream << currentPlayer->getPlayerName() << std::endl;
   // Closes file
   fileStream.close();
+}
+
+void GameEngine::addPlayer(std::string playerName) {
+  playersArr.push_back(new Player(playerName));
+  std::cout << std::endl;
+  numOfPlayers++;
+}
+
+void GameEngine::createTileBag() {
+  std::random_device random;
+  std::map<int, char> colourMap = {{0, RED}, {1, ORANGE}, {2, YELLOW}, 
+                                  {3, GREEN}, {4, BLUE}, {5, PURPLE}};
+  std::map<int, int> shapeMap = {{0, CIRCLE}, {1, STAR_4}, {2, DIAMOND},
+                                {3, SQUARE}, {4, STAR_6}, {5, CLOVER}};
+  for (unsigned int i = 0; i < colourMap.size(); i++) {
+    for (unsigned int j = 0; j < shapeMap.size(); j++) {
+      for (unsigned int k = 0; k < NO_OF_EACH_TILE; k++) {
+        tileBag.addBack(new Tile(colourMap[i], shapeMap[j]));
+      }
+    }
+  }
+  int randomNum = 0;
+  for (int i = 0; i < MAX_NO_OF_TILE; i++) {
+    std::uniform_int_distribution<int> uniform_dist(0, MAX_NO_OF_TILE-i-1);
+    randomNum = uniform_dist(random);
+    tileBag.addBack(new Tile(*(tileBag.getTileAt(randomNum))));
+    tileBag.deleteAt(randomNum);
+  }
 }

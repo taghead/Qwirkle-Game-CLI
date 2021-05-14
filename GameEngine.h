@@ -24,12 +24,18 @@
 #define DOWN                3
 
 class GameEngine {
+public:
+
   GameEngine();
   ~GameEngine();
 
   // Game Functions
   void saveGame(std::string filename);
   void loadGame(std::string filename);
+
+  void addPlayer(std::string playerName);
+
+  void createTileBag();
 
   Player* currentPlayer;
 
