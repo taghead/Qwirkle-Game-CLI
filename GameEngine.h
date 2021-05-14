@@ -31,23 +31,13 @@ public:
 
   void saveGame(std::string filename);
   void loadGame(std::string filename);
-  void printBoard();
-  void userInput();
+
   void addPlayer(std::string playerName);
   void createTileBag();
   void drawTiles();
   void qwirkleEngine();
-  bool tilePlace(std::string tile, std::string location, int index);
-  void changeTurn();
-  int calculatePoints(int letter, int number);
-  bool checkSurroundingTiles(Tile *tile, int letter, int number);
-  int countTiles(int letter, int number, int direction);
-  bool checkSingleTile(Tile *tile, int letter, int number, int direction);
-  bool checkManyTiles(Tile *tile, int tileCount, int letter, int number, int direction);
-  bool checkTiles(Tile *tile, int letter, int number, int axis);
-  void setLine(int &l, int &n, int direction);
-  bool checkDupeTile(Tile *tile, int letter, int number);
-  bool checkDupeBeforeTile(int letter, int number);
+  void printBoard();
+  void userInput();
 
   Player* currentPlayer;
 

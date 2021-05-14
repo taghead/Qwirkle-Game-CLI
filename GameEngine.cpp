@@ -58,8 +58,9 @@ void GameEngine::saveGame(std::string filename)
     {
       if (board[i][j] != nullptr)
       {
-        char alpha[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+        char alpha[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+                        'W', 'X', 'Y', 'Z'};
         saveBoard += board[i][j]->toString() + "@" + alpha[i] + std::to_string(j) + ",";
       }
     }
@@ -159,7 +160,7 @@ void GameEngine::qwirkleEngine()
     else
     {
       std::cin.ignore();
-      // userInput();
+      userInput();
     }
   }
 
@@ -171,41 +172,54 @@ void GameEngine::qwirkleEngine()
   // Check for winner
 }
 
-void GameEngine::printBoard() {
+void GameEngine::printBoard()
+{
   // Print numbers
-  for (int i = 0; i < BOARD_DIM; i++) {
-    if (i == 0) {
+  for (int i = 0; i < BOARD_DIM; i++)
+  {
+    if (i == 0)
+    {
       std::cout << "   " << i;
     }
-    else if (i <= 10) {
+    else if (i <= 10)
+    {
       std::cout << "  " << i;
     }
-    else {
+    else
+    {
       std::cout << " " << i;
     }
   }
   std::cout << std::endl;
   // Print hyphens
-  for (int i = 0; i < BOARD_DIM+1; i++) {
+  for (int i = 0; i < BOARD_DIM + 1; i++)
+  {
     // 27*3=81
     std::cout << "---";
   }
   std::cout << std::endl;
   // Print board
-  for (int y = 0; y < BOARD_DIM; y++) {
+  for (int y = 0; y < BOARD_DIM; y++)
+  {
     char c = y + 65;
     std::cout << c << " ";
-    for (int x = 0; x < BOARD_DIM; x++) {
-      if (board[y][x] != NULL_TILE) {
+    for (int x = 0; x < BOARD_DIM; x++)
+    {
+      if (board[y][x] != NULL_TILE)
+      {
         std::cout << "|" << board[y][x]->toString();
       }
-      else {
+      else
+      {
         std::cout << "|  ";
       }
     }
     std::cout << "|" << std::endl;
   }
-  
+
   std::cout << std::endl;
 }
 
+void userInput()
+{
+}
