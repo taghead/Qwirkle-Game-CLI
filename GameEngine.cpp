@@ -147,8 +147,7 @@ void GameEngine::qwirkleEngine()
       std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
                 << playersArr[i]->getPlayerScore() << std::endl;
     }
-    std::cout << "PRINT BOARD" << std::endl;
-    //printBoard();
+    printBoard();
     currentPlayer->toStringHand();
 
     if (std::cin.eof())
@@ -159,96 +158,54 @@ void GameEngine::qwirkleEngine()
     }
     else
     {
-      userInput();
+      std::cin.ignore();
+      // userInput();
     }
   }
 
   // Prints final board
-  std::cout << "PRINT BOARD" << std::endl;
-  //printBoard();
+  std::cout << "PRINT FINAL BOARD";
+  // printBoard();
   std::cout << "Game Over" << std::endl;
 
   // Check for winner
 }
 
-void GameEngine::userInput()
-{
-  // Do user input
-  bool inputIsValid = false;
-
-  while (!inputIsValid && !std::cin.eof())
-  {
-    std::cout << std::endl
-              << "> ";
-    std::string userIn;
-    std::getline(std::cin, userIn);
-
-    std::vector<std::string> inArr; // Input
-    std::stringstream data(userIn);
-
-    std::string tmpString;
-
-    while (std::getline(data, tmpString, ' '))
-    {
-      inArr.push_back(tmpString);
+void GameEngine::printBoard() {
+  // Print numbers
+  for (int i = 0; i < BOARD_DIM; i++) {
+    if (i == 0) {
+      std::cout << "   " << i;
     }
-
-    bool skipInvalidOutput = false;
-    // place G5 at C4
-    if (inArr.size() > 0)
-    {
-      if (inArr[0] == "place")
-      {
-        if (inArr.size() > 1)
-        {
-          {
-            if (inArr.size() > 2)
-            {
-              if (inArr[2] == "at")
-              {
-                if (inArr.size() > 3)
-                {
-
-                  // Do stuff for place tile at here
-                  inputIsValid = true;
-                }
-              }
-            }
-          }
-        }
-        // IF replace
-        if (inArr[0] == "replace")
-        {
-          if (inArr.size() > 1)
-          {
-            // Do replace tile stuff
-            inputIsValid = true;
-          }
-        }
-        // IF save game
-        if (inArr[0] == "save")
-        {
-          if (inArr.size() > 1)
-          {
-            // Do Save Game Stuff
-            skipInvalidOutput = true;
-          }
-        }
-        if (inArr[0] == "quit")
-        {
-          // Do quit game stuff
-          inputIsValid = true;
-        }
-      }
-      if (std::cin.eof())
-      {
-        inputIsValid = true;
-      }
-      if (!inputIsValid && !skipInvalidOutput)
-      {
-        std::cout << std::endl
-                  << "Invalid Input";
-      }
+    else if (i <= 10) {
+      std::cout << "  " << i;
+    }
+    else {
+      std::cout << " " << i;
     }
   }
+  std::cout << std::endl;
+  // Print hyphens
+  for (int i = 0; i < BOARD_DIM+1; i++) {
+    // 27*3=81
+    std::cout << "---";
+  }
+  std::cout << std::endl;
+  // Print board
+  for (int y = 0; y < BOARD_DIM; y++) {
+    char c = y + 65;
+    std::cout << c << " ";
+    for (int x = 0; x < BOARD_DIM; x++) {
+      if (board[y][x] != NULL_TILE) {
+        std::cout << "|" << board[y][x]->toString();
+      }
+      else {
+        std::cout << "|  ";
+      }
+    }
+    std::cout << "|" << std::endl;
+  }
+  
+  std::cout << std::endl;
 }
+
