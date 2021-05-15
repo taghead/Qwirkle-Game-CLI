@@ -36,12 +36,14 @@ public:
   bool tilePlace(std::string tile, std::string location, int index);
   bool tileReplace(int index);
   bool checkNeighbourTiles(Tile *tile, int row, int col);
+  // bool CheckSingleTile(Tile *tile, int row, int col, int dir);
+  // bool CheckMultipleTile(Tile *tile, int row, int col, int num, int dir);
+  // bool CheckExistingTile(Tile *tile, int row, int col);
+  // bool CheckDuplicateTile(int row, int col);
   void changeTurn();
   int  calcPoints(int row, int col);
   int  countTiles(int row, int col, int dir);
   void setLine(int &r, int &c, int dir);
-
-  // Check surrounding
 
   Player* currentPlayer;
 

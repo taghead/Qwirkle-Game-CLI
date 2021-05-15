@@ -78,6 +78,8 @@ void GameEngine::saveGame(std::string filename)
   outFile.close();
 }
 
+// LOAD GAME
+
 void GameEngine::addPlayer(std::string name)
 {
   playersArr.push_back(new Player(name));
@@ -589,6 +591,11 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
 
   return foundTile;
 }
+
+// bool GameEngine::CheckSingleTile(Tile *tile, int row, int col, int dir);
+// bool GameEngine::CheckMultipleTile(Tile *tile, int row, int col, int num, int dir);
+// bool GameEngine::CheckExistingTile(Tile *tile, int row, int col);
+// bool GameEngine::CheckDuplicateTile(int row, int col);
 
 void GameEngine::changeTurn()
 {
