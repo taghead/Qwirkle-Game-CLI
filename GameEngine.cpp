@@ -387,7 +387,7 @@ void GameEngine::printWinner()
   }
   else
   {
-    std::cout << "Players " << winner << " drew!" << std::endl;
+    std::cout << "Players " << winner << "drew!" << std::endl;
   }
 }
 
