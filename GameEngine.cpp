@@ -220,6 +220,6 @@ void GameEngine::printBoard()
   std::cout << std::endl;
 }
 
-void userInput()
+void GameEngine::userInput()
 {
 }
