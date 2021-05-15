@@ -260,7 +260,7 @@ void GameEngine::userInput(std::string userInput)
       std::cout << "Invalid Input" << std::endl;
     }
   }
-  
+
   // Check for "replace"
   else if (userInput.substr(0, 7) == "replace")
   {
@@ -290,7 +290,11 @@ void GameEngine::userInput(std::string userInput)
       std::cout << "Invalid Input" << std::endl;
     }
   }
-  
+  // SAVE
+
+  // LOAD
+
+  // QUIT
 }
 
 bool GameEngine::tilePlace(std::string tile, std::string location, int index)
@@ -299,32 +303,32 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
 
   // Pointers to players objects
   Tile *selectedTile = currentPlayer->getHandLinkedList()->getTileAt(index);
-  LinkedList *hand = currentPlayer->getHandLinkedList();
+  LinkedList *playerHand = currentPlayer->getHandLinkedList();
 
-  // Convert coordinate letter from string to int number
-  char letterChar = location.at(0);
-  int letter = letterChar - 65;
+  // Convert coordinate from string to int number
+  char ycoord = location.at(0);
+  int row = ycoord - 65;
 
   // Convert coordinate number/s from string to int number
-  int number = std::stoi(location.substr(1, 2));
-  
+  int col = std::stoi(location.substr(1, 2));
+
   // Allow player to place tile anywhere on first turn
   if (numOfTurns == INITIAL_TURN_COUNT)
   {
-    hand->deleteAt(index);
+    playerHand->deleteAt(index);
     if (tileBag.getSize() > 0)
     {
       currentPlayer->drawHand(tileBag.getTileAt(0));
       tileBag.deleteFront();
     }
-    board[letter][number] = selectedTile;
+    board[row][col] = selectedTile;
     // currentPlayer->addPoints(calculatePoints(letter, number));
     isValidPlacement = true;
   }
   else
   {
     // Check is space is empty
-    if (board[letter][number] != NULL_TILE)
+    if (board[row][col] != NULL_TILE)
     {
       std::cout << "Invalid Input" << std::endl;
       isValidPlacement = false;
@@ -332,19 +336,19 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
     else
     {
       // If surrounding placement is valid
-      //if (checkSurroundingTiles(selectedTile, letter, number))
+      //if (checkSurroundingTiles(selectedTile, row, col))
       if (isValidPlacement == true)
       {
-        hand->deleteAt(index);
+        playerHand->deleteAt(index);
         if (tileBag.getSize() > 0)
         {
           currentPlayer->drawHand(tileBag.getTileAt(0));
           tileBag.deleteFront();
         }
         // Assigned tile a place on the board
-        board[letter][number] = selectedTile;
+        board[row][col] = selectedTile;
         // Calculate points
-        //currentPlayer->addPoints(calculatePoints(letter, number));
+        //currentPlayer->addPoints(calcPoints(row, col));
         isValidPlacement = true;
       }
       else
@@ -396,4 +400,87 @@ void GameEngine::changeTurn()
     numOfTurns++;
   }
   currentPlayer = playersArr[currentTurn];
+}
+
+int GameEngine::calcPoints(int row, int col)
+{
+  int score = 0;
+  if (numOfTurns == INITIAL_TURN_COUNT)
+  {
+    score += 2;
+  }
+  int relativeTile[4];
+
+  for (int i = 0; i < 4; i++)
+  {
+    relativeTile[i] = countTiles(row, col, i);
+
+    if (relativeTile[i] == 5)
+    {
+      std::cout << "QWIRKLE!" << std::endl;
+      relativeTile[i] = 11;
+    }
+  }
+  for (int i : relativeTile)
+  {
+    if (i > 0)
+    {
+      score++;
+    }
+    score += i;
+  }
+  return score;
+}
+
+int GameEngine::countTiles(int row, int col, int dir)
+{
+  int numOfTiles = 0;
+  int r;
+  int c;
+  setLine(r, c, dir);
+  for (int i = 1; i <= 6; i++)
+  {
+
+    int y = row + i * r;
+    int x = col + i * c;
+
+    if (y >= 0 && x >= 0)
+    {
+      if (board[y][x] != NULL_TILE)
+      {
+        numOfTiles++;
+      }
+      else
+      {
+        i = 6;
+      }
+    }
+  }
+  return numOfTiles;
+}
+
+void GameEngine::setLine(int &r, int &c, int dir)
+{
+  int left = 0, up = 1, right = 2; // down = 3;
+
+  if (dir == left)
+  {
+    r = 0;
+    c = -1;
+  }
+  else if (dir == right)
+  {
+    r = 0;
+    c = 1;
+  }
+  else if (dir == up)
+  {
+    r = -1;
+    c = 0;
+  }
+  else
+  {
+    r = 1;
+    c = 0;
+  }
 }

@@ -18,11 +18,6 @@
 #define MAX_NO_OF_TILE      72
 #define MAX_HAND_SIZE       6
 
-#define LEFT                0
-#define UP                  1
-#define RIGHT               2
-#define DOWN                3
-
 class GameEngine {
 public:
 
@@ -41,7 +36,11 @@ public:
   bool tilePlace(std::string tile, std::string location, int index);
   bool tileReplace(int index);
   void changeTurn();
+  int  calcPoints(int row, int col);
+  int  countTiles(int row, int col, int dir);
+  void setLine(int &r, int &c, int dir);
 
+  // Check surrounding
 
   Player* currentPlayer;
 
