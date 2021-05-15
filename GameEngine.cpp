@@ -159,8 +159,11 @@ void GameEngine::qwirkleEngine()
     }
     else
     {
-      std::cin.ignore();
-      userInput();
+      std::string in;
+      std::cout << "> ";
+      std::getline(std::cin, in);
+
+      userInput(in);
     }
   }
 
@@ -220,6 +223,115 @@ void GameEngine::printBoard()
   std::cout << std::endl;
 }
 
-void GameEngine::userInput()
+void GameEngine::userInput(std::string userInput)
 {
+  bool valid = false;
+  int index = 0;
+
+  // Check for "place"
+  if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
+  {
+    std::string selectedTile = userInput.substr(6, 2);
+
+    for (int i = 0; i < currentPlayer->getPlayerHand().getSize(); i++)
+    {
+      Tile *tileInHand = currentPlayer->getPlayerHand().getTileAt(i);
+      if (tileInHand->toString() == selectedTile)
+      {
+        valid = true;
+        index = i;
+
+        i = currentPlayer->getPlayerHand().getSize();
+      }
+    }
+    if (valid)
+    {
+      std::string location = userInput.substr(12, 14);
+
+      bool tilePlaceCheck = false; /* = tilePlace(selectedTile, location, index); */
+      if (tilePlaceCheck)
+      {
+        tilesPlaced += 1;
+        changeTurn();
+      }
+    }
+    else
+    {
+      std::cout << "Invalid Input" << std::endl;
+    }
+  }
+  
+  // Check for "replace"
+  else if (userInput.substr(0, 7) == "replace")
+  {
+    std::string selectedTile = userInput.substr(8, 2);
+
+    for (int i = 0; i < currentPlayer->getPlayerHand().getSize(); i++)
+    {
+      Tile *tileInHand = currentPlayer->getPlayerHand().getTileAt(i);
+      if (tileInHand->toString() == selectedTile)
+      {
+        valid = true;
+        index = i;
+
+        i = currentPlayer->getPlayerHand().getSize();
+      }
+    }
+    if (valid)
+    {
+      bool tileReplaceCheck = tileReplace(index);
+      if (tileReplaceCheck)
+      {
+        changeTurn();
+      }
+    }
+    else
+    {
+      std::cout << "Invalid Input" << std::endl;
+    }
+  }
+  
+}
+
+// void GameEngine::tilePlace()
+
+bool GameEngine::tileReplace(int index)
+{
+  bool tileReplaced = false;
+  if (tileBag.getSize() > 0)
+  {
+    Tile *tileInHand = currentPlayer->getHandLinkedList()->getTileAt(index);
+    currentPlayer->getHandLinkedList()->deleteAt(index);
+    tileBag.addBack(tileInHand);
+
+    currentPlayer->drawHand(tileBag.getTileAt(0));
+    tileBag.deleteFront();
+    tileReplaced = true;
+  }
+  else
+  {
+    std::cout << "Invalid Input" << std::endl;
+  }
+  return tileReplaced;
+}
+
+void GameEngine::changeTurn()
+{
+  if (std::cin.eof())
+  {
+    std::cout << std::endl
+              << "Goodbye!" << std::endl;
+    exit(0);
+  }
+  else if ((unsigned)currentTurn == playersArr.size() - 1)
+  {
+    currentTurn = INITIAL_TURN_COUNT;
+    numOfTurns++;
+  }
+  else
+  {
+    currentTurn++;
+    numOfTurns++;
+  }
+  currentPlayer = playersArr[currentTurn];
 }

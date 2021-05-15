@@ -37,7 +37,11 @@ public:
   void drawTiles();
   void qwirkleEngine();
   void printBoard();
-  void userInput();
+  void userInput(std::string userInput);
+  // void tilePlace();
+  bool tileReplace(int index);
+  void changeTurn();
+
 
   Player* currentPlayer;
 
