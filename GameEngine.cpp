@@ -145,12 +145,12 @@ void GameEngine::loadGame(std::string filename)
       std::stringstream data(fileVector[i]);
       std::string tmpString;
 
-      char alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K',
-                   'L','M','N','O','P','Q','R','S','T','U','V',
-                   'W','X','Y','Z'};
+      char alphabet[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                         'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+                         'W', 'X', 'Y', 'Z'};
 
-      int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
-                20,21,22,23,24,25};
+      int alphaNum[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                        20, 21, 22, 23, 24, 25};
 
       while (std::getline(data, tmpString, ','))
       {
@@ -160,23 +160,25 @@ void GameEngine::loadGame(std::string filename)
 
         // Convert row alpha to numeric
         int row = 0;
-        for ( int i = 0; i<26; i++){
-          if ( tmpString.at(3) == alphabet[i] ){
+        for (int i = 0; i < 26; i++)
+        {
+          if (tmpString.at(3) == alphabet[i])
+          {
             row = alphaNum[i];
           }
         }
 
         // Convert col to int
         std::string tmpColString = tmpString;
-        tmpColString.erase(0,4);
+        tmpColString.erase(0, 4);
         int col;
         std::stringstream ss;
         ss << tmpColString;
         ss >> col;
         ss.clear();
-        
+
         // Add tile to board
-         board[row][col] = new Tile(colour, shape);
+        board[row][col] = new Tile(colour, shape);
       }
     }
     if (i == 8)
@@ -356,7 +358,7 @@ void GameEngine::printBoard()
     }
     std::cout << "|" << std::endl;
   }
-  
+
   std::cout << std::endl;
 }
 
@@ -471,9 +473,16 @@ void GameEngine::userInput(std::string userInput)
   // QUIT
   else if (userInput.substr(0, 4) == "quit")
   {
-    std::cout << std::endl << "Game Over" << std::endl;
+    std::cout << std::endl
+              << "Game Over" << std::endl;
     printWinner();
     std::cout << std::endl
+              << "Goodbye!" << std::endl;
+    exit(0);
+  }
+  else if (std::cin.eof())
+  {
+    std::cout << std::endl << std::endl
               << "Goodbye!" << std::endl;
     exit(0);
   }
