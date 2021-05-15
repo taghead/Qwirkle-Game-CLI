@@ -38,7 +38,7 @@ public:
   void qwirkleEngine();
   void printBoard();
   void userInput(std::string userInput);
-  // void tilePlace();
+  bool tilePlace(std::string tile, std::string location, int index);
   bool tileReplace(int index);
   void changeTurn();
 

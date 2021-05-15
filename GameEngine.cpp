@@ -248,7 +248,7 @@ void GameEngine::userInput(std::string userInput)
     {
       std::string location = userInput.substr(12, 14);
 
-      bool tilePlaceCheck = false; /* = tilePlace(selectedTile, location, index); */
+      bool tilePlaceCheck = tilePlace(selectedTile, location, index);
       if (tilePlaceCheck)
       {
         tilesPlaced += 1;
@@ -293,7 +293,69 @@ void GameEngine::userInput(std::string userInput)
   
 }
 
-// void GameEngine::tilePlace()
+bool GameEngine::tilePlace(std::string tile, std::string location, int index)
+{
+  bool isValidPlacement = false;
+
+  // Pointers to players objects
+  Tile *selectedTile = currentPlayer->getHandLinkedList()->getTileAt(index);
+  LinkedList *hand = currentPlayer->getHandLinkedList();
+
+  // Convert coordinate letter from string to int number
+  char letterChar = location.at(0);
+  int letter = letterChar - 65;
+
+  // Convert coordinate number/s from string to int number
+  int number = std::stoi(location.substr(1, 2));
+  
+  // Allow player to place tile anywhere on first turn
+  if (numOfTurns == INITIAL_TURN_COUNT)
+  {
+    hand->deleteAt(index);
+    if (tileBag.getSize() > 0)
+    {
+      currentPlayer->drawHand(tileBag.getTileAt(0));
+      tileBag.deleteFront();
+    }
+    board[letter][number] = selectedTile;
+    // currentPlayer->addPoints(calculatePoints(letter, number));
+    isValidPlacement = true;
+  }
+  else
+  {
+    // Check is space is empty
+    if (board[letter][number] != NULL_TILE)
+    {
+      std::cout << "Invalid Input" << std::endl;
+      isValidPlacement = false;
+    }
+    else
+    {
+      // If surrounding placement is valid
+      //if (checkSurroundingTiles(selectedTile, letter, number))
+      if (isValidPlacement == true)
+      {
+        hand->deleteAt(index);
+        if (tileBag.getSize() > 0)
+        {
+          currentPlayer->drawHand(tileBag.getTileAt(0));
+          tileBag.deleteFront();
+        }
+        // Assigned tile a place on the board
+        board[letter][number] = selectedTile;
+        // Calculate points
+        //currentPlayer->addPoints(calculatePoints(letter, number));
+        isValidPlacement = true;
+      }
+      else
+      {
+        std::cout << "Invalid Input" << std::endl;
+        isValidPlacement = false;
+      }
+    }
+  }
+  return isValidPlacement;
+}
 
 bool GameEngine::tileReplace(int index)
 {
