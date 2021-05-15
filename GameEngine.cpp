@@ -205,7 +205,6 @@ void GameEngine::loadGame(std::string filename)
     }
   }
 
-
   std::cout << std::endl
             << "Qwirkle game successfully loaded" << std::endl;
 }
@@ -213,8 +212,6 @@ void GameEngine::loadGame(std::string filename)
 void GameEngine::addPlayer(std::string name)
 {
   playersArr.push_back(new Player(name));
-  std::cout << std::endl;
-
   numOfPlayers++;
 }
 
