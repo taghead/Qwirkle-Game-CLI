@@ -151,9 +151,8 @@ void loadGame()
     }
     in.close();
   }
-
-  // LOAD GAME
-  // GAMEENGINE
+  gameEngine->loadGame(filename);
+  gameEngine->qwirkleEngine();
 }
 
 void studentInfo()

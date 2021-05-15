@@ -71,7 +71,144 @@ void GameEngine::saveGame(std::string filename)
   outFile.close();
 }
 
-// LOAD GAME
+void GameEngine::loadGame(std::string filename)
+{
+  std::ifstream in(filename);
+
+  std::string str;
+  std::vector<std::string> fileVector;
+
+  // Read the next line from File untill it reaches the end.
+  while (std::getline(in, str))
+  {
+    fileVector.push_back(str);
+  }
+
+  for (unsigned int i = 0; i < fileVector.size(); i++)
+  {
+    // fileVector[i] is the line in the file
+    if (i == 0)
+    {
+      //Load player 1 name
+      std::string name = fileVector[i];
+      addPlayer(name);
+    }
+    if (i == 1)
+    {
+      //Load player 1 score
+      int playerScoreScoreInt = std::stoi(fileVector[i]);
+      playersArr.at(0)->addPoints(playerScoreScoreInt);
+    }
+    if (i == 2)
+    {
+      //Load player 1 hand
+      std::istringstream playerOneHandStream(fileVector[i]);
+      std::string playerOneTile;
+      while (std::getline(playerOneHandStream, playerOneTile, ','))
+      {
+        char colour = playerOneTile.at(0);
+        int shape = stoi(playerOneTile.substr(1));
+        playersArr.at(0)->drawHand(new Tile(colour, shape));
+      }
+    }
+    if (i == 3)
+    {
+      //Load player 2 name
+      std::string name = fileVector[i];
+      addPlayer(name);
+    }
+    if (i == 4)
+    {
+      //Load player 2 score
+      int playerScoreScoreInt = std::stoi(fileVector[i]);
+      playersArr.at(1)->addPoints(playerScoreScoreInt);
+    }
+    if (i == 5)
+    {
+      //Load player 2 hand
+      std::istringstream playerTwoHandStream(fileVector[i]);
+      std::string playerTwoTile;
+      while (std::getline(playerTwoHandStream, playerTwoTile, ','))
+      {
+        char colour = playerTwoTile.at(0);
+        int shape = stoi(playerTwoTile.substr(1));
+        playersArr.at(1)->drawHand(new Tile(colour, shape));
+      }
+    }
+    if (i == 6)
+    {
+      //Load Board Shape
+    }
+    if (i == 7)
+    {
+      //Load board State
+      std::stringstream data(fileVector[i]);
+      std::string tmpString;
+
+      char alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K',
+                   'L','M','N','O','P','Q','R','S','T','U','V',
+                   'W','X','Y','Z'};
+
+      int alphaNum[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
+                20,21,22,23,24,25};
+
+      while (std::getline(data, tmpString, ','))
+      {
+        // Get color and shape
+        char colour = tmpString.at(0);
+        int shape = stoi(tmpString.substr(1));
+
+        // Convert row alpha to numeric
+        int row = 0;
+        for ( int i = 0; i<26; i++){
+          if ( tmpString.at(3) == alphabet[i] ){
+            row = alphaNum[i];
+          }
+        }
+
+        // Convert col to int
+        std::string tmpColString = tmpString;
+        tmpColString.erase(0,4);
+        int col;
+        std::stringstream ss;
+        ss << tmpColString;
+        ss >> col;
+        ss.clear();
+        
+        // Add tile to board
+         board[row][col] = new Tile(colour, shape);
+      }
+    }
+    if (i == 8)
+    {
+      //Load tilebag
+      std::istringstream tileBagStream(fileVector[i]);
+      std::string tile;
+      while (std::getline(tileBagStream, tile, ','))
+      {
+        char colour = tile.at(0);
+        int shape = stoi(tile.substr(1));
+        tileBag.addBack(new Tile(colour, shape));
+      }
+    }
+    if (i == 9)
+    {
+      // //Load current player's turn
+      for (unsigned int i = 0; i < playersArr.size(); i++)
+      {
+        if (fileVector[i] == playersArr[i]->getPlayerName())
+        {
+          currentPlayer = &*playersArr[i];
+          currentTurn = i;
+        }
+      }
+    }
+  }
+
+
+  std::cout << std::endl
+            << "Qwirkle game successfully loaded" << std::endl;
+}
 
 void GameEngine::addPlayer(std::string name)
 {
