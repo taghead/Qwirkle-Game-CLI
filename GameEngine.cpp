@@ -130,13 +130,15 @@ void GameEngine::qwirkleEngine()
     // Checks if both the current players hand and the tile bag is empty
     if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
     {
+      p->addPoints(6);
       winConditionCheck = true;
     }
   }
 
   while (!winConditionCheck && !std::cin.eof())
   {
-    std::cout << currentPlayer->getPlayerName()
+    std::cout << std::endl
+              << currentPlayer->getPlayerName()
               << ", it's your turn!" << std::endl;
     for (int i = 0; i < numOfPlayers; i++)
     {
@@ -158,11 +160,11 @@ void GameEngine::qwirkleEngine()
       std::string in;
       std::cout << "> ";
       std::getline(std::cin, in);
+      // Fixed immediate input
       if (in == "")
       {
         std::getline(std::cin, in);
       }
-
       userInput(in);
     }
   }
@@ -220,7 +222,7 @@ void GameEngine::printBoard()
     }
     std::cout << "|" << std::endl;
   }
-
+  
   std::cout << std::endl;
 }
 
@@ -328,15 +330,14 @@ void GameEngine::userInput(std::string userInput)
     std::string filename = userInput.substr(5);
     saveGame(filename);
     std::cout << std::endl
-              << "Game successfully saved" << std::endl
-              << std::endl;
+              << "Game successfully saved" << std::endl;
   }
   // LOAD
 
   // QUIT
   else if (userInput.substr(0, 4) == "quit")
   {
-    std::cout << "Game Over" << std::endl;
+    std::cout << std::endl << "Game Over" << std::endl;
     printWinner();
     std::cout << std::endl
               << "Goodbye!" << std::endl;

@@ -12,15 +12,17 @@
 
 void newGame();
 void loadGame();
+void studentInfo();
 bool checkUpperCase(std::string playerName);
 
-GameEngine* gameEngine;
+GameEngine *gameEngine;
 
-int main() {
+int main()
+{
   gameEngine = new GameEngine();
   // GREETING
   std::cout << "Welcome to Qwirkle!" << std::endl
-  << "-------------------" << std::endl;
+            << "-------------------" << std::endl;
 
   // MENU
   std::cout << "Menu" << std::endl
@@ -31,47 +33,40 @@ int main() {
             << "4. Quit" << std::endl;
 
   // USER CHOICE
-  while (!std::cin.eof()) {
-    std::cout << std::endl << "> ";
-    
+  while (!std::cin.eof())
+  {
+    std::cout << std::endl
+              << "> ";
+
     char choice;
     std::cin >> choice;
 
     std::cout << std::endl;
-    if (choice == '1') {
+    if (choice == '1')
+    {
       newGame();
     }
-    else if (choice == '2') {
+    else if (choice == '2')
+    {
       loadGame();
     }
-    else if (choice == '3') {
-      std::cout << "----------------------------------" << std::endl
-                << "Name: James Parsell" << std::endl
-                << "Student ID: s3599751" << std::endl
-                << "Email: s3599751@student.rmit.edu.au" << std::endl
-                << std::endl
-                << "Name: Andrew Chander" << std::endl
-                << "Student ID: s3666434" << std::endl
-                << "Email: s3666434@student.rmit.edu.au" << std::endl
-                << std::endl
-                << "Name: Cameron Tavelli" << std::endl
-                << "Student ID: s3668468" << std::endl
-                << "Email: s3668468@student.rmit.edu.au" << std::endl
-                << std::endl
-                << "Name: Siang Hii" << std::endl
-                << "Student ID: s3668877" << std::endl
-                << "Email: s3668877@student.rmit.edu.au" << std::endl
-                << "----------------------------------" << std::endl;
+    else if (choice == '3')
+    {
+      studentInfo();
     }
-    else if (choice == '4') {
+    else if (choice == '4')
+    {
       std::cout << "Goodbye!" << std::endl;
       exit(0);
     }
-    else if (std::cin.eof()) {
-      std::cout << std::endl << "Goodbye!" << std::endl;
+    else if (std::cin.eof())
+    {
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
       exit(0);
     }
-    else {
+    else
+    {
       std::cout << "Invalid Input" << std::endl;
     }
   }
@@ -80,17 +75,21 @@ int main() {
   return EXIT_SUCCESS;
 }
 
-void newGame() {
+void newGame()
+{
   std::string playerName;
   int playerCount = 2;
   bool validName = false;
 
   std::cout << "Starting a New Game"
-            << std::endl << std::endl;
+            << std::endl
+            << std::endl;
 
-  for (int i = 0; i < playerCount; i++) {
+  for (int i = 0; i < playerCount; i++)
+  {
     validName = false;
-    while (!validName) {
+    while (!validName)
+    {
       std::cout << "Enter a name for player " << std::to_string(i + 1)
                 << " (uppercase characters only)" << std::endl
                 << "> ";
@@ -98,11 +97,17 @@ void newGame() {
 
       validName = checkUpperCase(playerName);
 
-      if(!validName && !std::cin.eof()) {
-        std::cout << std::endl << "Invalid Input" << std::endl << std::endl;
+      if (!validName && !std::cin.eof())
+      {
+        std::cout << std::endl
+                  << "Invalid Input" << std::endl
+                  << std::endl;
       }
-      else if (std::cin.eof()) {
-        std::cout << std::endl << std::endl << "Goodbye!" << std::endl;
+      else if (std::cin.eof())
+      {
+        std::cout << std::endl
+                  << std::endl
+                  << "Goodbye!" << std::endl;
         exit(0);
       }
     }
@@ -112,10 +117,10 @@ void newGame() {
   gameEngine->createTileBag();
   gameEngine->drawTiles();
   gameEngine->qwirkleEngine();
-
 }
 
-void loadGame() {
+void loadGame()
+{
   bool validFile = false;
   std::string filename;
 
@@ -125,18 +130,23 @@ void loadGame() {
               << "> ";
     std::cin >> filename;
 
-    if (std::cin.eof()) {
-      std::cout << std::endl << std::endl << "Goodbye!" << std::endl;
+    if (std::cin.eof())
+    {
+      std::cout << std::endl
+                << std::endl
+                << "Goodbye!" << std::endl;
       exit(0);
     }
 
     std::ifstream in;
     in.open(filename);
 
-    if (in.fail()) {
+    if (in.fail())
+    {
       std::cout << "Please enter a correct load filename" << std::endl;
     }
-    else {
+    else
+    {
       validFile = true;
     }
     in.close();
@@ -146,9 +156,33 @@ void loadGame() {
   // GAMEENGINE
 }
 
-bool checkUpperCase(std::string playerName) {
-  for (char c : playerName) {
-    if (!isupper(c)) {
+void studentInfo()
+{
+  std::cout << "----------------------------------" << std::endl
+          << "Name: James Parsell" << std::endl
+          << "Student ID: s3599751" << std::endl
+          << "Email: s3599751@student.rmit.edu.au" << std::endl
+          << std::endl
+          << "Name: Andrew Chander" << std::endl
+          << "Student ID: s3666434" << std::endl
+          << "Email: s3666434@student.rmit.edu.au" << std::endl
+          << std::endl
+          << "Name: Cameron Tavelli" << std::endl
+          << "Student ID: s3668468" << std::endl
+          << "Email: s3668468@student.rmit.edu.au" << std::endl
+          << std::endl
+          << "Name: Siang Hii" << std::endl
+          << "Student ID: s3668877" << std::endl
+          << "Email: s3668877@student.rmit.edu.au" << std::endl
+          << "----------------------------------" << std::endl;
+}
+
+bool checkUpperCase(std::string playerName)
+{
+  for (char c : playerName)
+  {
+    if (!isupper(c))
+    {
       return false;
     }
   }
