@@ -65,16 +65,9 @@ void GameEngine::saveGame(std::string filename)
       }
     }
   }
-
-  //saveBoard = saveBoard.substr(0, saveBoard.size()-1);
-
   outFile << saveBoard << std::endl;
-  ;
-
   outFile << tileBag.toStringHand() << std::endl;
-
   outFile << currentPlayer->getPlayerName() << std::endl;
-
   outFile.close();
 }
 
@@ -150,6 +143,7 @@ void GameEngine::qwirkleEngine()
       std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
                 << playersArr[i]->getPlayerScore() << std::endl;
     }
+
     printBoard();
     currentPlayer->toStringHand();
 
@@ -164,16 +158,22 @@ void GameEngine::qwirkleEngine()
       std::string in;
       std::cout << "> ";
       std::getline(std::cin, in);
+      if (in == "")
+      {
+        std::getline(std::cin, in);
+      }
 
       userInput(in);
     }
   }
 
   // Prints final board
+  std::cout << std::endl;
   printBoard();
   std::cout << "Game Over" << std::endl;
 
-  // Check for winner
+  // Prints winner
+  printWinner();
 }
 
 void GameEngine::printBoard()
@@ -222,6 +222,37 @@ void GameEngine::printBoard()
   }
 
   std::cout << std::endl;
+}
+
+void GameEngine::printWinner()
+{
+  bool draw = false;
+  int winningScore = 0;
+  std::string winner;
+  for (Player *player : playersArr)
+  {
+    int finalScore = player->getPlayerScore();
+    if (finalScore > winningScore)
+    {
+      winningScore = finalScore;
+      winner = player->getPlayerName();
+    }
+    else if (finalScore == winningScore)
+    {
+      draw = true;
+      winner += player->getPlayerName() + ' ';
+    }
+    std::cout << "Score for " << player->getPlayerName()
+              << ": " << player->getPlayerScore() << std::endl;
+  }
+  if (!draw)
+  {
+    std::cout << "Player " << winner << " won!" << std::endl;
+  }
+  else
+  {
+    std::cout << "Players " << winner << " drew!" << std::endl;
+  }
 }
 
 void GameEngine::userInput(std::string userInput)
@@ -292,10 +323,30 @@ void GameEngine::userInput(std::string userInput)
     }
   }
   // SAVE
-
+  else if (userInput.substr(0, 4) == "save")
+  {
+    std::string filename = userInput.substr(5);
+    saveGame(filename);
+    std::cout << std::endl
+              << "Game successfully saved" << std::endl
+              << std::endl;
+  }
   // LOAD
 
   // QUIT
+  else if (userInput.substr(0, 4) == "quit")
+  {
+    std::cout << "Game Over" << std::endl;
+    printWinner();
+    std::cout << std::endl
+              << "Goodbye!" << std::endl;
+    exit(0);
+  }
+  else if (!std::cin.eof())
+  {
+    std::cout << "Invalid Input" << std::endl;
+    valid = false;
+  }
 }
 
 bool GameEngine::tilePlace(std::string tile, std::string location, int index)
@@ -816,7 +867,7 @@ int GameEngine::calcPoints(int row, int col)
 
     if (relativeTile[i] == 5)
     {
-      std::cout << "QWIRKLE!" << std::endl;
+      std::cout << "QWIRKLE!!" << std::endl;
       relativeTile[i] = 11;
     }
   }

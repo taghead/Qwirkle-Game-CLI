@@ -32,6 +32,7 @@ public:
   void drawTiles();
   void qwirkleEngine();
   void printBoard();
+  void printWinner();
   void userInput(std::string userInput);
   bool tilePlace(std::string tile, std::string location, int index);
   bool tileReplace(int index);

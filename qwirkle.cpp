@@ -108,6 +108,7 @@ void newGame() {
     }
     gameEngine->addPlayer(playerName);
   }
+  std::cout << "Let's Play!" << std::endl;
   gameEngine->createTileBag();
   gameEngine->drawTiles();
   gameEngine->qwirkleEngine();
