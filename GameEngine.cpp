@@ -170,8 +170,7 @@ void GameEngine::qwirkleEngine()
   }
 
   // Prints final board
-  std::cout << "PRINT FINAL BOARD";
-  // printBoard();
+  printBoard();
   std::cout << "Game Over" << std::endl;
 
   // Check for winner
@@ -462,12 +461,12 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
           if (tileCount == 1)
           {
             // If there was only one tile counted
-            // tilesChecked[i] = checkSingleTile(tile, row, col, direction[i]);
+            tilesChecked[i] = checkSingleTile(tile, row, col, direction[i]);
           }
           else
           {
             // If there was many tiles counted
-            // tilesChecked[i] = checkManyTiles(tile, tileCount, row, col, direction[i]);
+            tilesChecked[i] = checkMultipleTile(tile, tileCount, row, col, direction[i]);
           }
           // Current direction has been checked
           tilesValid[i] = true;
