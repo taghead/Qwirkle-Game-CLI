@@ -387,14 +387,14 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
   // If any tile existed
   bool foundTile;
   // Initialize checks
-  bool  leftChecked = false,   tileIsOnLeftExists = false,  tileOnLeftIsValid = false,
-        rightChecked = false,  tileIsRightExists = false,   tileOnRightIsValid = false,
-        upChecked = false,     tileIsUpExists = false,      tileOnUpIsValid = false,
-        downChecked = false,   tileIsDownExists = false,    tileOnDownIsValid = false;
+  bool leftChecked = false, tileIsOnLeftExists = false, tileOnLeftIsValid = false,
+       rightChecked = false, tileIsRightExists = false, tileOnRightIsValid = false,
+       upChecked = false, tileIsUpExists = false, tileOnUpIsValid = false,
+       downChecked = false, tileIsDownExists = false, tileOnDownIsValid = false;
 
   // Numbers assigned to directions index
   int left = 0, up = 1, right = 2, down = 3;
-  int direction[4] = { left, up, right, down};
+  int direction[4] = {left, up, right, down};
 
   // Counter to track number of tiles
   int tileCount = 1;
@@ -408,7 +408,7 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
     }
   }
 
-// If tile there is a tile to the right
+  // If tile there is a tile to the right
   if (col + 1 <= 25)
   {
     if (board[row][col + 1] != NULL_TILE)
@@ -440,17 +440,18 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
   {
     // Parralel arrays to check if tiles have been valid, checked or exists.
     int numberOfDirections = 4;
-    bool tilesDirectionExists[4] = { tileIsOnLeftExists, tileIsUpExists,
-                                     tileIsRightExists, tileIsDownExists };
+    bool tilesDirectionExists[4] = {tileIsOnLeftExists, tileIsUpExists,
+                                    tileIsRightExists, tileIsDownExists};
 
-    bool tilesChecked[4] =  { leftChecked, upChecked,
-                              rightChecked, downChecked };
+    bool tilesChecked[4] = {leftChecked, upChecked,
+                            rightChecked, downChecked};
 
-    bool tilesValid[4] =    { tileOnLeftIsValid, tileOnUpIsValid,
-                              tileOnRightIsValid, tileOnDownIsValid};
+    bool tilesValid[4] = {tileOnLeftIsValid, tileOnUpIsValid,
+                          tileOnRightIsValid, tileOnDownIsValid};
 
     // Uses the parralel arrays to check each direction
-    for ( int i = 0; i<numberOfDirections; i++){
+    for (int i = 0; i < numberOfDirections; i++)
+    {
       if (tilesDirectionExists[i])
       {
         // Counts the amount of tiles of the current direction
@@ -490,7 +491,7 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
     tileIsOnLeftExists = tilesDirectionExists[0];
     tileIsUpExists = tilesDirectionExists[1];
     tileIsRightExists = tilesDirectionExists[2];
-    tileIsDownExists = tilesDirectionExists[3]; 
+    tileIsDownExists = tilesDirectionExists[3];
 
     tileOnLeftIsValid = tilesValid[0];
     tileOnUpIsValid = tilesValid[1];
@@ -592,10 +593,193 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
   return foundTile;
 }
 
-// bool GameEngine::CheckSingleTile(Tile *tile, int row, int col, int dir);
-// bool GameEngine::CheckMultipleTile(Tile *tile, int row, int col, int num, int dir);
-// bool GameEngine::CheckExistingTile(Tile *tile, int row, int col);
-// bool GameEngine::CheckDuplicateTile(int row, int col);
+bool GameEngine::checkSingleTile(Tile *tile, int row, int col, int dir)
+{
+  // Declare
+  bool doesColorMatch = false;
+  bool doesShapeMatch = false;
+  bool isValid = false;
+
+  // Tile
+  char tileColour = tile->getColour();
+  int tileShape = tile->getShape();
+
+  // Get relative rows and cols
+  int checkRow;
+  int checkColumn;
+  setLine(checkRow, checkColumn, dir);
+
+  // Get relative color
+  char boardColour = board[row + checkRow][col + checkColumn]->getColour();
+  int boardShape = board[row + checkRow][col + checkColumn]->getShape();
+
+  // Check if tile exists
+  if (!checkExistingTile(tile, row + checkRow, col + checkColumn))
+  {
+    // Check if row is locked into a certain color
+    if (tileColour == boardColour)
+    {
+      doesColorMatch = true;
+    }
+    // Check if row is locked into a certain shape
+    else if (tileShape == boardShape)
+    {
+      doesShapeMatch = true;
+    }
+    // Check if it is locked into either color or shape
+    if (doesColorMatch || doesShapeMatch)
+    {
+      isValid = true;
+    }
+    else
+    {
+      std::cout << "Invalid Input" << std::endl;
+      isValid = false;
+    }
+  }
+  if (checkDuplicateTile(row, col))
+  {
+    isValid = false;
+  }
+  return isValid;
+}
+
+bool GameEngine::checkMultipleTile(Tile *tile, int count, int row, int col, int dir)
+{
+  // Declare
+  bool dupeDetected = false;
+  bool isValid = false;
+
+  // Get relative rows and cols
+  int checkRow;
+  int checkCol;
+  setLine(checkRow, checkCol, dir);
+
+  // Iterate amount of relative tiles counted
+  for (int i = 1; i <= count; i++)
+  {
+    if (checkExistingTile(tile, row + checkRow * i, col + checkCol * i))
+    {
+      dupeDetected = true;
+      i = count;
+    }
+    else
+    {
+      dupeDetected = false;
+    }
+  }
+  if (!dupeDetected)
+  {
+    // Check if locked into color
+    Colour colorBoardTileOne = board[row + checkRow][col + checkCol]->getColour();
+    Colour colorBoardTileTwo = board[row + (2 * checkRow)][col + (2 * checkCol)]->getColour();
+
+    if (colorBoardTileOne == colorBoardTileTwo)
+    {
+      if (tile->getColour() == colorBoardTileOne)
+      {
+        isValid = true;
+      }
+      else
+      {
+        std::cout << "Invalid Input" << std::endl;
+      }
+    }
+    else
+    {
+      //Check if locked into shape
+      if (tile->getShape() == board[row + checkRow][col + checkCol]->getShape())
+      {
+        isValid = true;
+      }
+      else
+      {
+        std::cout << "Invalid Input" << std::endl;
+      }
+    }
+  }
+  if (checkDuplicateTile(row, col))
+  {
+    isValid = false;
+  }
+  return isValid;
+}
+
+bool GameEngine::checkExistingTile(Tile *tile, int row, int col)
+{
+  bool dupe = false;
+
+  if (tile->getColour() == board[row][col]->getColour() &&
+      tile->getShape() == board[row][col]->getShape())
+  {
+    std::cout << "Invalid Input" << std::endl;
+    dupe = true;
+  }
+  return dupe;
+}
+
+bool GameEngine::checkDuplicateTile(int row, int col)
+{
+  bool dupe = true;
+
+  bool rowDupe = false;
+  bool colDupe = false;
+
+  int dirCheck[4];
+
+  for (int i = 0; i < 4; i++)
+  {
+    dirCheck[i] = countTiles(row, col, i);
+  }
+
+  if (dirCheck[0] > 0 && dirCheck[2] > 0)
+  {
+    for (int x = 1; x <= dirCheck[0]; x++)
+    {
+      for (int y = 1; y <= dirCheck[2]; y++)
+      {
+        std::string westTile = board[row][col - x]->toString();
+        std::string eastTile = board[row][col + y]->toString();
+
+        if (westTile == eastTile)
+        {
+          rowDupe = true;
+          x = dirCheck[0] + 1;
+          y = dirCheck[2] + 1;
+        }
+      }
+    }
+  }
+  if (dirCheck[1] > 0 && dirCheck[3] > 0)
+  {
+    for (int x = 1; x <= dirCheck[1]; x++)
+    {
+      for (int y = 1; y <= dirCheck[3]; y++)
+      {
+        std::string northTile = board[row - x][col]->toString();
+        std::string southTile = board[row + y][col]->toString();
+
+        if (northTile == southTile)
+        {
+          colDupe = true;
+          x = dirCheck[1] + 1;
+          y = dirCheck[3] + 1;
+        }
+      }
+    }
+  }
+
+  if (!rowDupe && !colDupe)
+  {
+    dupe = false;
+  }
+  else
+  {
+    std::cout << "Invalid Input" << std::endl;
+  }
+
+  return dupe;
+}
 
 void GameEngine::changeTurn()
 {
