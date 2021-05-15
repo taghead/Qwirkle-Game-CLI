@@ -35,6 +35,7 @@ public:
   void userInput(std::string userInput);
   bool tilePlace(std::string tile, std::string location, int index);
   bool tileReplace(int index);
+  bool checkNeighbourTiles(Tile *tile, int row, int col);
   void changeTurn();
   int  calcPoints(int row, int col);
   int  countTiles(int row, int col, int dir);

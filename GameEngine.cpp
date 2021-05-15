@@ -322,7 +322,7 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
       tileBag.deleteFront();
     }
     board[row][col] = selectedTile;
-    // currentPlayer->addPoints(calculatePoints(letter, number));
+    currentPlayer->addPoints(calcPoints(row, col));
     isValidPlacement = true;
   }
   else
@@ -336,8 +336,7 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
     else
     {
       // If surrounding placement is valid
-      //if (checkSurroundingTiles(selectedTile, row, col))
-      if (isValidPlacement == true)
+      if (checkNeighbourTiles(selectedTile, row, col))
       {
         playerHand->deleteAt(index);
         if (tileBag.getSize() > 0)
@@ -348,7 +347,7 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
         // Assigned tile a place on the board
         board[row][col] = selectedTile;
         // Calculate points
-        //currentPlayer->addPoints(calcPoints(row, col));
+        currentPlayer->addPoints(calcPoints(row, col));
         isValidPlacement = true;
       }
       else
@@ -379,6 +378,216 @@ bool GameEngine::tileReplace(int index)
     std::cout << "Invalid Input" << std::endl;
   }
   return tileReplaced;
+}
+
+bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
+{
+  // If any tile existed
+  bool foundTile;
+  // Initialize checks
+  bool  leftChecked = false,   tileIsOnLeftExists = false,  tileOnLeftIsValid = false,
+        rightChecked = false,  tileIsRightExists = false,   tileOnRightIsValid = false,
+        upChecked = false,     tileIsUpExists = false,      tileOnUpIsValid = false,
+        downChecked = false,   tileIsDownExists = false,    tileOnDownIsValid = false;
+
+  // Numbers assigned to directions index
+  int left = 0, up = 1, right = 2, down = 3;
+  int direction[4] = { left, up, right, down};
+
+  // Counter to track number of tiles
+  int tileCount = 1;
+
+  // If tile there is a tile to the left
+  if (col - 1 >= 0)
+  {
+    if (board[row][col - 1] != NULL_TILE)
+    {
+      tileIsOnLeftExists = true;
+    }
+  }
+
+// If tile there is a tile to the right
+  if (col + 1 <= 25)
+  {
+    if (board[row][col + 1] != NULL_TILE)
+    {
+      tileIsRightExists = true;
+    }
+  }
+
+  // If tile there is a tile above
+  if (row - 1 >= 0)
+  {
+    if (board[row - 1][col] != NULL_TILE)
+    {
+      tileIsUpExists = true;
+    }
+  }
+
+  // If tile there is a tile below
+  if (row + 1 <= 25)
+  {
+    if (board[row + 1][col] != NULL_TILE)
+    {
+      tileIsDownExists = true;
+    }
+  }
+
+  // If a tile exists in any direction
+  if (tileIsOnLeftExists || tileIsRightExists || tileIsUpExists || tileIsDownExists)
+  {
+    // Parralel arrays to check if tiles have been valid, checked or exists.
+    int numberOfDirections = 4;
+    bool tilesDirectionExists[4] = { tileIsOnLeftExists, tileIsUpExists,
+                                     tileIsRightExists, tileIsDownExists };
+
+    bool tilesChecked[4] =  { leftChecked, upChecked,
+                              rightChecked, downChecked };
+
+    bool tilesValid[4] =    { tileOnLeftIsValid, tileOnUpIsValid,
+                              tileOnRightIsValid, tileOnDownIsValid};
+
+    // Uses the parralel arrays to check each direction
+    for ( int i = 0; i<numberOfDirections; i++){
+      if (tilesDirectionExists[i])
+      {
+        // Counts the amount of tiles of the current direction
+        tileCount = countTiles(row, col, direction[i]);
+        if (tileCount < 6)
+        {
+
+          if (tileCount == 1)
+          {
+            // If there was only one tile counted
+            // tilesChecked[i] = checkSingleTile(tile, row, col, direction[i]);
+          }
+          else
+          {
+            // If there was many tiles counted
+            // tilesChecked[i] = checkManyTiles(tile, tileCount, row, col, direction[i]);
+          }
+          // Current direction has been checked
+          tilesValid[i] = true;
+        }
+        else
+        {
+          std::cout << "Invalid Input" << std::endl;
+        }
+      }
+      else
+      {
+        tilesChecked[i] = true;
+      }
+    }
+
+    leftChecked = tilesChecked[0];
+    upChecked = tilesChecked[1];
+    rightChecked = tilesChecked[2];
+    downChecked = tilesChecked[3];
+
+    tileIsOnLeftExists = tilesDirectionExists[0];
+    tileIsUpExists = tilesDirectionExists[1];
+    tileIsRightExists = tilesDirectionExists[2];
+    tileIsDownExists = tilesDirectionExists[3]; 
+
+    tileOnLeftIsValid = tilesValid[0];
+    tileOnUpIsValid = tilesValid[1];
+    tileOnRightIsValid = tilesValid[2];
+    tileOnDownIsValid = tilesValid[3];
+  }
+
+  // Ensure every direction has been checked
+  if (leftChecked && upChecked && rightChecked && downChecked)
+  {
+    if (tileOnLeftIsValid && tileOnRightIsValid)
+    {
+      // Validate X axis (Column)
+      int rowCheck;
+      int colCheck;
+
+      setLine(rowCheck, colCheck, direction[0]);
+      Tile *tileOne = tile;
+      Tile *tileTwo = board[row + rowCheck][col + colCheck];
+      Tile *tileThr = board[row - rowCheck][col - colCheck];
+
+      if (tileOne->getColour() == tileTwo->getColour())
+      {
+        if (tileThr->getColour() == tileOne->getColour())
+        {
+          foundTile = true;
+        }
+        else
+        {
+          foundTile = false;
+        }
+      }
+
+      else if (tileOne->getShape() == tileTwo->getShape())
+      {
+        if (tileThr->getShape() == tileOne->getShape())
+        {
+          foundTile = true;
+        }
+        else
+        {
+          foundTile = false;
+        }
+      }
+      else
+      {
+        foundTile = false;
+      }
+    }
+    else if (tileOnDownIsValid && tileOnUpIsValid)
+    {
+      // Validate Y axis (Col)
+      int rowCheck;
+      int colCheck;
+
+      setLine(rowCheck, colCheck, direction[0]);
+      Tile *tileOne = tile;
+      Tile *tileTwo = board[row + rowCheck][col + colCheck];
+      Tile *tileThr = board[row - rowCheck][col - colCheck];
+
+      if (tileOne->getColour() == tileTwo->getColour())
+      {
+        if (tileThr->getColour() == tileOne->getColour())
+        {
+          foundTile = true;
+        }
+        else
+        {
+          foundTile = false;
+        }
+      }
+
+      else if (tileOne->getShape() == tileTwo->getShape())
+      {
+        if (tileThr->getShape() == tileOne->getShape())
+        {
+          foundTile = true;
+        }
+        else
+        {
+          foundTile = false;
+        }
+      }
+      else
+      {
+        foundTile = false;
+      }
+    }
+    else
+    {
+      foundTile = true;
+    }
+  }
+  else
+  {
+    foundTile = false;
+  }
+
+  return foundTile;
 }
 
 void GameEngine::changeTurn()
