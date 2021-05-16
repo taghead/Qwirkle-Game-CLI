@@ -1,0 +1,8 @@
+2
+Tests/Test_Gameplay_Invalid_Locations.save
+place O1 at o1
+place O1 at Oi
+place O1 at ii
+place O1 at Oii
+place O1 at Oi5
+place O1 at O5i
