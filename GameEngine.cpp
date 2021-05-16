@@ -274,20 +274,11 @@ void GameEngine::qwirkleEngine()
     }
   }
 
+  // Print initial board
+  printBoard();
+
   while (!winConditionCheck && !std::cin.eof())
   {
-    std::cout << std::endl
-              << currentPlayer->getPlayerName()
-              << ", it's your turn!" << std::endl;
-    for (int i = 0; i < numOfPlayers; i++)
-    {
-      std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
-                << playersArr[i]->getPlayerScore() << std::endl;
-    }
-
-    printBoard();
-    currentPlayer->toStringHand();
-
     if (std::cin.eof())
     {
       std::cout << std::endl
@@ -319,6 +310,14 @@ void GameEngine::qwirkleEngine()
 
 void GameEngine::printBoard()
 {
+  std::cout << std::endl
+            << currentPlayer->getPlayerName()
+            << ", it's your turn!" << std::endl;
+  for (int i = 0; i < numOfPlayers; i++)
+  {
+    std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
+              << playersArr[i]->getPlayerScore() << std::endl;
+  }
   // Print numbers
   for (int i = 0; i < BOARD_DIM; i++)
   {
@@ -363,6 +362,8 @@ void GameEngine::printBoard()
   }
 
   std::cout << std::endl;
+  
+  currentPlayer->toStringHand();
 }
 
 void GameEngine::printWinner()
@@ -470,6 +471,9 @@ void GameEngine::userInput(std::string userInput)
     else
     {
       std::cout << "4. Invalid Input" << std::endl;
+    }
+    if (valid){
+      printBoard();
     }
   }
 
