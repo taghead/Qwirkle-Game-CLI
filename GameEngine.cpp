@@ -179,6 +179,9 @@ void GameEngine::loadGame(std::string filename)
 
         // Add tile to board
         board[row][col] = new Tile(colour, shape);
+
+        // Add turn counter
+        numOfTurns += 1;
       }
     }
     if (i == 8)
@@ -468,8 +471,6 @@ void GameEngine::userInput(std::string userInput)
     std::cout << std::endl
               << "Game successfully saved" << std::endl;
   }
-  // LOAD
-
   // QUIT
   else if (userInput.substr(0, 4) == "quit")
   {
@@ -487,6 +488,11 @@ void GameEngine::userInput(std::string userInput)
     exit(0);
   }
   else if (!std::cin.eof())
+  {
+    std::cout << "Invalid Input" << std::endl;
+    valid = false;
+  }
+  else 
   {
     std::cout << "Invalid Input" << std::endl;
     valid = false;
