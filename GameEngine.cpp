@@ -66,7 +66,8 @@ void GameEngine::saveGame(std::string filename)
         char alpha[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
                         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
                         'U', 'V', 'W', 'X', 'Y', 'Z'};
-        saveBoard += board[i][j]->toString() + "@" + alpha[i] + std::to_string(j) + ",";
+        saveBoard +=
+            board[i][j]->toString() + "@" + alpha[i] + std::to_string(j) + ",";
       }
     }
   }
@@ -233,8 +234,10 @@ void GameEngine::createTileBag()
   // Declare
   std::random_device random;
   int randomNum = 0;
-  std::map<int, char> colourMap = {{0, RED}, {1, ORANGE}, {2, YELLOW}, {3, GREEN}, {4, BLUE}, {5, PURPLE}};
-  std::map<int, int> shapeMap = {{0, CIRCLE}, {1, STAR_4}, {2, DIAMOND}, {3, SQUARE}, {4, STAR_6}, {5, CLOVER}};
+  std::map<int, char> colourMap = {{0, RED}, {1, ORANGE}, {2, YELLOW}, 
+                                  {3, GREEN}, {4, BLUE}, {5, PURPLE}};
+  std::map<int, int> shapeMap = {{0, CIRCLE}, {1, STAR_4}, {2, DIAMOND}, 
+                                {3, SQUARE}, {4, STAR_6}, {5, CLOVER}};
   // Iterates over the colour and shape vectors to populate tile bag
   for (unsigned int i = 0; i < colourMap.size(); i++)
   {
@@ -456,7 +459,8 @@ void GameEngine::userInput(std::string userInput)
       std::string location = userInput.substr(12, 3);
       // Ensure lettering is in a legal range and an number exists
       if ((location[0] >= *"A" && location[0] <= *"Z" &&
-           location[1]) || (location[0] >= *"A" &&
+           location[1]) ||
+          (location[0] >= *"A" &&
            location[0] <= *"Z" && location[1] && location[2]))
       {
         bool typo = false;
@@ -1068,7 +1072,7 @@ void GameEngine::changeTurn()
   }
   else if ((unsigned)currentTurn == playersArr.size() - 1)
   {
-    // Sets current turn to initial value and adds one to number of turns 
+    // Sets current turn to initial value and adds one to number of turns
     currentTurn = INITIAL_TURN_COUNT;
     numOfTurns++;
   }
@@ -1122,7 +1126,7 @@ int GameEngine::countTiles(int row, int col, int dir)
   int numOfTiles = 0;
   int r;
   int c;
-  // Overloads setLine 
+  // Overloads setLine
   setLine(r, c, dir);
   // Count number tiles in the obtained direction
   for (int i = 1; i <= 6; i++)
@@ -1149,7 +1153,7 @@ void GameEngine::setLine(int &r, int &c, int dir)
 {
   // Define directions
   int left = 0, up = 1, right = 2; // down = 3;
-  // Determine and set the pointers values to the next row or column based on direction.
+  // Determine and set pointers to the next row or column based on direction.
   if (dir == left)
   {
     // Set left
