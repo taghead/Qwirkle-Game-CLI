@@ -10,17 +10,17 @@
 #include "TileCodes.h"
 
 #define INITIAL_NUM_PLAYERS 0
-#define INITIAL_TURN_COUNT  0
-#define NULL_TILE           0
+#define INITIAL_TURN_COUNT 0
+#define NULL_TILE 0
 
-#define BOARD_DIM           26
-#define NO_OF_EACH_TILE     2
-#define MAX_NO_OF_TILE      72
-#define MAX_HAND_SIZE       6
+#define BOARD_DIM 26
+#define NO_OF_EACH_TILE 2
+#define MAX_NO_OF_TILE 72
+#define MAX_HAND_SIZE 6
 
-class GameEngine {
+class GameEngine
+{
 public:
-
   GameEngine();
   ~GameEngine();
 
@@ -42,11 +42,11 @@ public:
   bool checkExistingTile(Tile *tile, int row, int col);
   bool checkDuplicateTile(int row, int col);
   void changeTurn();
-  int  calcPoints(int row, int col);
-  int  countTiles(int row, int col, int dir);
+  int calcPoints(int row, int col);
+  int countTiles(int row, int col, int dir);
   void setLine(int &r, int &c, int dir);
 
-  Player* currentPlayer;
+  Player *currentPlayer;
 
 private:
   LinkedList tileBag;
@@ -55,12 +55,11 @@ private:
   int currentTurn = 0;
   int tilesPlaced = 0;
   bool turnCheck = false;
-  std::vector<Player*> playersArr;
+  std::vector<Player *> playersArr;
 
-  // Declare Board vector     
-  std::vector<std::vector<Tile*>> 
-    board{BOARD_DIM + 1, std::vector<Tile*>(BOARD_DIM + 1, nullptr)};
-  
+  // Declare Board vector
+  std::vector<std::vector<Tile *>>
+      board{BOARD_DIM + 1, std::vector<Tile *>(BOARD_DIM + 1, nullptr)};
 };
 
 #endif // ASSIGN2_GAME_ENGINE_H

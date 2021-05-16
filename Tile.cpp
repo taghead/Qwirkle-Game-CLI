@@ -23,6 +23,7 @@ Shape Tile::getShape()
   return shape;
 }
 
+// Gets tiles codes and returns as a string
 std::string Tile::toString()
 {
   std::string shapeCode = "";
@@ -50,6 +51,5 @@ std::string Tile::toString()
   {
     shapeCode = "6";
   }
-
   return colour + shapeCode;
 }
