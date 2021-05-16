@@ -434,30 +434,37 @@ void GameEngine::userInput(std::string userInput)
             ss.clear();
             if (tmpLocation >= 0 && tmpLocation <= 25)
             {
-              bool tilePlaceCheck = tilePlace(selectedTile, location, index);
-              if (tilePlaceCheck)
-              {
-                tilesPlaced += 1;
-                changeTurn();
-              }
+              valid = true;
             }
             else 
             {
               std::cout << "1. Invalid Input" << std::endl;
+              valid = false;
             }
           }
           else 
           {
             typo = true;
+            valid = false;
           }
         }
         if (typo) {
           std::cout << "2. Invalid Input" << std::endl;
+            valid = false;
         }
       }
       else
       {
         std::cout << "3. Invalid Input" << std::endl;
+        valid = false;
+      }
+      if (valid){
+        bool tilePlaceCheck = tilePlace(selectedTile, location, index);
+        if (tilePlaceCheck)
+        {
+          tilesPlaced += 1;
+          changeTurn();
+        }
       }
     }
     else
