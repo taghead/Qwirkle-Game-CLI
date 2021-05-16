@@ -501,6 +501,7 @@ void GameEngine::userInput(std::string userInput)
       if (tileReplaceCheck)
       {
         changeTurn();
+        printBoard();
       }
     }
     else
