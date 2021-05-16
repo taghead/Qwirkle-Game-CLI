@@ -419,18 +419,50 @@ void GameEngine::userInput(std::string userInput)
     }
     if (valid)
     {
-      std::string location = userInput.substr(12, 14);
+      std::string location = userInput.substr(12, 3);
 
-      bool tilePlaceCheck = tilePlace(selectedTile, location, index);
-      if (tilePlaceCheck)
+      if ((location[0] >= *"A" && location[0] <= *"Z" && location[1]) || (location[0] >= *"A" && location[0] <= *"Z" && location[1] && location[2]))
       {
-        tilesPlaced += 1;
-        changeTurn();
+        bool typo = false;
+        for (unsigned int i = 1; i < location.size(); i++) {
+          if (location[i] >= *"0" && location[i] <= *"9")
+          {
+            int tmpLocation;
+            std::stringstream ss;
+            ss << location.substr(1,2);
+            ss >> tmpLocation;
+            ss.clear();
+            if (tmpLocation >= 0 && tmpLocation <= 25)
+            {
+              bool tilePlaceCheck = tilePlace(selectedTile, location, index);
+              if (tilePlaceCheck)
+              {
+                tilesPlaced += 1;
+                changeTurn();
+              }
+            }
+            else 
+            {
+              std::cout << "1. Invalid Input" << std::endl;
+            }
+          }
+          else 
+          {
+            typo = true;
+          }
+        }
+        if (typo) {
+          std::cout << "2. Invalid Input" << std::endl;
+        }
+      }
+      else
+      {
+        std::cout << "3. Invalid Input" << std::endl;
       }
     }
     else
     {
-      std::cout << "Invalid Input" << std::endl;
+      std::cout << "4. Invalid Input" << std::endl;
     }
   }
 
@@ -460,7 +492,7 @@ void GameEngine::userInput(std::string userInput)
     }
     else
     {
-      std::cout << "Invalid Input" << std::endl;
+      std::cout << "5. Invalid Input" << std::endl;
     }
   }
   // SAVE
@@ -489,12 +521,12 @@ void GameEngine::userInput(std::string userInput)
   }
   else if (!std::cin.eof())
   {
-    std::cout << "Invalid Input" << std::endl;
+    std::cout << "6. Invalid Input" << std::endl;
     valid = false;
   }
   else 
   {
-    std::cout << "Invalid Input" << std::endl;
+    std::cout << "7. Invalid Input" << std::endl;
     valid = false;
   }
 }
@@ -532,7 +564,7 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
     // Check is space is empty
     if (board[row][col] != NULL_TILE)
     {
-      std::cout << "Invalid Input" << std::endl;
+      std::cout << "8. Invalid Input" << std::endl;
       isValidPlacement = false;
     }
     else
@@ -554,7 +586,7 @@ bool GameEngine::tilePlace(std::string tile, std::string location, int index)
       }
       else
       {
-        std::cout << "Invalid Input" << std::endl;
+        //std::cout << "9. Invalid Input" << std::endl;
         isValidPlacement = false;
       }
     }
@@ -577,7 +609,7 @@ bool GameEngine::tileReplace(int index)
   }
   else
   {
-    std::cout << "Invalid Input" << std::endl;
+    std::cout << "10. Invalid Input" << std::endl;
   }
   return tileReplaced;
 }
@@ -674,7 +706,7 @@ bool GameEngine::checkNeighbourTiles(Tile *tile, int row, int col)
         }
         else
         {
-          std::cout << "Invalid Input" << std::endl;
+          std::cout << "11. Invalid Input" << std::endl;
         }
       }
       else
@@ -833,7 +865,7 @@ bool GameEngine::checkSingleTile(Tile *tile, int row, int col, int dir)
     }
     else
     {
-      std::cout << "Invalid Input" << std::endl;
+      std::cout << "12. Invalid Input" << std::endl;
       isValid = false;
     }
   }
@@ -882,7 +914,7 @@ bool GameEngine::checkMultipleTile(Tile *tile, int count, int row, int col, int 
       }
       else
       {
-        std::cout << "Invalid Input" << std::endl;
+        std::cout << "13. Invalid Input" << std::endl;
       }
     }
     else
@@ -894,7 +926,7 @@ bool GameEngine::checkMultipleTile(Tile *tile, int count, int row, int col, int 
       }
       else
       {
-        std::cout << "Invalid Input" << std::endl;
+        std::cout << "14. Invalid Input" << std::endl;
       }
     }
   }
@@ -912,7 +944,7 @@ bool GameEngine::checkExistingTile(Tile *tile, int row, int col)
   if (tile->getColour() == board[row][col]->getColour() &&
       tile->getShape() == board[row][col]->getShape())
   {
-    std::cout << "Invalid Input" << std::endl;
+    std::cout << "15. Invalid Input" << std::endl;
     dupe = true;
   }
   return dupe;
@@ -975,7 +1007,7 @@ bool GameEngine::checkDuplicateTile(int row, int col)
   }
   else
   {
-    std::cout << "Invalid Input" << std::endl;
+    std::cout << "16. Invalid Input" << std::endl;
   }
 
   return dupe;

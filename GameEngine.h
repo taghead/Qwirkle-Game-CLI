@@ -57,7 +57,9 @@ private:
   bool turnCheck = false;
   std::vector<Player*> playersArr;
 
-  std::vector<std::vector<Tile*>> board{26, std::vector<Tile*>(26, nullptr)};
+  // Declare Board vector     
+  std::vector<std::vector<Tile*>> 
+    board{BOARD_DIM + 1, std::vector<Tile*>(BOARD_DIM + 1, nullptr)};
   
 };
 
