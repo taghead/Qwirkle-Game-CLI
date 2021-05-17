@@ -473,8 +473,45 @@ void GameEngine::userInput(std::string userInput)
   bool valid = false;
   // Stores index of tile in player hand
   int index = 0;
+
+  // Checks for "help"
+  if (userInput.substr(0, 4) == "help"){
+    std::cout << "                         ----HELP----" << std::endl
+              << std::endl
+              << "                         Tile colours" << std::endl
+              << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
+              << std::endl
+              << "    |    GREEN 'G'    |     BLUE 'B'    |   PURPLE 'P'    |" 
+              << std::endl
+              << "                         Tile Shapes" << std::endl
+              << "    |    CIRCLE '1'   |    STAR_4 '2'   |   DIAMOND '3'   |" 
+              << std::endl
+              << "    |   SQUARE '4'    |    STAR_6 '5'   |    CLOVER'6'    |" 
+              << std::endl << std::endl
+              << "                         Coordinates" << std::endl
+              << "Cordinates are defined as rows and columns in that order."
+              << std::endl
+              << "Rows are represented with capitalized alphabetic characters."
+              << std::endl
+              << "These characters range from A-Z and represent the rows 0-25."
+              << std::endl
+              << "Columns are represented using the numbers 0-25"
+              << std::endl
+              << std::endl
+              << "                            Commands"
+              << std::endl
+              << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+              << std::endl
+              << " replace TILE              | replace O5       | replace tile"
+              << std::endl
+              << " save FILENAME.save        |  save game.save  | save game"
+              << std::endl
+              << " quit                      |                  | quit game"
+              << std::endl;
+  }
+
   // Checks for "place"
-  if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
+  else if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
   {
     std::string selectedTile = userInput.substr(6, 2);
     // Obtains index of selected tile
