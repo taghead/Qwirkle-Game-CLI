@@ -343,8 +343,43 @@ void GameEngine::printBoard()
     std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
               << playersArr[i]->getPlayerScore() << std::endl;
   }
+
+  // Get board dimension
+  int boardDimY = 1;
+  int boardDimX = 1;
+
+  // If expandable board is disabled
+  if ( !expandableBoard ){
+    boardDimY = BOARD_DIM;
+    boardDimX = BOARD_DIM;
+  }
+  else {
+    for (int y = 0; y < BOARD_DIM; y++)
+    {
+      for (int x = 0; x < BOARD_DIM; x++)
+      {
+        if (board[y][x] != NULL_TILE)
+        {
+          // Grab the dimensions and account for last row
+          if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+            boardDimX = x+1;
+          }
+          else if ( x < BOARD_DIM ) {
+            boardDimX = x+2;
+          }
+          if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+            boardDimY = y+1;
+          }
+          else if ( y < BOARD_DIM ){
+            boardDimY = y+2;
+          }
+        }
+      }
+    }
+  }
+
   // Prints numbers
-  for (int i = 0; i < BOARD_DIM; i++)
+  for (int i = 0; i < boardDimX; i++)
   {
     if (i == 0)
     {
@@ -361,18 +396,18 @@ void GameEngine::printBoard()
   }
   std::cout << std::endl;
   // Prints hyphens (27*3=81)
-  for (int i = 0; i < BOARD_DIM + 1; i++)
+  for (int i = 0; i < boardDimX + 1; i++)
   {
     std::cout << "---";
   }
   std::cout << std::endl;
   // Prints board
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < boardDimY; y++)
   {
     // converts int to char
     char c = y + 65;
     std::cout << c << " ";
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < boardDimX; x++)
     {
       if (board[y][x] != NULL_TILE)
       {
@@ -1179,3 +1214,15 @@ void GameEngine::setLine(int &r, int &c, int dir)
     c = 0;
   }
 }
+
+  void GameEngine::enableExpandableBoard(){
+    expandableBoard = true;
+  }
+
+  void GameEngine::disableExpandableBoard(){
+    expandableBoard = false;
+  }
+
+  bool GameEngine::getExpandableBoardOption(){
+    return expandableBoard;
+  }
