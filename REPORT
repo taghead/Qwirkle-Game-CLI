@@ -1,0 +1,136 @@
+4.1  Minor enhancements
+4.1.1  Help!
+
+The help function required little change to the code. Under the userInput function in GameEngine.cpp a check was made for when to output relevent help text.
+
+if (userInput.substr(0, 4) == "help"){
+  std::cout << "                         ----HELP----" << std::endl
+            << std::endl
+            << "                         Tile colours" << std::endl
+            << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
+            << std::endl
+            << "    |    GREEN 'G'    |     BLUE 'B'    |   PURPLE 'P'    |" 
+            << std::endl
+            << "                         Tile Shapes" << std::endl
+            << "    |    CIRCLE '1'   |    STAR_4 '2'   |   DIAMOND '3'   |" 
+            << std::endl
+            << "    |   SQUARE '4'    |    STAR_6 '5'   |    CLOVER'6'    |" 
+            << std::endl << std::endl
+            << "                         Coordinates" << std::endl
+            << "Cordinates are defined as rows and columns in that order."
+            << std::endl
+            << "Rows are represented with capitalized alphabetic characters."
+            << std::endl
+            << "These characters range from A-Z and represent the rows 0-25."
+            << std::endl
+            << "Columns are represented using the numbers 0-25"
+            << std::endl
+            << std::endl
+            << "                            Commands"
+            << std::endl
+            << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+            << std::endl
+            << " replace TILE              | replace O5       | replace tile"
+            << std::endl
+            << " save FILENAME.save        |  save game.save  | save game"
+            << std::endl
+            << " quit                      |                  | quit game"
+            << std::endl;
+}
+
+4.1.2  Better Invalid Input
+
+4.1.3  Colour
+
+4.1.4  Unicode/Emoji Tile Symbols
+
+4.1.5  Simple Hints
+
+4.1.6  Expandable Board
+
+Our board initially printed based on a fixed size, to implement this feature the BOARD_DIM was no longer used when iterating over the printBoard. 
+Instead a variable was assigned limiting the output of the board if no tile was detected. 
+
+// Get board dimension
+int boardDimY = 1;
+int boardDimX = 1;
+
+// If expandable board is disabled
+if ( !expandableBoard ){
+  boardDimY = BOARD_DIM;
+  boardDimX = BOARD_DIM;
+}
+else {
+  for (int y = 0; y < BOARD_DIM; y++)
+  {
+    for (int x = 0; x < BOARD_DIM; x++)
+    {
+      if (board[y][x] != NULL_TILE)
+      {
+        // Grab the dimensions and account for last row
+        if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+          boardDimX = x+1;
+        }
+        else if ( x < BOARD_DIM ) {
+          boardDimX = x+2;
+        }
+        if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+          boardDimY = y+1;
+        }
+        else if ( y < BOARD_DIM ){
+          boardDimY = y+2;
+        }
+      }
+    }
+  }
+}
+
+This feature was required to be toggleable, for this to happen the game engine instance required additional functions to be called prior to inital gameplay to prepare some variables.
+
+
+void GameEngine::enableExpandableBoard(){
+  expandableBoard = true;
+}
+
+void GameEngine::disableExpandableBoard(){
+  expandableBoard = false;
+}
+
+bool GameEngine::getExpandableBoardOption(){
+  return expandableBoard;
+}
+
+Now to enable these to be toggled by the user Qwirkle.CPP was given the following changes.
+
+An additional menu item
+  // MENU
+  std::cout << "Menu" << std::endl
+            << "----" << std::endl
+            << "1. New Game" << std::endl
+            << "2. Load Game" << std::endl
+            << "3. Credits (Show student information)" << std::endl
+            << "4. Quit" << std::endl
+            << "5. Toggle Expandable Board" << std::endl;
+
+An additional if check
+    else if (choice == '5')
+    {
+      if ( gameEngine->getExpandableBoardOption() ){
+        std::cout << "Expandable board is now disabled";
+        gameEngine->disableExpandableBoard();
+      }
+      else {
+        std::cout << "Expandable board is now enabled";
+        gameEngine->enableExpandableBoard();
+      }
+    }
+
+4.1.7  High Scores
+
+4.2  Major enhancements
+
+4.2.1  3-4 Player modes
+
+4.2.2  Place Multiple Tiles
+
+4.2.3  Write an AI
