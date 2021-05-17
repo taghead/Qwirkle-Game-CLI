@@ -30,7 +30,8 @@ int main()
             << "1. New Game" << std::endl
             << "2. Load Game" << std::endl
             << "3. Credits (Show student information)" << std::endl
-            << "4. Quit" << std::endl;
+            << "4. Quit" << std::endl
+            << "5. Toggle Expandable Board" << std::endl;
 
   // USER CHOICE
   while (!std::cin.eof())
@@ -59,6 +60,17 @@ int main()
       std::cout << "Goodbye!" << std::endl;
       delete gameEngine;
       exit(0);
+    }
+    else if (choice == '5')
+    {
+      if ( gameEngine->getExpandableBoardOption() ){
+        std::cout << "Expandable board is now disabled";
+        gameEngine->disableExpandableBoard();
+      }
+      else {
+        std::cout << "Expandable board is now enabled";
+        gameEngine->enableExpandableBoard();
+      }
     }
     else if (std::cin.eof())
     {

@@ -343,8 +343,43 @@ void GameEngine::printBoard()
     std::cout << "Score for " << playersArr[i]->getPlayerName() << ": "
               << playersArr[i]->getPlayerScore() << std::endl;
   }
+
+  // Get board dimension
+  int boardDimY = 1;
+  int boardDimX = 1;
+
+  // If expandable board is disabled
+  if ( !expandableBoard ){
+    boardDimY = BOARD_DIM;
+    boardDimX = BOARD_DIM;
+  }
+  else {
+    for (int y = 0; y < BOARD_DIM; y++)
+    {
+      for (int x = 0; x < BOARD_DIM; x++)
+      {
+        if (board[y][x] != NULL_TILE)
+        {
+          // Grab the dimensions and account for last row
+          if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+            boardDimX = x+1;
+          }
+          else if ( x < BOARD_DIM ) {
+            boardDimX = x+2;
+          }
+          if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+            boardDimY = y+1;
+          }
+          else if ( y < BOARD_DIM ){
+            boardDimY = y+2;
+          }
+        }
+      }
+    }
+  }
+
   // Prints numbers
-  for (int i = 0; i < BOARD_DIM; i++)
+  for (int i = 0; i < boardDimX; i++)
   {
     if (i == 0)
     {
@@ -361,18 +396,18 @@ void GameEngine::printBoard()
   }
   std::cout << std::endl;
   // Prints hyphens (27*3=81)
-  for (int i = 0; i < BOARD_DIM + 1; i++)
+  for (int i = 0; i < boardDimX + 1; i++)
   {
     std::cout << "---";
   }
   std::cout << std::endl;
   // Prints board
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < boardDimY; y++)
   {
     // converts int to char
     char c = y + 65;
     std::cout << c << " ";
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < boardDimX; x++)
     {
       if (board[y][x] != NULL_TILE)
       {
@@ -438,8 +473,45 @@ void GameEngine::userInput(std::string userInput)
   bool valid = false;
   // Stores index of tile in player hand
   int index = 0;
+
+  // Checks for "help"
+  if (userInput.substr(0, 4) == "help"){
+    std::cout << "                         ----HELP----" << std::endl
+              << std::endl
+              << "                         Tile colours" << std::endl
+              << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
+              << std::endl
+              << "    |    GREEN 'G'    |     BLUE 'B'    |   PURPLE 'P'    |" 
+              << std::endl
+              << "                         Tile Shapes" << std::endl
+              << "    |    CIRCLE '1'   |    STAR_4 '2'   |   DIAMOND '3'   |" 
+              << std::endl
+              << "    |   SQUARE '4'    |    STAR_6 '5'   |    CLOVER'6'    |" 
+              << std::endl << std::endl
+              << "                         Coordinates" << std::endl
+              << "Cordinates are defined as rows and columns in that order."
+              << std::endl
+              << "Rows are represented with capitalized alphabetic characters."
+              << std::endl
+              << "These characters range from A-Z and represent the rows 0-25."
+              << std::endl
+              << "Columns are represented using the numbers 0-25"
+              << std::endl
+              << std::endl
+              << "                            Commands"
+              << std::endl
+              << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+              << std::endl
+              << " replace TILE              | replace O5       | replace tile"
+              << std::endl
+              << " save FILENAME.save        |  save game.save  | save game"
+              << std::endl
+              << " quit                      |                  | quit game"
+              << std::endl;
+  }
+
   // Checks for "place"
-  if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
+  else if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
   {
     std::string selectedTile = userInput.substr(6, 2);
     // Obtains index of selected tile
@@ -1179,3 +1251,15 @@ void GameEngine::setLine(int &r, int &c, int dir)
     c = 0;
   }
 }
+
+  void GameEngine::enableExpandableBoard(){
+    expandableBoard = true;
+  }
+
+  void GameEngine::disableExpandableBoard(){
+    expandableBoard = false;
+  }
+
+  bool GameEngine::getExpandableBoardOption(){
+    return expandableBoard;
+  }
