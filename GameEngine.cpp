@@ -1206,3 +1206,11 @@ void GameEngine::setLine(int &r, int &c, int dir)
     c = 0;
   }
 }
+
+  void GameEngine::enableExpandableBoard(){
+    expandableBoard = true;
+  }
+
+  void GameEngine::disableExpandableBoard(){
+    expandableBoard = false;
+  }

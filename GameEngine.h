@@ -46,6 +46,10 @@ public:
   int countTiles(int row, int col, int dir);
   void setLine(int &r, int &c, int dir);
 
+  // Options
+  void enableExpandableBoard();
+  void disableExpandableBoard();
+
   Player *currentPlayer;
 
 private:
@@ -55,6 +59,9 @@ private:
   int currentTurn = 0;
   int tilesPlaced = 0;
   bool turnCheck = false;
+
+  // Options
+  bool expandableBoard = false;
   std::vector<Player *> playersArr;
 
   // Declare Board vector
