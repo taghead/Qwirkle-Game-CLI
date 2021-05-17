@@ -347,6 +347,12 @@ void GameEngine::printBoard()
   // Get board dimension
   int boardDimY = 1;
   int boardDimX = 1;
+
+  // If expandable board is disabled
+  if ( !expandableBoard ){
+    boardDimY = BOARD_DIM;
+    boardDimX = BOARD_DIM;
+  }
   for (int y = 0; y < BOARD_DIM; y++)
   {
     for (int x = 0; x < BOARD_DIM; x++)
