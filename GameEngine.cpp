@@ -353,24 +353,26 @@ void GameEngine::printBoard()
     boardDimY = BOARD_DIM;
     boardDimX = BOARD_DIM;
   }
-  for (int y = 0; y < BOARD_DIM; y++)
-  {
-    for (int x = 0; x < BOARD_DIM; x++)
+  else {
+    for (int y = 0; y < BOARD_DIM; y++)
     {
-      if (board[y][x] != NULL_TILE)
+      for (int x = 0; x < BOARD_DIM; x++)
       {
-        // Grab the dimensions and account for last row
-        if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
-          boardDimX = x+1;
-        }
-        else if ( x < BOARD_DIM ) {
-          boardDimX = x+2;
-        }
-        if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
-          boardDimY = y+1;
-        }
-        else if ( y < BOARD_DIM ){
-          boardDimY = y+2;
+        if (board[y][x] != NULL_TILE)
+        {
+          // Grab the dimensions and account for last row
+          if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+            boardDimX = x+1;
+          }
+          else if ( x < BOARD_DIM ) {
+            boardDimX = x+2;
+          }
+          if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+            boardDimY = y+1;
+          }
+          else if ( y < BOARD_DIM ){
+            boardDimY = y+2;
+          }
         }
       }
     }
@@ -1219,4 +1221,8 @@ void GameEngine::setLine(int &r, int &c, int dir)
 
   void GameEngine::disableExpandableBoard(){
     expandableBoard = false;
+  }
+
+  bool GameEngine::getExpandableBoardOption(){
+    return expandableBoard;
   }

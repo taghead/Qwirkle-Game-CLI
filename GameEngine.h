@@ -49,6 +49,7 @@ public:
   // Options
   void enableExpandableBoard();
   void disableExpandableBoard();
+  bool getExpandableBoardOption();
 
   Player *currentPlayer;
 
