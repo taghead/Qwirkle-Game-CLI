@@ -473,8 +473,20 @@ void GameEngine::userInput(std::string userInput)
   bool valid = false;
   // Stores index of tile in player hand
   int index = 0;
+
+  // Checks for "help"
+  if (userInput.substr(0, 4) == "help"){
+    std::cout << "                          ----HELP----" << std::endl
+              << "                         Tile colours" << std::endl
+              << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
+              << std::endl
+              << "    |    GREEN 'G'    |     BLUE 'B'    |   PURPLE 'P'    |" 
+              << std::endl
+              << std::endl;
+  }
+
   // Checks for "place"
-  if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
+  else if (userInput.substr(0, 5) == "place" && userInput.substr(9, 2) == "at")
   {
     std::string selectedTile = userInput.substr(6, 2);
     // Obtains index of selected tile
