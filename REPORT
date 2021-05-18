@@ -131,6 +131,10 @@ An additional if check
 
 4.2.1  3-4 Player modes
 
+We already had scalability in mind with the program however upgrades to the menu and save and load were required. 
+
+
+
 4.2.2  Place Multiple Tiles
 
 4.2.3  Write an AI
