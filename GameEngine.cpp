@@ -94,8 +94,10 @@ void GameEngine::loadGame(std::string filename)
 
   int playerCount = 0;
   for ( unsigned int i = 0; i<fileVector.size()-4; i++){
-    std::cout << fileVector[i] << std::endl;
     if ( i == 0 || i == 3 || i == 6 || i == 9 ){
+      std::cout << playerCount << fileVector[i] << std::endl;
+      std::cout << playerCount << fileVector[i+1] << std::endl;
+      std::cout << playerCount << fileVector[i+2] << std::endl;
       // Load players names
       std::string name = fileVector[i];
       addPlayer(name);
@@ -105,12 +107,12 @@ void GameEngine::loadGame(std::string filename)
       playersArr.at(playerCount)->addPoints(playerScoreScoreInt);
 
       // Load players hands
-      std::istringstream playerOneHandStream(fileVector[i+2]);
-      std::string playerOneTile;
-      while (std::getline(playerOneHandStream, playerOneTile, ','))
+      std::istringstream playerHandStream(fileVector[i+2]);
+      std::string playerTile;
+      while (std::getline(playerHandStream, playerTile, ','))
       {
-        char colour = playerOneTile.at(playerCount);
-        int shape = stoi(playerOneTile.substr(1));
+        char colour = playerTile.at(0);
+        int shape = stoi(playerTile.substr(1));
         playersArr.at(playerCount)->drawHand(new Tile(colour, shape));
       }
       playerCount++;
