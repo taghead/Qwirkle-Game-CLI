@@ -230,7 +230,6 @@ void newGameMorePlayers()
 
     // Sanitize. Accepts input for 3 or 4.
     if ( playerCountInput == '3' ){
-      std::cout << "OK";
       playerCount = 3;
     }
     else if ( playerCountInput == '4' ){
