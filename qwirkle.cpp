@@ -32,7 +32,8 @@ int main()
             << "2. Load Game" << std::endl
             << "3. Credits (Show student information)" << std::endl
             << "4. Quit" << std::endl
-            << "5. Toggle Expandable Board" << std::endl;
+            << "5. Toggle Expandable Board" << std::endl
+            << "6. New Game 3-4 Mode" << std::endl;
 
   // USER CHOICE
   while (!std::cin.eof())
@@ -238,10 +239,11 @@ void newGameMorePlayers()
     else {
       std::cout << std::endl
                 << "Invalid Input" << std::endl
-                << " >" << std::endl;
+                << " >";
     }
   }
 
+  // Get players name and add them to the game engine
   for (int i = 0; i < playerCount; i++)
   {
     validName = false;
