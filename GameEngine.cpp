@@ -440,7 +440,8 @@ void GameEngine::userInput(std::string userInput)
 
   // Checks for "help"
   if (userInput.substr(0, 4) == "help"){
-    std::cout << "                         ----HELP----" << std::endl
+    std::cout << std::endl << "                         ----HELP----"
+              << std::endl
               << std::endl
               << "                         Tile colours" << std::endl
               << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
@@ -464,9 +465,9 @@ void GameEngine::userInput(std::string userInput)
               << std::endl
               << "                            Commands"
               << std::endl
-              << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+              << " place TILE at COORDINATES |  place O5 at Z25 | place tile"
               << std::endl
-              << " replace TILE              | replace O5       | replace tile"
+              << " replace TILE              |  replace O5      | replace tile"
               << std::endl
               << " save FILENAME.save        |  save game.save  | save game"
               << std::endl
