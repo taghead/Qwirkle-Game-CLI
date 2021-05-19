@@ -246,15 +246,7 @@ void GameEngine::qwirkleEngine()
   }
   // Create win condition check
   bool winConditionCheck = false;
-  for (Player *p : playersArr)
-  {
-    // Checks if both the current players hand and the tile bag is empty
-    if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
-    {
-      p->addPoints(6);
-      winConditionCheck = true;
-    }
-  }
+
   // Print initial board
   printBoard();
   // Checks for win condition and EOF
@@ -269,17 +261,28 @@ void GameEngine::qwirkleEngine()
     }
     else
     {
-      // Asks for user input
-      std::string in;
-      std::cout << "> ";
-      std::getline(std::cin, in);
-      // Fixes immediate input
-      if (in == "")
+      for (Player *p : playersArr)
       {
-        std::getline(std::cin, in);
+        // Checks if both the current players hand and the tile bag is empty
+        if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
+        {
+          p->addPoints(6);
+          winConditionCheck = true;
+        }
       }
-      // Overloads function with user input
-      userInput(in);
+      if ( !winConditionCheck ){
+        // Asks for user input
+        std::string in;
+        std::cout << "> ";
+        std::getline(std::cin, in);
+        // Fixes immediate input
+        if (in == "")
+        {
+          std::getline(std::cin, in);
+        }
+        // Overloads function with user input
+        userInput(in);
+      }
     }
   }
 
