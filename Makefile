@@ -1,6 +1,4 @@
 define testScript =
-	make clean; make;
-
 	DIFF="/usr/bin/diff"
 	DIFF_OPTS="--brief --report-identical-files -w"
 	## Define colors
@@ -28,7 +26,7 @@ endef
 
 .default: all
 
-all: qwirkle
+all: qwirkle runtests
 
 clean:
 	rm -rf qwirkle *.o *.dSYM
