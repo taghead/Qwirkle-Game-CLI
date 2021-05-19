@@ -6,6 +6,8 @@ Menu
 2. Load Game
 3. Credits (Show student information)
 4. Quit
+5. Toggle Expandable Board
+6. New Game 3-4 Mode
 
 > 
 ----------------------------------
@@ -27,5 +29,4 @@ Email: s3668877@student.rmit.edu.au
 ----------------------------------
 
 > 
-
-Goodbye!
+Expandable board is now enabled

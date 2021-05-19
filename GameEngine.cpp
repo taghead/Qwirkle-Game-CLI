@@ -95,9 +95,6 @@ void GameEngine::loadGame(std::string filename)
   int playerCount = 0;
   for ( unsigned int i = 0; i<fileVector.size()-4; i++){
     if ( i == 0 || i == 3 || i == 6 || i == 9 ){
-      std::cout << playerCount << fileVector[i] << std::endl;
-      std::cout << playerCount << fileVector[i+1] << std::endl;
-      std::cout << playerCount << fileVector[i+2] << std::endl;
       // Load players names
       std::string name = fileVector[i];
       addPlayer(name);
