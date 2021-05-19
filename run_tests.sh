@@ -25,9 +25,11 @@ do
   # Run tests
   echo -e "${YELLOW}Testing $FILENAME ${NC}";
   ./qwirkle < $f > $FILENAME.gameout
-  $DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout
+  $DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | GREP_COLOR='1;32' grep -E --color 'identical' 
+  $DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | GREP_COLOR='1;31' grep -E --color 'differ' 
   if [[ -f $FILENAME.expsave ]]; then
-    $DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save
+    $DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | GREP_COLOR='1;32' grep -E --color 'identical' 
+    $DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | GREP_COLOR='1;31' grep -E --color 'differ' 
   fi
   echo -e "\n";
 done
