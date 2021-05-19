@@ -331,3 +331,11 @@ We already had scalability in mind with the program however upgrades to the menu
 4.2.2  Place Multiple Tiles
 
 4.2.3  Write an AI
+
+
+
+Fixes 
+
+Game win condition was outside of the while loop. This being the case the win conditions were never checked. 
+
+This was corrected by migrating the check into the games while loop.
