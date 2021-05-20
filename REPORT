@@ -339,3 +339,13 @@ Fixes
 Game win condition was outside of the while loop. This being the case the win conditions were never checked. 
 
 This was corrected by migrating the check into the games while loop.
+
+Tests
+
+Test cases for the enhance cover the following 
+
+- Win conditions for 3 to 4 players mode
+- Functional gameplay of 3 to 4 players mode
+- New game and player names for 3 to 4 players mode
+- Expandable checks board expansion  for corners and centre of the board
+- Help command works when in game
