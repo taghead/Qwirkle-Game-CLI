@@ -4,6 +4,8 @@ define testScript =
 
 	## Define colors
 	YELLOW='\033[1;33m'
+	GREEN='\033[1;32m'
+	RED='\033[1;31m'
 	NC='\033[0m'
 
 	## Counters
@@ -40,7 +42,7 @@ define testScript =
 		fi
 		echo "\n";
 	done
-	echo "${YELLOW}\n \nTESTS PASSED: $PASSED \nTESTS FAILED: $FAILED${NC}";
+	echo "${GREEN}\n \nTESTS PASSED: $PASSED ${RED}\nTESTS FAILED: $FAILED${NC}";
 endef
 
 .default: all
