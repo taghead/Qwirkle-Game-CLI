@@ -14,9 +14,9 @@ GameEngine::GameEngine()
   numOfPlayers = INITIAL_NUM_PLAYERS;
   numOfTurns = INITIAL_TURN_COUNT;
   // Initializes the board with null pointers
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < BOARD_DIM+1; y++)
   {
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < BOARD_DIM+1; x++)
     {
       board[y][x] = nullptr;
     }
@@ -26,9 +26,9 @@ GameEngine::GameEngine()
 GameEngine::~GameEngine()
 {
   // Deletes the board
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < BOARD_DIM+1; y++)
   {
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < BOARD_DIM+1; x++)
     {
       delete board[y][x];
     }
@@ -95,9 +95,6 @@ void GameEngine::loadGame(std::string filename)
   int playerCount = 0;
   for ( unsigned int i = 0; i<fileVector.size()-4; i++){
     if ( i == 0 || i == 3 || i == 6 || i == 9 ){
-      std::cout << playerCount << fileVector[i] << std::endl;
-      std::cout << playerCount << fileVector[i+1] << std::endl;
-      std::cout << playerCount << fileVector[i+2] << std::endl;
       // Load players names
       std::string name = fileVector[i];
       addPlayer(name);
@@ -249,15 +246,7 @@ void GameEngine::qwirkleEngine()
   }
   // Create win condition check
   bool winConditionCheck = false;
-  for (Player *p : playersArr)
-  {
-    // Checks if both the current players hand and the tile bag is empty
-    if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
-    {
-      p->addPoints(6);
-      winConditionCheck = true;
-    }
-  }
+
   // Print initial board
   printBoard();
   // Checks for win condition and EOF
@@ -272,17 +261,28 @@ void GameEngine::qwirkleEngine()
     }
     else
     {
-      // Asks for user input
-      std::string in;
-      std::cout << "> ";
-      std::getline(std::cin, in);
-      // Fixes immediate input
-      if (in == "")
+      for (Player *p : playersArr)
       {
-        std::getline(std::cin, in);
+        // Checks if both the current players hand and the tile bag is empty
+        if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
+        {
+          p->addPoints(6);
+          winConditionCheck = true;
+        }
       }
-      // Overloads function with user input
-      userInput(in);
+      if ( !winConditionCheck ){
+        // Asks for user input
+        std::string in;
+        std::cout << "> ";
+        std::getline(std::cin, in);
+        // Fixes immediate input
+        if (in == "")
+        {
+          std::getline(std::cin, in);
+        }
+        // Overloads function with user input
+        userInput(in);
+      }
     }
   }
 
@@ -308,12 +308,12 @@ void GameEngine::printBoard()
               << playersArr[i]->getPlayerScore() << std::endl;
   }
 
-  // Get board dimension
+  // Set initial board size
   int boardDimY = 1;
   int boardDimX = 1;
 
-  // If expandable board is disabled
-  if ( !expandableBoard ){
+  // Set initial board size if expandable board is disabled
+  if (!expandableBoard){
     boardDimY = BOARD_DIM;
     boardDimX = BOARD_DIM;
   }
@@ -324,17 +324,17 @@ void GameEngine::printBoard()
       {
         if (board[y][x] != NULL_TILE)
         {
-          // Grab the dimensions and account for last row
-          if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+          // Grab the dimensions and account for last row and column
+          if ( x == BOARD_DIM-1 || x == BOARD_DIM-1 ){
             boardDimX = x+1;
           }
-          else if ( x < BOARD_DIM ) {
+          else if ( x < BOARD_DIM-1 ) {
             boardDimX = x+2;
           }
-          if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+          if ( y == BOARD_DIM-1 || y == BOARD_DIM-1 ){
             boardDimY = y+1;
           }
-          else if ( y < BOARD_DIM ){
+          else if ( y < BOARD_DIM-1 ){
             boardDimY = y+2;
           }
         }
@@ -440,7 +440,8 @@ void GameEngine::userInput(std::string userInput)
 
   // Checks for "help"
   if (userInput.substr(0, 4) == "help"){
-    std::cout << "                         ----HELP----" << std::endl
+    std::cout << std::endl << "                         ----HELP----"
+              << std::endl
               << std::endl
               << "                         Tile colours" << std::endl
               << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
@@ -464,9 +465,9 @@ void GameEngine::userInput(std::string userInput)
               << std::endl
               << "                            Commands"
               << std::endl
-              << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+              << " place TILE at COORDINATES |  place O5 at Z25 | place tile"
               << std::endl
-              << " replace TILE              | replace O5       | replace tile"
+              << " replace TILE              |  replace O5      | replace tile"
               << std::endl
               << " save FILENAME.save        |  save game.save  | save game"
               << std::endl

@@ -41,17 +41,25 @@ int main()
     std::cout << std::endl
               << "> ";
 
-    char choice = '5';
+    char choice = '0';
     std::cin >> choice;
 
     std::cout << std::endl;
     if (choice == '1')
     {
       newGame();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (choice == '2')
     {
       loadGame();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (choice == '3')
     {
@@ -77,6 +85,10 @@ int main()
     else if (choice == '6')
     {
       newGameMorePlayers();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (std::cin.eof())
     {
