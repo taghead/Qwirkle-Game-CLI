@@ -1,0 +1,21 @@
+Welcome to Qwirkle!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits (Show student information)
+4. Quit
+5. Toggle Expandable Board
+6. New Game 3-4 Mode
+
+> 
+Starting a New Game...
+
+How many players? 3 or 4?:Enter a name for player 1 (uppercase characters only)
+> Enter a name for player 2 (uppercase characters only)
+> Enter a name for player 3 (uppercase characters only)
+> Enter a name for player 4 (uppercase characters only)
+> 
+
+Goodbye!

@@ -1,0 +1,69 @@
+Welcome to Qwirkle!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits (Show student information)
+4. Quit
+5. Toggle Expandable Board
+6. New Game 3-4 Mode
+
+> 
+Expandable board is now enabled
+> 
+Enter the filename to load a game
+> 
+Qwirkle game successfully loaded
+
+A, it's your turn!
+Score for A: 0
+Score for C: 0
+   0
+------
+A |  |
+
+Your hand is
+G3, Y6, R4, R6, G4, O6
+
+> 
+C, it's your turn!
+Score for A: 2
+Score for C: 0
+   0  1  2  3  4
+------------------
+A |  |  |  |G3|  |
+B |  |  |  |  |  |
+
+Your hand is
+R1, O5, Y6, B4, G4, Y2
+
+> 
+A, it's your turn!
+Score for A: 2
+Score for C: 2
+   0  1  2  3  4
+------------------
+A |  |  |  |G3|  |
+B |  |  |  |G4|  |
+C |  |  |  |  |  |
+
+Your hand is
+Y6, R4, R6, G4, O6, G3
+
+> 
+C, it's your turn!
+Score for A: 4
+Score for C: 2
+   0  1  2  3  4  5
+---------------------
+A |  |  |  |G3|  |  |
+B |  |  |  |G4|R4|  |
+C |  |  |  |  |  |  |
+
+Your hand is
+R1, O5, Y6, B4, Y2, G1
+
+> 
+
+Goodbye!

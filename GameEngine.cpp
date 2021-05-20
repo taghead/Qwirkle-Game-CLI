@@ -14,9 +14,9 @@ GameEngine::GameEngine()
   numOfPlayers = INITIAL_NUM_PLAYERS;
   numOfTurns = INITIAL_TURN_COUNT;
   // Initializes the board with null pointers
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < BOARD_DIM+1; y++)
   {
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < BOARD_DIM+1; x++)
     {
       board[y][x] = nullptr;
     }
@@ -26,9 +26,9 @@ GameEngine::GameEngine()
 GameEngine::~GameEngine()
 {
   // Deletes the board
-  for (int y = 0; y < BOARD_DIM; y++)
+  for (int y = 0; y < BOARD_DIM+1; y++)
   {
-    for (int x = 0; x < BOARD_DIM; x++)
+    for (int x = 0; x < BOARD_DIM+1; x++)
     {
       delete board[y][x];
     }
@@ -92,129 +92,90 @@ void GameEngine::loadGame(std::string filename)
     fileVector.push_back(str);
   }
 
-  for (unsigned int i = 0; i < fileVector.size(); i++)
+  int playerCount = 0;
+  for ( unsigned int i = 0; i<fileVector.size()-4; i++){
+    if ( i == 0 || i == 3 || i == 6 || i == 9 ){
+      // Load players names
+      std::string name = fileVector[i];
+      addPlayer(name);
+
+      // Load players scores
+      int playerScoreScoreInt = std::stoi(fileVector[i+1]);
+      playersArr.at(playerCount)->addPoints(playerScoreScoreInt);
+
+      // Load players hands
+      std::istringstream playerHandStream(fileVector[i+2]);
+      std::string playerTile;
+      while (std::getline(playerHandStream, playerTile, ','))
+      {
+        char colour = playerTile.at(0);
+        int shape = stoi(playerTile.substr(1));
+        playersArr.at(playerCount)->drawHand(new Tile(colour, shape));
+      }
+      playerCount++;
+    }
+  }
+
+  // Load board State
+  std::stringstream data(fileVector[fileVector.size()-3]);
+  std::string tmpString;
+
+  char alpha[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                  'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+  int alphaNum[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                    14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+
+  while (std::getline(data, tmpString, ','))
   {
-    // fileVector[i] is the line in the file
-    if (i == 0)
+    // Get color and shape
+    char colour = tmpString.at(0);
+    int shape = stoi(tmpString.substr(1));
+
+    // Convert row alpha to numeric
+    int row = 0;
+    for (int i = 0; i < 26; i++)
     {
-      // Load player 1 name
-      std::string name = fileVector[i];
-      addPlayer(name);
-    }
-    if (i == 1)
-    {
-      // Load player 1 score
-      int playerScoreScoreInt = std::stoi(fileVector[i]);
-      playersArr.at(0)->addPoints(playerScoreScoreInt);
-    }
-    if (i == 2)
-    {
-      // Load player 1 hand
-      std::istringstream playerOneHandStream(fileVector[i]);
-      std::string playerOneTile;
-      while (std::getline(playerOneHandStream, playerOneTile, ','))
+      if (tmpString.at(3) == alpha[i])
       {
-        char colour = playerOneTile.at(0);
-        int shape = stoi(playerOneTile.substr(1));
-        playersArr.at(0)->drawHand(new Tile(colour, shape));
+        row = alphaNum[i];
       }
     }
-    if (i == 3)
-    {
-      // Load player 2 name
-      std::string name = fileVector[i];
-      addPlayer(name);
-    }
-    if (i == 4)
-    {
-      // Load player 2 score
-      int playerScoreScoreInt = std::stoi(fileVector[i]);
-      playersArr.at(1)->addPoints(playerScoreScoreInt);
-    }
-    if (i == 5)
-    {
-      // Load player 2 hand
-      std::istringstream playerTwoHandStream(fileVector[i]);
-      std::string playerTwoTile;
-      while (std::getline(playerTwoHandStream, playerTwoTile, ','))
-      {
-        char colour = playerTwoTile.at(0);
-        int shape = stoi(playerTwoTile.substr(1));
-        playersArr.at(1)->drawHand(new Tile(colour, shape));
-      }
-    }
-    if (i == 6)
-    {
-      // Load Board Shape
-    }
-    if (i == 7)
-    {
-      // Load board State
-      std::stringstream data(fileVector[i]);
-      std::string tmpString;
 
-      char alpha[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-                      'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-                      'U', 'V', 'W', 'X', 'Y', 'Z'};
+    // Convert col to int
+    std::string tmpColString = tmpString;
+    tmpColString.erase(0, 4);
+    int col;
+    std::stringstream ss;
+    ss << tmpColString;
+    ss >> col;
+    ss.clear();
 
-      int alphaNum[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                        14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+    // Add tile to board
+    board[row][col] = new Tile(colour, shape);
 
-      while (std::getline(data, tmpString, ','))
-      {
-        // Get color and shape
-        char colour = tmpString.at(0);
-        int shape = stoi(tmpString.substr(1));
+    // Add turn counter
+    numOfTurns += 1;
+  }
+    
+  // Load tilebag
+  std::istringstream tileBagStream(fileVector[fileVector.size()-2]);
+  std::string tile;
+  while (std::getline(tileBagStream, tile, ','))
+  {
+    char colour = tile.at(0);
+    int shape = stoi(tile.substr(1));
+    tileBag.addBack(new Tile(colour, shape));
+  }
 
-        // Convert row alpha to numeric
-        int row = 0;
-        for (int i = 0; i < 26; i++)
-        {
-          if (tmpString.at(3) == alpha[i])
-          {
-            row = alphaNum[i];
-          }
-        }
-
-        // Convert col to int
-        std::string tmpColString = tmpString;
-        tmpColString.erase(0, 4);
-        int col;
-        std::stringstream ss;
-        ss << tmpColString;
-        ss >> col;
-        ss.clear();
-
-        // Add tile to board
-        board[row][col] = new Tile(colour, shape);
-
-        // Add turn counter
-        numOfTurns += 1;
-      }
-    }
-    if (i == 8)
+  // Load current player's turn
+  for (unsigned int j = 0; j < playersArr.size(); j++)
+  {
+    if (fileVector[fileVector.size()-1] == playersArr[j]->getPlayerName())
     {
-      // Load tilebag
-      std::istringstream tileBagStream(fileVector[i]);
-      std::string tile;
-      while (std::getline(tileBagStream, tile, ','))
-      {
-        char colour = tile.at(0);
-        int shape = stoi(tile.substr(1));
-        tileBag.addBack(new Tile(colour, shape));
-      }
-    }
-    if (i == 9)
-    {
-      // Load current player's turn
-      for (unsigned int j = 0; j < playersArr.size(); j++)
-      {
-        if (fileVector[i] == playersArr[j]->getPlayerName())
-        {
-          currentPlayer = &*playersArr[j];
-          currentTurn = j;
-        }
-      }
+      currentPlayer = &*playersArr[j];
+      currentTurn = j;
     }
   }
 
@@ -285,15 +246,7 @@ void GameEngine::qwirkleEngine()
   }
   // Create win condition check
   bool winConditionCheck = false;
-  for (Player *p : playersArr)
-  {
-    // Checks if both the current players hand and the tile bag is empty
-    if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
-    {
-      p->addPoints(6);
-      winConditionCheck = true;
-    }
-  }
+
   // Print initial board
   printBoard();
   // Checks for win condition and EOF
@@ -308,17 +261,28 @@ void GameEngine::qwirkleEngine()
     }
     else
     {
-      // Asks for user input
-      std::string in;
-      std::cout << "> ";
-      std::getline(std::cin, in);
-      // Fixes immediate input
-      if (in == "")
+      for (Player *p : playersArr)
       {
-        std::getline(std::cin, in);
+        // Checks if both the current players hand and the tile bag is empty
+        if (p->getHandLinkedList()->getSize() == 0 && tileBag.getSize() == 0)
+        {
+          p->addPoints(6);
+          winConditionCheck = true;
+        }
       }
-      // Overloads function with user input
-      userInput(in);
+      if ( !winConditionCheck ){
+        // Asks for user input
+        std::string in;
+        std::cout << "> ";
+        std::getline(std::cin, in);
+        // Fixes immediate input
+        if (in == "")
+        {
+          std::getline(std::cin, in);
+        }
+        // Overloads function with user input
+        userInput(in);
+      }
     }
   }
 
@@ -344,12 +308,12 @@ void GameEngine::printBoard()
               << playersArr[i]->getPlayerScore() << std::endl;
   }
 
-  // Get board dimension
+  // Set initial board size
   int boardDimY = 1;
   int boardDimX = 1;
 
-  // If expandable board is disabled
-  if ( !expandableBoard ){
+  // Set initial board size if expandable board is disabled
+  if (!expandableBoard){
     boardDimY = BOARD_DIM;
     boardDimX = BOARD_DIM;
   }
@@ -360,17 +324,17 @@ void GameEngine::printBoard()
       {
         if (board[y][x] != NULL_TILE)
         {
-          // Grab the dimensions and account for last row
-          if ( x == BOARD_DIM || x == BOARD_DIM-1 ){
+          // Grab the dimensions and account for last row and column
+          if ( x == BOARD_DIM-1 || x == BOARD_DIM-1 ){
             boardDimX = x+1;
           }
-          else if ( x < BOARD_DIM ) {
+          else if ( x < BOARD_DIM-1 ) {
             boardDimX = x+2;
           }
-          if ( y == BOARD_DIM || y == BOARD_DIM-1 ){
+          if ( y == BOARD_DIM-1 || y == BOARD_DIM-1 ){
             boardDimY = y+1;
           }
-          else if ( y < BOARD_DIM ){
+          else if ( y < BOARD_DIM-1 ){
             boardDimY = y+2;
           }
         }
@@ -476,7 +440,8 @@ void GameEngine::userInput(std::string userInput)
 
   // Checks for "help"
   if (userInput.substr(0, 4) == "help"){
-    std::cout << "                         ----HELP----" << std::endl
+    std::cout << std::endl << "                         ----HELP----"
+              << std::endl
               << std::endl
               << "                         Tile colours" << std::endl
               << "    |     RED 'R'     |    ORANGE 'O'   |   YELLOW 'Y'    |" 
@@ -500,9 +465,9 @@ void GameEngine::userInput(std::string userInput)
               << std::endl
               << "                            Commands"
               << std::endl
-              << " place TILE at COORDINATES | place O5 at Z25  | place tile"
+              << " place TILE at COORDINATES |  place O5 at Z25 | place tile"
               << std::endl
-              << " replace TILE              | replace O5       | replace tile"
+              << " replace TILE              |  replace O5      | replace tile"
               << std::endl
               << " save FILENAME.save        |  save game.save  | save game"
               << std::endl

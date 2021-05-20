@@ -14,6 +14,7 @@ void newGame();
 void loadGame();
 void studentInfo();
 bool checkUpperCase(std::string playerName);
+void newGameMorePlayers();
 
 GameEngine *gameEngine;
 
@@ -31,7 +32,8 @@ int main()
             << "2. Load Game" << std::endl
             << "3. Credits (Show student information)" << std::endl
             << "4. Quit" << std::endl
-            << "5. Toggle Expandable Board" << std::endl;
+            << "5. Toggle Expandable Board" << std::endl
+            << "6. New Game 3-4 Mode" << std::endl;
 
   // USER CHOICE
   while (!std::cin.eof())
@@ -39,17 +41,25 @@ int main()
     std::cout << std::endl
               << "> ";
 
-    char choice = '5';
+    char choice = '0';
     std::cin >> choice;
 
     std::cout << std::endl;
     if (choice == '1')
     {
       newGame();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (choice == '2')
     {
       loadGame();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (choice == '3')
     {
@@ -71,6 +81,14 @@ int main()
         std::cout << "Expandable board is now enabled";
         gameEngine->enableExpandableBoard();
       }
+    }
+    else if (choice == '6')
+    {
+      newGameMorePlayers();
+      std::cout << std::endl
+                << "Goodbye!" << std::endl;
+      delete gameEngine;
+      exit(0);
     }
     else if (std::cin.eof())
     {
@@ -202,4 +220,72 @@ bool checkUpperCase(std::string playerName)
     }
   }
   return true;
+}
+
+void newGameMorePlayers()
+{
+  // Declare
+  std::string playerName;
+  char playerCountInput;
+  int playerCount = 0;
+  bool validName = false;
+
+  std::cout << "Starting a New Game..."
+            << std::endl
+            << std::endl;
+
+  // Obtain amount of players
+  std::cout << "How many players? 3 or 4?:";
+  while ( playerCount == 0 && !std::cin.eof() ){
+    // Ask for amount of players
+    std::cin >> playerCountInput;
+
+    // Sanitize. Accepts input for 3 or 4.
+    if ( playerCountInput == '3' ){
+      playerCount = 3;
+    }
+    else if ( playerCountInput == '4' ){
+      playerCount = 4;
+    }
+    else {
+      std::cout << std::endl
+                << "Invalid Input" << std::endl
+                << " >";
+    }
+  }
+
+  // Get players name and add them to the game engine
+  for (int i = 0; i < playerCount; i++)
+  {
+    validName = false;
+    while (!validName)
+    {
+      std::cout << "Enter a name for player " << std::to_string(i + 1)
+                << " (uppercase characters only)" << std::endl
+                << "> ";
+      std::cin >> playerName;
+
+      validName = checkUpperCase(playerName);
+
+      if (!validName && !std::cin.eof())
+      {
+        std::cout << std::endl
+                  << "Invalid Input" << std::endl
+                  << std::endl;
+      }
+      else if (std::cin.eof())
+      {
+        std::cout << std::endl
+                  << std::endl
+                  << "Goodbye!" << std::endl;
+        delete gameEngine;
+        exit(0);
+      }
+    }
+    gameEngine->addPlayer(playerName);
+  }
+  std::cout << "Let's Play!" << std::endl;
+  gameEngine->createTileBag();
+  gameEngine->drawTiles();
+  gameEngine->qwirkleEngine();
 }
