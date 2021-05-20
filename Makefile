@@ -29,8 +29,12 @@ define testScript =
 		$DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | \
 																		GREP_COLOR='1;31' grep -E --color 'differ'
 		if [ -f $FILENAME.expsave ]; then
-			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | \
-																	GREP_COLOR='1;32' grep -E --color 'identical'
+			if	$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | \
+													GREP_COLOR='1;32' grep -E --color 'identical' ; then
+					PASSED=$((PASSED=PASSED+1))
+			else
+					FAILED=$((FAILED=FAILED+1))
+			fi
 			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | \
 																		GREP_COLOR='1;31' grep -E --color 'differ'
 		fi
