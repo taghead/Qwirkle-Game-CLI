@@ -20,15 +20,19 @@ define testScript =
 		# Run tests
 		echo "${YELLOW}Testing $FILENAME ${NC}";
 		./qwirkle < $FILENAME.input > $FILENAME.gameout
-		if $DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | GREP_COLOR='1;32' grep -E --color 'identical' ; then
+		if $DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | \
+													GREP_COLOR='1;32' grep -E --color 'identical' ; then
 				PASSED=$((PASSED=PASSED+1))
 		else
 				FAILED=$((FAILED=FAILED+1))
 		fi
-		$DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | GREP_COLOR='1;31' grep -E --color 'differ' 
+		$DIFF $DIFF_OPTS $FILENAME.output $FILENAME.gameout | \
+																		GREP_COLOR='1;31' grep -E --color 'differ'
 		if [ -f $FILENAME.expsave ]; then
-			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | GREP_COLOR='1;32' grep -E --color 'identical' 
-			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | GREP_COLOR='1;31' grep -E --color 'differ' 
+			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | \
+																	GREP_COLOR='1;32' grep -E --color 'identical'
+			$DIFF $DIFF_OPTS $FILENAME.expsave $FILENAME.save | \
+																		GREP_COLOR='1;31' grep -E --color 'differ'
 		fi
 		echo "\n";
 	done
