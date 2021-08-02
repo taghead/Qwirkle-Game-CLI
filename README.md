@@ -9,4 +9,9 @@ This software was developed using on Debian.
 ```bash
 sudo apt install -y build-essential g++ make
 make
+./qwirkle
 ```
+
+## Performance Report 
+
+The performance and implmentation report can be accessed here [/docs/REPORT.md](/docs/REPORT.md)
