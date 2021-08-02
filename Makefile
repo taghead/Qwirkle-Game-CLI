@@ -14,7 +14,7 @@ define testScript =
 	PASSED=0
 
 	## Run tests
-	for f in ./Tests/*.input; 
+	for f in ./tests/*.input; 
 	do 
 	  # Remove file extension
 		FILENAME="${f%??????}"
