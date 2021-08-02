@@ -18,11 +18,10 @@ The performance and implmentation report can be accessed here [/docs/REPORT.md](
 
 ## Preview
 
-![Preview](https://i.imgur.com/hCHubX2.gif)
+![Preview](/docs/assets/img/demo.gif)
 
 ## The development team
 
-<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/13403032?v=4" width="100" height="100" href="https://github.com/taghead" />
-<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/44457682?v=4" width="100" height="100" href="https://github.com/uwott" />
-<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/62458174?v=4" width="100" height="100" href="https://github.com/s3668468" />
-<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/37392300?v=4?" width="100" height="100" href="https://github.com/s3599751" />
+| [taghead](taghead) | [uwott](uwott) | [s3668468](https://github.com/s3668468) | [s3599751](https://github.com/s3599751) |
+| :---: | :---: | :---: | :---: |
+| <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/13403032?v=4" width="100" height="100" href="https://github.com/taghead" /> | <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/44457682?v=4" width="100" height="100" href="https://github.com/uwott" /> | <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/62458174?v=4" width="100" height="100" href="https://github.com/s3668468" /> | <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/37392300?v=4?" width="100" height="100" href="https://github.com/s3599751" /> |
