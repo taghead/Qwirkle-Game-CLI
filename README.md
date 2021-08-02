@@ -2,9 +2,11 @@
 
 The purpose of this project accumulates the final deliverable attributing towards *Bachelor of Information Technology - Advanced Programming* course. Establishing knowledge in critical aspects of being a C++ programmer including headers, classes, data structures (linkedlist), loops, if logic, and fundamental libraries like arrays and vectors.
 
+This repositroy is a clone of  [-BP192-COSC_1076-2021-Advanced-Programming-Techniques-Assignment-2](https://github.com/taghead/-BP192-COSC_1076-2021-Advanced-Programming-Techniques-Assignment-2) with my own personal enhancements which are 2-4 Player Mode, Help Command and Expanding Board.
+
 ## Usage
 
-This software was developed using on Debian.
+This program was developed using Debian, these are the commands used to compile and run on Debian.
 
 ```bash
 sudo apt install -y build-essential g++ make
